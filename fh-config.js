@@ -1,10 +1,13 @@
-// fh-config.js — Configuración central de 4Helix Ventures
-// ─────────────────────────────────────────────────────────
-// Edita SOLO este archivo para activar el chat en todo el sitio.
+// ============================================================
+//  CONFIGURACIÓN DEL ASISTENTE IA — 4Helix Ventures
+// ============================================================
+//  Pega aquí la URL de tu Cloudflare Worker (ver backend/README.md)
+//  para activar el chat en el sitio publicado. Solo esta línea.
 //
-// Cuando tengas la URL de tu Cloudflare Worker, sustitúyela aquí:
-//   window.FH_ASSISTANT_ENDPOINT = 'https://4helix-asistente.tu-cuenta.workers.dev';
+//  Ejemplo:
+//    window.FH_ASSISTANT_ENDPOINT = 'https://4helix-asistente.tu-cuenta.workers.dev';
 //
-// Mientras el valor sea '' el asistente muestra un aviso amable y no se rompe nada.
-
+//  Déjalo vacío ('') mientras no tengas el Worker: el asistente
+//  seguirá funcionando y mostrará un aviso amable.
+// ============================================================
 window.FH_ASSISTANT_ENDPOINT = 'https://chat-ai-worker.emilio-mulet.workers.dev/chat';

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="4helix-favicon.svg">
+<script src="fh-config.js"></script>
+<script src="fh-assistant.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: #061322; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  @keyframes logoDraw { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+  @keyframes logoPulse { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
+  .lg-stroke { stroke-dasharray: 100; stroke-dashoffset: 100; animation: logoDraw .55s ease forwards; }
+  .ls1 { animation-delay: 0s; } .ls2 { animation-delay: .4s; } .ls3 { animation-delay: .8s; } .ls4 { animation-delay: 1.2s; }
+  .lg-pulse { animation: logoPulse 2.6s ease-in-out infinite; }
+  .lg-diag, .lg-curve { transition: transform .3s ease; }
+  nav a:hover .lg-diag { transform: translate(1.1px,-1.1px); }
+  nav a:hover .lg-curve { transform: translate(-1.1px,1.1px); }
+  @media (prefers-reduced-motion: reduce) { .lg-stroke { animation: none; stroke-dashoffset: 0; } .lg-pulse { animation: none; } }
+  @media (max-width: 880px) { [style*="minmax(0px, 1"] { grid-template-columns: 1fr !important; } }
+  @media (max-width: 600px) { nav > div { flex-wrap: wrap !important; row-gap: 12px !important; } }
+  a { text-decoration: none; }
+  button:focus-visible, input:focus-visible { outline: 2px solid #88b0ee; outline-offset: 3px; }
+  input::placeholder { color: #6b7686; }
+</style>
+</helmet>
+
+<div style="font-family:'Hanken Grotesk',sans-serif; color:#e8eaed; position:relative; z-index:0; background:radial-gradient(125% 95% at 64% 24%, #1c4673 0%, #102c49 42%, #08182a 72%, #061322 100%); min-height:100vh; overflow-x:hidden;">
+
+  <canvas ref="{{ bgCanvas }}" style="position:fixed; inset:0; width:100vw; height:100vh; z-index:-1; pointer-events:none;"></canvas>
+
+  <!-- NAV -->
+  <nav style="position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(8,9,12,0.62); border-bottom:1px solid rgba(220,225,232,0.07);">
+    <div style="max-width:1180px; margin:0 auto; padding:16px clamp(24px,5vw,64px); display:flex; align-items:center; justify-content:space-between; gap:24px;">
+      <a href="4Helix Ventures.dc.html" style="display:flex; align-items:center; gap:12px; color:#e8eaed;">
+        <svg width="26" height="26" viewBox="0 0 40 40" style="display:block; overflow:visible;">
+          <g class="lg-diag">
+            <path class="lg-stroke ls1" d="M8 6 C8 18, 32 22, 32 34" pathLength="100" style="fill:none; stroke:#34D6C6; stroke-width:2.4; stroke-linecap:round;"></path>
+            <path class="lg-stroke ls2" d="M32 6 C32 18, 8 22, 8 34" pathLength="100" style="fill:none; stroke:#F0B429; stroke-width:2.4; stroke-linecap:round;"></path>
+          </g>
+          <g class="lg-curve">
+            <path class="lg-stroke ls3" d="M8 6 C20 12, 20 28, 8 34" pathLength="100" style="fill:none; stroke:#8E9BFF; stroke-width:2.4; stroke-linecap:round; opacity:0.9;"></path>
+            <path class="lg-stroke ls4" d="M32 6 C20 12, 20 28, 32 34" pathLength="100" style="fill:none; stroke:#F47E6F; stroke-width:2.4; stroke-linecap:round; opacity:0.9;"></path>
+          </g>
+          <circle class="lg-pulse" cx="20" cy="20" r="2.6" style="fill:#eef2f6;"></circle>
+        </svg>
+        <span style="display:flex; align-items:baseline; gap:6px;">
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; letter-spacing:-0.01em; color:#E9ECF6;">4Helix</span>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:14px; color:#94A0BE;">Ventures</span>
+        </span>
+      </a>
+      <div style="display:flex; align-items:center; gap:clamp(18px,3vw,38px);">
+        <div style="display:flex; gap:clamp(18px,2.6vw,34px);">
+          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="5">
+            <a href="{{ item.href }}" style="{{ item.style }}" style-hover="color:#e8eaed;">{{ item.label }}</a>
+          </sc-for>
+        </div>
+        <div style="display:flex; align-items:center; gap:2px; background:rgba(220,225,232,0.05); border:1px solid rgba(220,225,232,0.08); border-radius:999px; padding:3px;">
+          <button onClick="{{ setES }}" style="{{ esBtnStyle }}">ES</button>
+          <button onClick="{{ setEN }}" style="{{ enBtnStyle }}">EN</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header style="max-width:1180px; margin:0 auto; padding:clamp(44px,7vh,80px) clamp(24px,5vw,64px) clamp(20px,3vh,32px);">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.26em; text-transform:uppercase; color:#88b0ee; margin-bottom:20px;">{{ t.eyebrow }}</div>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.02em; line-height:1.05; font-size:clamp(30px,4.2vw,54px); margin:0; max-width:20ch; color:#eef2f6;">{{ t.title }}</h1>
+    <p style="font-size:clamp(16px,1.4vw,18px); line-height:1.62; color:#9aa0ac; max-width:54ch; margin:22px 0 0; font-weight:300;">{{ t.intro }}</p>
+  </header>
+
+  <!-- CONTROLS -->
+  <section style="max-width:1180px; margin:0 auto; padding:clamp(16px,2vh,28px) clamp(24px,5vw,64px) 0;">
+    <div data-bg-clear style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between;">
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <sc-for list="{{ filterChips }}" as="c" hint-placeholder-count="5">
+          <button onClick="{{ c.onSel }}" style="{{ c.style }}">{{ c.label }}<span style="{{ c.countStyle }}">{{ c.count }}</span></button>
+        </sc-for>
+      </div>
+      <div style="position:relative; flex:1; min-width:220px; max-width:340px;">
+        <span style="position:absolute; left:14px; top:50%; transform:translateY(-50%); pointer-events:none; color:#6b7686; font-size:15px;">&#9906;</span>
+        <input type="text" value="{{ query }}" onInput="{{ onSearch }}" placeholder="{{ t.searchPlaceholder }}" style="width:100%; padding:11px 14px 11px 38px; border-radius:999px; border:1px solid rgba(220,225,232,0.14); background:rgba(13,18,28,0.6); color:#e8eaed; font-family:'Hanken Grotesk',sans-serif; font-size:14.5px; outline:none;"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED -->
+  <sc-if value="{{ showFeatured }}" hint-placeholder-val="{{ true }}">
+    <section style="max-width:1180px; margin:0 auto; padding:clamp(24px,3vh,40px) clamp(24px,5vw,64px) 0;">
+      <a href="{{ featured.href }}" data-bg-clear style="display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:clamp(20px,3vw,40px); align-items:center; border:1px solid rgba(220,225,232,0.1); border-radius:12px; background:rgba(13,18,28,0.55); padding:clamp(24px,3vw,40px); color:inherit; cursor:pointer;" style-hover="border-color:rgba(136,176,238,0.4); background:rgba(18,24,34,0.7);">
+        <div>
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+            <span style="{{ featured.tagStyle }}">{{ featured.catLabel }}</span>
+            <span style="{{ featured.estadoStyle }}">{{ featured.estadoLabel }}</span>
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7c93ab;">{{ featured.dateLabel }}</span>
+          </div>
+          <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; margin:0; color:#eef2f6;">{{ featured.title }}</h2>
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.06em; color:#88b0ee; margin-top:10px;">{{ featured.issuer }}</div>
+          <p style="font-size:16px; line-height:1.6; color:#aab2bf; margin:16px 0 0; font-weight:300;">{{ featured.summary }}</p>
+          <span style="display:inline-flex; align-items:center; gap:8px; margin-top:24px; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:14px; color:#cfd6df;">{{ t.readMore }} &#8594;</span>
+        </div>
+        <div style="border-left:3px solid rgba(136,176,238,0.5); padding-left:24px;">
+          <sc-for list="{{ featured.facts }}" as="f" hint-placeholder-count="4">
+            <div style="margin-bottom:18px;">
+              <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#7c93ab; margin-bottom:4px;">{{ f.k }}</div>
+              <div style="font-size:15px; color:#e2e6ec; font-weight:400;">{{ f.v }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </a>
+    </section>
+  </sc-if>
+
+  <!-- GRID -->
+  <section style="max-width:1180px; margin:0 auto; padding:clamp(28px,4vh,44px) clamp(24px,5vw,64px) clamp(64px,9vh,110px);">
+    <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+      <div data-bg-clear style="display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:18px;">
+        <sc-for list="{{ cards }}" as="c" hint-placeholder-count="4">
+          <a href="{{ c.href }}" style="display:flex; flex-direction:column; border:1px solid rgba(220,225,232,0.09); border-radius:10px; background:rgba(15,18,24,0.55); padding:24px 24px 26px; color:inherit; cursor:pointer; transition:border-color .2s, background .2s;" style-hover="border-color:rgba(136,176,238,0.35); background:rgba(20,24,31,0.72);">
+            <div style="{{ c.barStyle }}"></div>
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+              <span style="{{ c.tagStyle }}">{{ c.catLabel }}</span>
+              <span style="{{ c.estadoStyle }}">{{ c.estadoLabel }}</span>
+            </div>
+            <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:20px; line-height:1.15; margin:0; color:#eef2f6;">{{ c.title }}</h3>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.05em; color:#88b0ee; margin-top:8px;">{{ c.issuer }}</div>
+            <p style="font-size:14px; line-height:1.55; color:#9aa0ac; margin:14px 0 0; font-weight:300; flex:1;">{{ c.summary }}</p>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:20px; padding-top:16px; border-top:1px solid rgba(220,225,232,0.07);">
+              <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7c93ab;">{{ c.deadlineLabel }}</span>
+              <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7c93ab;">{{ c.trl }}</span>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+      <div data-bg-clear style="text-align:center; padding:60px 20px; border:1px dashed rgba(220,225,232,0.14); border-radius:12px;">
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:20px; color:#cfd6df;">{{ t.emptyTitle }}</div>
+        <p style="font-size:15px; color:#9aa0ac; margin:10px 0 0; font-weight:300;">{{ t.emptyBody }}</p>
+      </div>
+    </sc-if>
+    <div data-bg-clear style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.04em; color:#5d748c; margin-top:28px;">{{ t.disclaimer }}</div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid rgba(220,225,232,0.06);">
+    <div style="max-width:1180px; margin:0 auto; padding:40px clamp(24px,5vw,64px); display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:18px;">
+      <div style="display:flex; align-items:baseline; gap:8px;">
+        <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; color:#e8eaed;">4Helix</span>
+        <span style="font-size:13px; color:#888e9a;">Ventures</span>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.08em; color:#5d636e;">{{ t.footerNote }}</div>
+      <div style="font-size:12px; color:#5d636e;">© {{ year }}</div>
+    </div>
+  </footer>
+
+</div>
+
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" fill="#0e1116"/>
+    <g transform="translate(26 28)" fill="none" stroke="#88b0ee" stroke-width="3" stroke-linecap="round">
+      <line x1="0" y1="0" x2="48" y2="0"/><line x1="0" y1="14" x2="36" y2="14"/><line x1="0" y1="28" x2="48" y2="28"/><line x1="0" y1="42" x2="30" y2="42"/>
+    </g>
+  </svg>
+</template>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es'|'en'&quot;}}">
+const NAV = {
+  es: [
+    { label: 'Inicio', href: '4Helix Ventures.dc.html', key: 'home' },
+    { label: 'Modelo', href: 'Modelo.dc.html', key: 'modelo' },
+    { label: 'Método', href: 'Metodo.dc.html', key: 'metodo' },
+    { label: 'Actualidad', href: 'Actualidad.dc.html', key: 'actualidad' },
+    { label: 'Contacto', href: '4Helix Ventures.dc.html#contacto', key: 'contacto' }
+  ],
+  en: [
+    { label: 'Home', href: '4Helix Ventures.dc.html', key: 'home' },
+    { label: 'Model', href: 'Modelo.dc.html', key: 'modelo' },
+    { label: 'Method', href: 'Metodo.dc.html', key: 'metodo' },
+    { label: 'News', href: 'Actualidad.dc.html', key: 'actualidad' },
+    { label: 'Contact', href: '4Helix Ventures.dc.html#contacto', key: 'contacto' }
+  ]
+};
+function fhReadLang(fb) { try { return localStorage.getItem('fh_lang') || fb; } catch (e) { return fb; } }
+function fhWriteLang(l) { try { localStorage.setItem('fh_lang', l); } catch (e) {} }
+function fhNavItems(lang, page) {
+  return NAV[lang].map(function (it) {
+    const active = it.key === page;
+    return Object.assign({}, it, { style: { fontSize: '14px', letterSpacing: '0.01em', paddingBottom: '4px', color: active ? '#e8eaed' : '#9aa0ac', borderBottom: active ? '1.5px solid #88b0ee' : '1.5px solid transparent', transition: 'color .2s' } });
+  });
+}
+
+const UI = {
+  es: {
+    eyebrow: 'Actualidad',
+    title: 'Fondos europeos, convocatorias y casos.',
+    intro: 'El radar de 4Helix: convocatorias abiertas de financiación europea y nacional, casos de éxito y análisis. Filtra por categoría o busca lo que necesites.',
+    searchPlaceholder: 'Buscar convocatorias…',
+    readMore: 'Leer más', allLabel: 'Todo',
+    emptyTitle: 'Sin resultados',
+    emptyBody: 'Prueba con otra palabra o quita los filtros.',
+    deadline: 'Cierre', noDeadline: 'Continua',
+    estados: { abierta: 'Abierta', proxima: 'Próxima', cerrada: 'Cerrada' },
+    facts: { programa: 'Programa', deadline: 'Fecha de cierre', importe: 'Financiación', trl: 'TRL elegible' },
+    disclaimer: 'Fechas e importes orientativos — confirma siempre en la convocatoria oficial.',
+    footerNote: '4Helix Ventures · nombre de trabajo · pendiente de registro de marca',
+    locale: 'es-ES'
+  },
+  en: {
+    eyebrow: 'News',
+    title: 'European funding, calls and cases.',
+    intro: "4Helix's radar: open European and national funding calls, success cases and analysis. Filter by category or search for what you need.",
+    searchPlaceholder: 'Search calls…',
+    readMore: 'Read more', allLabel: 'All',
+    emptyTitle: 'No results',
+    emptyBody: 'Try another word or clear the filters.',
+    deadline: 'Deadline', noDeadline: 'Rolling',
+    estados: { abierta: 'Open', proxima: 'Upcoming', cerrada: 'Closed' },
+    facts: { programa: 'Programme', deadline: 'Deadline', importe: 'Funding', trl: 'Eligible TRL' },
+    disclaimer: 'Dates and amounts are indicative — always confirm in the official call.',
+    footerNote: '4Helix Ventures · working name · trademark pending',
+    locale: 'en-GB'
+  }
+};
+const ESTADO_COLOR = { abierta: '95,211,200', proxima: '230,192,116', cerrada: '136,146,163' };
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { lang: fhReadLang((props && props.defaultLang) || 'es'), filter: 'todos', query: '', entries: null };
+    this.bgCanvas = React.createRef();
+  }
+  componentDidMount() {
+    import('./fh-common.js').then((m) => { this._net = m.startNetwork(this.bgCanvas.current); }).catch(() => {});
+    import('./contenido.js').then((m) => { this._cats = m.CATEGORIES; this.setState({ entries: m.ENTRIES }); }).catch((e) => { this.setState({ entries: [] }); });
+  }
+  componentWillUnmount() { if (this._net) this._net.stop(); }
+  setLang(l) { fhWriteLang(l); this.setState({ lang: l }); }
+
+  fmtDate(iso, locale) {
+    if (!iso) return '';
+    try { return new Date(iso + 'T00:00:00').toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' }); } catch (e) { return iso; }
+  }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const t = UI[lang];
+    const isES = lang === 'es';
+    const cats = this._cats || {};
+    const entries = this.state.entries || [];
+    const filter = this.state.filter;
+    const query = this.state.query;
+    const q = query.trim().toLowerCase();
+
+    const baseBtn = { padding: '6px 14px', borderRadius: '999px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '12px', letterSpacing: '0.08em', cursor: 'pointer', border: 'none', background: 'transparent', color: '#7c828e', transition: 'all .2s' };
+    const activeBtn = Object.assign({}, baseBtn, { background: 'rgba(220,225,232,0.13)', color: '#eef0f2' });
+
+    // category counts
+    const counts = { todos: entries.length };
+    Object.keys(cats).forEach((k) => { counts[k] = entries.filter((e) => e.category === k).length; });
+
+    const chipDefs = [{ key: 'todos', label: t.allLabel, rgb: '180,190,205' }].concat(
+      Object.keys(cats).map((k) => ({ key: k, label: cats[k][lang], rgb: cats[k].rgb }))
+    );
+    const filterChips = chipDefs.filter((c) => c.key === 'todos' || counts[c.key] > 0).map((c) => {
+      const on = filter === c.key;
+      return {
+        label: c.label, count: counts[c.key] || 0,
+        onSel: () => this.setState({ filter: c.key }),
+        style: { display: 'inline-flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap', padding: '8px 15px', borderRadius: '999px', cursor: 'pointer', fontFamily: "'Hanken Grotesk', sans-serif", fontSize: '13.5px', fontWeight: 500, transition: 'all .2s', color: on ? '#eef2f6' : '#9aa0ac', border: '1px solid ' + (on ? 'rgba(' + c.rgb + ',0.6)' : 'rgba(220,225,232,0.12)'), background: on ? 'rgba(' + c.rgb + ',0.14)' : 'rgba(13,18,28,0.4)', outline: 'none' },
+        countStyle: { fontFamily: "'IBM Plex Mono', monospace", fontSize: '10.5px', color: on ? 'rgb(' + c.rgb + ')' : '#6b7686' }
+      };
+    });
+
+    // filter + search
+    let list = entries.slice().sort((a, b) => (a.date < b.date ? 1 : -1));
+    if (filter !== 'todos') list = list.filter((e) => e.category === filter);
+    if (q) list = list.filter((e) => { const c = e[lang]; return (c.title + ' ' + c.issuer + ' ' + c.summary).toLowerCase().indexOf(q) !== -1; });
+
+    const detailHref = (e) => 'Convocatoria.dc.html?id=' + encodeURIComponent(e.id);
+    const estadoOf = (e) => e.fund ? e.fund.estado : null;
+
+    const tagStyleFor = (cat) => ({ fontFamily: "'IBM Plex Mono', monospace", fontSize: '10.5px', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '4px 9px', borderRadius: '5px', color: 'rgb(' + cats[cat].rgb + ')', background: 'rgba(' + cats[cat].rgb + ',0.12)' });
+    const estadoStyleFor = (est) => est ? { fontFamily: "'IBM Plex Mono', monospace", fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: '999px', color: 'rgb(' + ESTADO_COLOR[est] + ')', border: '1px solid rgba(' + ESTADO_COLOR[est] + ',0.4)' } : { display: 'none' };
+
+    const showFeatured = !q && filter === 'todos';
+    let featuredEntry = null;
+    if (showFeatured) { featuredEntry = list.find((e) => e.featured) || list[0]; }
+    const gridList = (showFeatured && featuredEntry) ? list.filter((e) => e.id !== featuredEntry.id) : list;
+
+    let featured = null;
+    if (featuredEntry) {
+      const c = featuredEntry[lang];
+      const est = estadoOf(featuredEntry);
+      const facts = featuredEntry.fund ? [
+        { k: t.facts.programa, v: featuredEntry.fund.programa },
+        { k: t.facts.deadline, v: this.fmtDate(featuredEntry.fund.deadline, t.locale) || t.noDeadline },
+        { k: t.facts.importe, v: featuredEntry.fund.importe },
+        { k: t.facts.trl, v: featuredEntry.fund.trl }
+      ] : [];
+      featured = {
+        href: detailHref(featuredEntry), title: c.title, issuer: c.issuer, summary: c.summary,
+        catLabel: cats[featuredEntry.category][lang], tagStyle: tagStyleFor(featuredEntry.category),
+        estadoLabel: est ? t.estados[est] : '', estadoStyle: estadoStyleFor(est),
+        dateLabel: this.fmtDate(featuredEntry.date, t.locale), facts: facts
+      };
+    }
+
+    const cards = gridList.map((e) => {
+      const c = e[lang];
+      const est = estadoOf(e);
+      return {
+        href: detailHref(e), title: c.title, issuer: c.issuer, summary: c.summary,
+        catLabel: cats[e.category][lang], tagStyle: tagStyleFor(e.category),
+        estadoLabel: est ? t.estados[est] : '', estadoStyle: estadoStyleFor(est),
+        barStyle: { position: 'absolute', display: 'none' },
+        deadlineLabel: e.fund ? (t.deadline + ': ' + (this.fmtDate(e.fund.deadline, t.locale) || t.noDeadline)) : this.fmtDate(e.date, t.locale),
+        trl: e.fund ? e.fund.trl : ''
+      };
+    });
+
+    return {
+      t: t, year: '2026', nav: fhNavItems(lang, 'actualidad'), bgCanvas: this.bgCanvas,
+      esBtnStyle: isES ? activeBtn : baseBtn, enBtnStyle: isES ? baseBtn : activeBtn,
+      setES: () => this.setLang('es'), setEN: () => this.setLang('en'),
+      filterChips: filterChips,
+      query: query, onSearch: (ev) => this.setState({ query: ev.target.value }),
+      showFeatured: !!featured, featured: featured || {},
+      cards: cards, hasResults: cards.length > 0, noResults: cards.length === 0 && !featured
+    };
+  }
+}
+</script>
+</body>
+</html>

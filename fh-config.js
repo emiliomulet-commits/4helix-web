@@ -7,4 +7,4 @@
 //
 // Mientras el valor sea '' el asistente muestra un aviso amable y no se rompe nada.
 
-window.FH_ASSISTANT_ENDPOINT = '';
+window.FH_ASSISTANT_ENDPOINT = 'https://chat-ai-worker.emilio-mulet.workers.dev/chat';

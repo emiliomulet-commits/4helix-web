@@ -8,7 +8,27 @@
 /* ── CSS ──────────────────────────────────────────────────── */
 const CSS = `
 .fh-chat-section{padding:60px 0;background:linear-gradient(180deg,rgba(8,13,28,1) 0%,rgba(13,20,40,1) 100%);position:relative;z-index:1}
-.fh-chat-section .wrap{max-width:860px}
+.fh-chat-section .wrap{max-width:1160px;display:flex;flex-direction:row;gap:24px;align-items:flex-start}
+.fh-chat-col{flex:1;min-width:0}
+.fh-nav-panel{width:300px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;position:sticky;top:80px;max-height:calc(100vh - 120px);overflow-y:auto;scrollbar-width:none}
+.fh-nav-panel::-webkit-scrollbar{display:none}
+.fh-nav-panel-title{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);padding:4px 4px 10px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:2px}
+.fh-nav-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;display:flex;align-items:flex-start;gap:11px;text-decoration:none;color:inherit;transition:background .2s,border-color .2s,transform .15s;cursor:pointer}
+.fh-nav-card:hover{background:rgba(255,255,255,.07);transform:translateX(3px)}
+.fh-nav-card-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.fh-nav-card-body{flex:1;min-width:0}
+.fh-nav-card-name{font-size:12px;font-weight:600;color:var(--on-dark);margin-bottom:2px;line-height:1.35}
+.fh-nav-card-tag{font-size:11px;color:var(--on-dark-mut);line-height:1.4}
+.fh-nav-card-arrow{width:16px;height:16px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.2);font-size:12px;flex-shrink:0;margin-top:4px;transition:color .2s,transform .2s}
+.fh-nav-card:hover .fh-nav-card-arrow{color:rgba(255,255,255,.65);transform:translateX(3px)}
+.fh-nav-card[data-accent="teal"]{border-color:rgba(52,214,198,.18)}.fh-nav-card[data-accent="teal"]:hover{border-color:rgba(52,214,198,.45);background:rgba(52,214,198,.06)}
+.fh-nav-card[data-accent="gold"]{border-color:rgba(240,180,41,.18)}.fh-nav-card[data-accent="gold"]:hover{border-color:rgba(240,180,41,.45);background:rgba(240,180,41,.06)}
+.fh-nav-card[data-accent="lavender"]{border-color:rgba(142,155,255,.18)}.fh-nav-card[data-accent="lavender"]:hover{border-color:rgba(142,155,255,.45);background:rgba(142,155,255,.06)}
+.fh-nav-card[data-accent="salmon"]{border-color:rgba(244,126,111,.18)}.fh-nav-card[data-accent="salmon"]:hover{border-color:rgba(244,126,111,.45);background:rgba(244,126,111,.06)}
+.fh-nav-card-icon[data-accent="teal"]{background:rgba(52,214,198,.12)}.fh-nav-card-icon[data-accent="gold"]{background:rgba(240,180,41,.12)}.fh-nav-card-icon[data-accent="lavender"]{background:rgba(142,155,255,.12)}.fh-nav-card-icon[data-accent="salmon"]{background:rgba(244,126,111,.12)}
+.fh-nav-badge{display:inline-block;font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:4px;margin-bottom:5px;font-weight:700}
+.fh-nav-badge[data-accent="teal"]{background:rgba(52,214,198,.15);color:#34D6C6}.fh-nav-badge[data-accent="gold"]{background:rgba(240,180,41,.15);color:#F0B429}.fh-nav-badge[data-accent="lavender"]{background:rgba(142,155,255,.15);color:#8E9BFF}.fh-nav-badge[data-accent="salmon"]{background:rgba(244,126,111,.15);color:#F47E6F}
+@media(max-width:900px){.fh-chat-section .wrap{flex-direction:column}.fh-nav-panel{width:100%;position:static;max-height:none}}
 .fh-chat-header{margin-bottom:20px}
 .fh-chat-title-row{display:flex;align-items:flex-start;gap:16px}
 .fh-chat-logo-icon{width:44px;height:44px;background:rgba(52,214,198,.1);border:1px solid rgba(52,214,198,.25);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:4px}
@@ -68,7 +88,113 @@ const SITE_MAP = {
   casos:    { url: 'Casos.dc.html',     label_es: 'Casos de exito europeos',    label_en: 'European success cases',  keys: ['caso','exito','biontech','spin-off europ','referente','ecosistema'] },
   gateway:  { url: 'Gateway.html',      label_es: 'Gateway corporativo',         label_en: 'Corporate Gateway',       keys: ['gateway','reto corporat','corporaci','puerta directa'] },
   home:     { url: '4Helix Ventures.dc.html', label_es: 'Inicio 4Helix Ventures', label_en: 'Home 4Helix Ventures', keys: ['inicio','home','presentacion','quienes somos'] }
+}
+
+/* ── Section Metadata for Nav Panel ───────────────────────────────── */
+const SECTION_META = {
+  modelo:    { icon: '⬡', accent: 'teal',     tag_es: '4 helices: Ciencia, Capital, Industria, Gobierno', tag_en: '4 helices: Science, Capital, Industry, Gov' },
+  metodo:    { icon: '⬆', accent: 'teal',     tag_es: 'Escala TRL 1→9 — del laboratorio al mercado',     tag_en: 'TRL scale 1→9 — from lab to market' },
+  capital:   { icon: '◈', accent: 'gold',     tag_es: 'De-risking, inversores y fondos deeptech',         tag_en: 'De-risking, investors and deep-tech funds' },
+  ciencia:   { icon: '✦', accent: 'teal',     tag_es: 'Spin-offs, licencias, patentes, transferencia IP', tag_en: 'Spin-offs, licenses, patents, IP transfer' },
+  industria: { icon: '◉', accent: 'lavender', tag_es: 'Co-desarrollo e integracion corporativa',          tag_en: 'Co-development and corporate integration' },
+  eje:       { icon: '✕', accent: 'salmon',   tag_es: '4Helix como orquestador del ecosistema',           tag_en: '4Helix as ecosystem orchestrator' },
+  actualidad:{ icon: '◎', accent: 'gold',     tag_es: 'CDTI, Neotec, InvestEU, Pathfinder...',           tag_en: 'CDTI, Neotec, InvestEU, Pathfinder...' },
+  topics:    { icon: '▣', accent: 'lavender', tag_es: 'Topics abiertos de Horizon Europe',               tag_en: 'Open Horizon Europe topics by cluster' },
+  casos:     { icon: '★', accent: 'gold',     tag_es: 'Referentes europeos: ciencia al mercado',         tag_en: 'European references: science to market' },
+  gateway:   { icon: '→', accent: 'salmon',   tag_es: 'Acceso corporativo — retos y colaboracion',       tag_en: 'Corporate access — challenges & collaboration' },
+  home:      { icon: '◈', accent: 'teal',     tag_es: 'Inicio 4Helix Ventures',                         tag_en: 'Home 4Helix Ventures' }
 };
+
+/* ── Build Nav Panel DOM (once per initChat) ────────────────────── */
+function buildNavPanel(section) {
+  const wrap = section.querySelector('.wrap');
+  if (!wrap || wrap.dataset.navBuilt) return;
+  wrap.dataset.navBuilt = '1';
+  const col = document.createElement('div');
+  col.className = 'fh-chat-col';
+  while (wrap.firstChild) col.appendChild(wrap.firstChild);
+  wrap.appendChild(col);
+  const panel = document.createElement('div');
+  panel.className = 'fh-nav-panel';
+  const titleEl = document.createElement('div');
+  titleEl.className = 'fh-nav-panel-title';
+  titleEl.textContent = '\u2014 Explorar la web';
+  panel.appendChild(titleEl);
+  const lang = document.documentElement.lang || 'es';
+  const isEN = lang.toLowerCase().startsWith('en');
+  const defaults = ['metodo','modelo','capital','ciencia','industria','actualidad'];
+  defaults.forEach(key => panel.appendChild(makeNavCard(key, isEN)));
+  wrap.appendChild(panel);
+}
+
+/* ── Create a nav card element ──────────────────────────────────── */
+function makeNavCard(key, isEN) {
+  const sm = SITE_MAP[key]; if (!sm) return document.createTextNode('');
+  const meta = SECTION_META[key] || { icon: '→', accent: 'teal', tag_es: '', tag_en: '' };
+  const card = document.createElement('a');
+  card.className = 'fh-nav-card';
+  card.href = sm.url;
+  card.setAttribute('data-accent', meta.accent);
+  const iconEl = document.createElement('div');
+  iconEl.className = 'fh-nav-card-icon';
+  iconEl.setAttribute('data-accent', meta.accent);
+  iconEl.textContent = meta.icon;
+  const body = document.createElement('div');
+  body.className = 'fh-nav-card-body';
+  const badge = document.createElement('span');
+  badge.className = 'fh-nav-badge';
+  badge.setAttribute('data-accent', meta.accent);
+  badge.textContent = meta.accent.toUpperCase();
+  const name = document.createElement('div');
+  name.className = 'fh-nav-card-name';
+  name.textContent = isEN ? sm.label_en : sm.label_es;
+  const tag = document.createElement('div');
+  tag.className = 'fh-nav-card-tag';
+  tag.textContent = isEN ? meta.tag_en : meta.tag_es;
+  body.appendChild(badge); body.appendChild(name); body.appendChild(tag);
+  const arrow = document.createElement('div');
+  arrow.className = 'fh-nav-card-arrow';
+  arrow.textContent = '\u203a';
+  card.appendChild(iconEl); card.appendChild(body); card.appendChild(arrow);
+  return card;
+}
+
+/* ── Update Nav Panel after bot reply ───────────────────────────── */
+function updateNavPanel(reply, section) {
+  const panel = section.querySelector('.fh-nav-panel');
+  if (!panel) return;
+  const lang = document.documentElement.lang || 'es';
+  const isEN = lang.toLowerCase().startsWith('en');
+  const lower = reply.toLowerCase();
+  const scores = {};
+  Object.keys(SITE_MAP).forEach(key => {
+    if (key === 'home') return;
+    let score = 0;
+    SITE_MAP[key].keys.forEach(kw => { if (lower.includes(kw)) score++; });
+    scores[key] = score;
+  });
+  let ranked = Object.keys(scores).filter(k => scores[k] > 0)
+    .sort((a,b) => scores[b]-scores[a]).slice(0,5);
+  if (ranked.length === 0) ranked = ['metodo','modelo','capital','ciencia','actualidad'];
+  const titleEl = panel.querySelector('.fh-nav-panel-title');
+  panel.innerHTML = '';
+  const t = document.createElement('div');
+  t.className = 'fh-nav-panel-title';
+  t.textContent = '\u2014 Secciones relacionadas';
+  panel.appendChild(t);
+  let delay = 0;
+  ranked.forEach(key => {
+    const card = makeNavCard(key, isEN);
+    card.style.cssText = 'opacity:0;transform:translateX(14px)';
+    panel.appendChild(card);
+    const d = delay;
+    setTimeout(() => {
+      card.style.cssText = 'transition:opacity .3s ease '+d+'ms, transform .3s ease '+d+'ms;opacity:1;transform:translateX(0)';
+    }, 50);
+    delay += 60;
+  });
+}
+;
 
 function detectCrossLinks(text, currentPage) {
   const t = (text || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
@@ -114,6 +240,7 @@ function initChat(section) {
     btn.addEventListener('click', () => setTimeout(syncLang, 80));
   });
   syncLang();
+  buildNavPanel(section);
 
   /* ── Custom Scrollbar ─────────────────────────────────── */
   (function buildScrollbar() {
@@ -230,7 +357,8 @@ function initChat(section) {
     }
 
     typing.remove();
-    addMsg(reply, 'bot');
+    addMsg(reply, 'bot')
+    updateNavPanel(reply, section);;
     history.push({ role: 'assistant', content: reply });
 
     const crossLinks = detectCrossLinks(reply + ' ' + text, pageFile);

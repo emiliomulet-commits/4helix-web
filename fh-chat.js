@@ -17,9 +17,15 @@ const CSS = `
 .fh-chat-badge{margin-left:auto;flex-shrink:0;background:rgba(52,214,198,.12);border:1px solid rgba(52,214,198,.3);color:var(--science);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px;white-space:nowrap;display:flex;align-items:center;gap:6px}
 .fh-chat-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--science);animation:fhChatPulse 1.8s ease-in-out infinite}
 @keyframes fhChatPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-.fh-chat-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden}
+.fh-chat-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;position:relative}
 .fh-chat-messages{min-height:160px;max-height:360px;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
-.fh-chat-messages::-webkit-scrollbar{width:8px}.fh-chat-messages::-webkit-scrollbar-track{background:rgba(6,19,34,.8);border-radius:4px}.fh-chat-messages::-webkit-scrollbar-thumb{background:linear-gradient(to bottom,#34D6C6 0%,#a8d8a8 40%,#d4d888 70%,#F0B429 100%);border-radius:4px;border:1px solid rgba(255,255,255,.15)}.fh-chat-messages::-webkit-scrollbar-thumb:hover{background:linear-gradient(to bottom,#3ee8d7 0%,#b8e8b8 40%,#e4e898 70%,#f5c43e 100%)}
+.fh-chat-messages::-webkit-scrollbar{display:none}.fh-chat-messages{-ms-overflow-style:none;scrollbar-width:none}
+.fh-sb-track{position:absolute;right:6px;top:12px;bottom:12px;width:6px;border-radius:3px;background:linear-gradient(to bottom,#34D6C6 0%,#a8d8a8 40%,#d4d888 70%,#F0B429 100%);opacity:.25;pointer-events:none;z-index:10}
+.fh-sb-thumb{position:absolute;right:6px;width:6px;border-radius:3px;background:#fff;opacity:.85;cursor:grab;z-index:11;min-height:28px;transition:opacity .15s,width .15s,right .15s;box-shadow:0 0 6px rgba(52,214,198,.6)}
+.fh-sb-thumb:hover,.fh-sb-thumb.dragging{opacity:1;width:8px;right:5px;box-shadow:0 0 10px rgba(52,214,198,.9)}
+.fh-sb-dot{position:absolute;right:4px;width:10px;height:10px;border-radius:50%;z-index:12;pointer-events:none;border:1.5px solid rgba(255,255,255,.4)}
+.fh-sb-dot-top{top:8px;background:#34D6C6;box-shadow:0 0 5px rgba(52,214,198,.8)}
+.fh-sb-dot-bot{bottom:8px;background:#F0B429;box-shadow:0 0 5px rgba(240,180,41,.8)}
 .fh-msg{max-width:78%;padding:10px 14px;border-radius:12px;font-size:14px;line-height:1.6;word-break:break-word}
 .fh-msg.bot{align-self:flex-start;background:rgba(52,214,198,.1);border:1px solid rgba(52,214,198,.18);color:var(--on-dark)}
 .fh-msg.user{align-self:flex-end;background:rgba(52,214,198,.22);border:1px solid rgba(52,214,198,.35);color:var(--on-dark)}
@@ -107,6 +113,72 @@ function initChat(section) {
     btn.addEventListener('click', () => setTimeout(syncLang, 80));
   });
   syncLang();
+
+  /* ── Custom Scrollbar ─────────────────────────────────── */
+  (function buildScrollbar() {
+    const box = section.querySelector('.fh-chat-box');
+    if (!box) return;
+    // Build DOM
+    const track = document.createElement('div'); track.className = 'fh-sb-track';
+    const thumb = document.createElement('div'); thumb.className = 'fh-sb-thumb';
+    const dotTop = document.createElement('div'); dotTop.className = 'fh-sb-dot fh-sb-dot-top';
+    const dotBot = document.createElement('div'); dotBot.className = 'fh-sb-dot fh-sb-dot-bot';
+    box.appendChild(track); box.appendChild(thumb); box.appendChild(dotTop); box.appendChild(dotBot);
+
+    function updateThumb() {
+      const scrollH = msgArea.scrollHeight - msgArea.clientHeight;
+      if (scrollH <= 0) { thumb.style.display = 'none'; return; }
+      thumb.style.display = 'block';
+      const trackH = track.offsetHeight;
+      const ratio = msgArea.clientHeight / msgArea.scrollHeight;
+      const thumbH = Math.max(28, trackH * ratio);
+      const scrollRatio = msgArea.scrollTop / scrollH;
+      const maxTop = trackH - thumbH;
+      const topPx = scrollRatio * maxTop;
+      thumb.style.height = thumbH + 'px';
+      thumb.style.top = (track.offsetTop + topPx) + 'px';
+    }
+
+    msgArea.addEventListener('scroll', updateThumb);
+    const ro = new ResizeObserver(updateThumb);
+    ro.observe(msgArea);
+    const mo = new MutationObserver(updateThumb);
+    mo.observe(msgArea, { childList: true, subtree: true });
+
+    // Drag to scroll
+    let dragStartY = 0, dragStartScroll = 0;
+    thumb.addEventListener('mousedown', function(e) {
+      e.preventDefault();
+      dragStartY = e.clientY;
+      dragStartScroll = msgArea.scrollTop;
+      thumb.classList.add('dragging');
+      function onMove(ev) {
+        const dy = ev.clientY - dragStartY;
+        const trackH = track.offsetHeight;
+        const thumbH = thumb.offsetHeight;
+        const maxThumbTop = trackH - thumbH;
+        const scrollH = msgArea.scrollHeight - msgArea.clientHeight;
+        msgArea.scrollTop = dragStartScroll + (dy / maxThumbTop) * scrollH;
+      }
+      function onUp() {
+        thumb.classList.remove('dragging');
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+
+    // Click on track to jump
+    track.addEventListener('click', function(e) {
+      const rect = track.getBoundingClientRect();
+      const ratio = (e.clientY - rect.top) / rect.height;
+      msgArea.scrollTop = ratio * (msgArea.scrollHeight - msgArea.clientHeight);
+    });
+
+    updateThumb();
+  })();
+
 
   function addMsg(text, cls) {
     const d = document.createElement('div');

@@ -384,6 +384,25 @@ function initChat(section) {
     return d;
   }
 
+/* ── Typewriter effect for bot replies ─────────────────────────── */
+function typewriterMsg(text, msgs) {
+  const d = document.createElement('div');
+  d.className = 'fh-msg bot';
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+  const words = text.split(' ');
+  let idx = 0;
+  const SPEED = 28; // ms per word
+  function tick() {
+    if (idx >= words.length) return;
+    d.textContent += (idx === 0 ? '' : ' ') + words[idx];
+    idx++;
+    msgs.scrollTop = msgs.scrollHeight;
+    setTimeout(tick, SPEED);
+  }
+  tick();
+}
+
   async function sendMsg(text) {
     if (!text.trim()) return;
     input.value = '';
@@ -424,7 +443,7 @@ function initChat(section) {
     }
 
     typing.remove();
-    addMsg(reply, 'bot')
+    typewriterMsg(reply, msgs)
     updateNavPanel(reply, section);;
     history.push({ role: 'assistant', content: reply });
 

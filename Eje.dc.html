@@ -14,6 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="4helix-favicon.svg">
 <script src="fh-config.js"></script>
 <script src="fh-assistant.js"></script>
+<script src="fh-chat.js"></script>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -82,7 +83,43 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  
+  <!-- CHAT EJE -->
+  <section class="fh-chat-section" data-system-prompt="Eres el asistente de 4Helix Ventures especializado en el rol del Eje orquestador (Helice 4). 4Helix es el eje que conecta y traduce entre la Ciencia, la Industria y el Capital. Explica como 4Helix alinea incentivos, traduce el paper cientifico en plan de empresa, gestiona la propiedad intelectual, y orquesta el proceso completo del laboratorio al mercado. Responde sobre la propuesta de valor diferencial de 4Helix como intermediario.">
+    <div class="wrap">
+      <div class="fh-chat-header">
+        <div class="fh-chat-title-row">
+          <div class="fh-chat-logo-icon"><svg width="28" height="28" viewBox="0 0 40 40"><path d="M8 6 C8 18,32 22,32 34" fill="none" stroke="#34D6C6" stroke-width="2.6" stroke-linecap="round"/><path d="M32 6 C32 18,8 22,8 34" fill="none" stroke="#F0B429" stroke-width="2.6" stroke-linecap="round"/><path d="M8 6 C20 12,20 28,8 34" fill="none" stroke="#8E9BFF" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><path d="M32 6 C20 12,20 28,32 34" fill="none" stroke="#F47E6F" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><circle cx="20" cy="20" r="2.6" fill="#eef2f6"/></svg></div>
+          <div>
+            <h2 class="fh-chat-heading" data-es="Asistente — El Eje 4Helix" data-en="Assistant — The 4Helix Axis">Asistente — El Eje 4Helix</h2>
+            <p class="fh-chat-sub" data-es="Entiende como 4Helix conecta y traduce entre ciencia, industria y capital." data-en="Understand how 4Helix connects and translates between science, industry and capital.">Entiende como 4Helix conecta y traduce entre ciencia, industria y capital.</p>
+          </div>
+          <div class="fh-chat-badge" data-es="IA ACTIVA" data-en="AI ACTIVE">IA ACTIVA</div>
+        </div>
+      </div>
+      <div class="fh-chat-box">
+        <div class="fh-chat-messages">
+          <div class="fh-msg bot" data-es="Hola. Soy el asistente del Eje 4Helix. Puedo explicarte por que las tres helices (ciencia, industria, capital) no se conectan solas y cual es el rol especifico de 4Helix como orquestador y traductor entre ellas." data-en="Hi! I am the 4Helix Axis assistant. I can explain why the three helices do not connect on their own and what is 4Helix's specific role as orchestrator and translator between them.">Hola. Soy el asistente del Eje 4Helix. Puedo explicarte por que las tres helices no se conectan solas y cual es el rol especifico de 4Helix como orquestador.</div>
+        </div>
+        <div class="fh-chat-chips">
+          <button class="fh-chip" data-q-es="Que hace exactamente 4Helix como eje orquestador?" data-q-en="What exactly does 4Helix do as the orchestrator axis?">Que hace 4Helix</button>
+          <button class="fh-chip" data-q-es="Por que las tres helices no se conectan solas sin un eje?" data-q-en="Why don't the three helices connect on their own without an axis?">Por que hace falta el eje</button>
+          <button class="fh-chip" data-q-es="Como traduce 4Helix la ciencia a un caso de negocio?" data-q-en="How does 4Helix translate science into a business case?">Traducir ciencia a negocio</button>
+          <button class="fh-chip" data-q-es="Como alinea 4Helix los incentivos de las tres helices?" data-q-en="How does 4Helix align the incentives of the three helices?">Alineacion de incentivos</button>
+          <button class="fh-chip" data-q-es="Que diferencia a 4Helix de una aceleradora o un fondo convencional?" data-q-en="What differentiates 4Helix from a conventional accelerator or fund?">4Helix vs aceleradora</button>
+          <button class="fh-chip" data-q-es="Cuales son los casos de exito que ha generado 4Helix?" data-q-en="What are the success cases that 4Helix has generated?">Casos de exito</button>
+        </div>
+        <div class="fh-chat-input-row">
+          <textarea class="fh-chat-input" rows="1" placeholder="Pregunta sobre el rol de 4Helix..."></textarea>
+          <button class="fh-chat-send" aria-label="Enviar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D1428" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        </div>
+        <p class="fh-chat-disclaimer" data-es="Informacion orientativa." data-en="Informational only.">Informacion orientativa.</p>
+      </div>
+    </div>
+  </section>
+  <!-- /CHAT EJE -->
+
+<!-- HERO -->
   <header style="max-width:1180px; margin:0 auto; padding:clamp(40px,7vh,72px) clamp(24px,5vw,64px) clamp(8px,2vh,20px);">
     <div data-bg-clear style="display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:30px;">
       <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#5d748c; margin-right:6px;">{{ t.position }}</span>

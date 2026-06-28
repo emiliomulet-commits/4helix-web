@@ -10,8 +10,9 @@ const CSS = `
 .fh-chat-section{padding:60px 0;background:linear-gradient(180deg,rgba(8,13,28,1) 0%,rgba(13,20,40,1) 100%);position:relative;z-index:1}
 .fh-chat-section .wrap{max-width:1160px;display:flex;flex-direction:row;gap:24px;align-items:flex-start}
 .fh-chat-col{flex:1;min-width:0}
-.fh-nav-panel{width:300px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;position:sticky;top:80px;max-height:calc(100vh - 120px);overflow-y:auto;scrollbar-width:none}
-.fh-nav-panel::-webkit-scrollbar{display:none}
+.fh-nav-panel{width:300px;flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:80px;max-height:calc(100vh - 120px);overflow:hidden}
+.fh-nav-panel-inner{flex:1;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;gap:10px;padding-right:14px}
+.fh-nav-panel-inner::-webkit-scrollbar{display:none}
 .fh-nav-panel-title{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);padding:4px 4px 10px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:2px}
 .fh-nav-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;display:flex;align-items:flex-start;gap:11px;text-decoration:none;color:inherit;transition:background .2s,border-color .2s,transform .15s;cursor:pointer}
 .fh-nav-card:hover{background:rgba(255,255,255,.07);transform:translateX(3px)}
@@ -65,7 +66,11 @@ const CSS = `
 .fh-chat-disclaimer{padding:8px 24px 14px;font-size:11px;color:var(--on-dark-mut);opacity:.6}
 .fh-chat-cross-link{margin-top:8px;padding:8px 12px;background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.2);border-radius:8px;font-size:12px;color:rgba(240,180,41,.85)}
 .fh-chat-cross-link a{color:rgba(240,180,41,.9);text-decoration:underline}
-`;
+
+.fh-sb-nav-track{position:absolute;right:4px;top:10px;bottom:10px;width:6px;border-radius:3px;background:linear-gradient(to bottom,#34D6C6 0%,#a8d8a8 40%,#d4d888 70%,#F0B429 100%);opacity:.25;pointer-events:none;z-index:10}
+.fh-sb-nav-thumb{position:absolute;right:4px;width:6px;border-radius:3px;background:#fff;opacity:.85;cursor:grab;z-index:11;min-height:28px;transition:opacity .15s,width .15s,right .15s;box-shadow:0 0 6px rgba(52,214,198,.6)}
+.fh-sb-nav-thumb:hover,.fh-sb-nav-thumb.dragging{opacity:1;width:8px;right:3px;box-shadow:0 0 10px rgba(52,214,198,.9)}
+.fh-sb-nav-dot{position:absolute;right:2px;width:10px;height:10px;border-radius:50%;z-index:12;pointer-events:none;border:1.5px solid rgba(255,255,255,.3)}`;
 
 /* ── Inject CSS once ─────────────────────────────────────── */
 if (!document.getElementById('fh-chat-css')) {
@@ -120,11 +125,15 @@ function buildNavPanel(section) {
   titleEl.className = 'fh-nav-panel-title';
   titleEl.textContent = '\u2014 Explorar la web';
   panel.appendChild(titleEl);
+  const inner = document.createElement('div');
+  inner.className = 'fh-nav-panel-inner';
   const lang = document.documentElement.lang || 'es';
   const isEN = lang.toLowerCase().startsWith('en');
   const defaults = ['metodo','modelo','capital','ciencia','industria','actualidad'];
-  defaults.forEach(key => panel.appendChild(makeNavCard(key, isEN)));
+  defaults.forEach(key => inner.appendChild(makeNavCard(key, isEN)));
+  panel.appendChild(inner);
   wrap.appendChild(panel);
+  buildNavScrollbar(panel, inner);
 }
 
 /* ── Create a nav card element ──────────────────────────────────── */
@@ -177,21 +186,79 @@ function updateNavPanel(reply, section) {
     .sort((a,b) => scores[b]-scores[a]).slice(0,5);
   if (ranked.length === 0) ranked = ['metodo','modelo','capital','ciencia','actualidad'];
   const titleEl = panel.querySelector('.fh-nav-panel-title');
-  panel.innerHTML = '';
-  const t = document.createElement('div');
-  t.className = 'fh-nav-panel-title';
-  t.textContent = '\u2014 Secciones relacionadas';
-  panel.appendChild(t);
+  if (titleEl) titleEl.textContent = '\u2014 Secciones relacionadas';
+  let inner = panel.querySelector('.fh-nav-panel-inner');
+  if (!inner) {
+    inner = document.createElement('div');
+    inner.className = 'fh-nav-panel-inner';
+    panel.appendChild(inner);
+  }
+  inner.innerHTML = '';
   let delay = 0;
   ranked.forEach(key => {
     const card = makeNavCard(key, isEN);
     card.style.cssText = 'opacity:0;transform:translateX(14px)';
-    panel.appendChild(card);
+    inner.appendChild(card);
     const d = delay;
     setTimeout(() => {
       card.style.cssText = 'transition:opacity .3s ease '+d+'ms, transform .3s ease '+d+'ms;opacity:1;transform:translateX(0)';
     }, 50);
     delay += 60;
+  });
+  buildNavScrollbar(panel, inner);
+}
+
+/* ── Custom Scrollbar for Nav Panel ─────────────────────────────── */
+function buildNavScrollbar(panel, inner) {
+  panel.querySelectorAll('.fh-sb-nav-track,.fh-sb-nav-thumb,.fh-sb-nav-dot').forEach(el => el.remove());
+  const track = document.createElement('div');
+  track.className = 'fh-sb-nav-track';
+  const thumb = document.createElement('div');
+  thumb.className = 'fh-sb-nav-thumb';
+  const dotTop = document.createElement('div');
+  dotTop.className = 'fh-sb-nav-dot';
+  dotTop.style.cssText = 'top:5px;background:#34D6C6;box-shadow:0 0 6px rgba(52,214,198,.7)';
+  const dotBot = document.createElement('div');
+  dotBot.className = 'fh-sb-nav-dot';
+  dotBot.style.cssText = 'bottom:5px;background:#F0B429;box-shadow:0 0 6px rgba(240,180,41,.7)';
+  panel.appendChild(track);
+  panel.appendChild(thumb);
+  panel.appendChild(dotTop);
+  panel.appendChild(dotBot);
+  function updateThumb() {
+    const scrollH = inner.scrollHeight;
+    const clientH = inner.clientHeight;
+    const trackH = track.offsetHeight;
+    if (scrollH <= clientH + 2) { thumb.style.display = 'none'; track.style.opacity = '.12'; return; }
+    thumb.style.display = '';
+    track.style.opacity = '.25';
+    const ratio = clientH / scrollH;
+    const thumbH = Math.max(28, trackH * ratio);
+    const scrollRatio = inner.scrollTop / (scrollH - clientH);
+    const thumbTop = track.offsetTop + scrollRatio * (trackH - thumbH);
+    thumb.style.height = thumbH + 'px';
+    thumb.style.top = thumbTop + 'px';
+  }
+  inner.addEventListener('scroll', updateThumb);
+  new ResizeObserver(updateThumb).observe(inner);
+  new MutationObserver(updateThumb).observe(inner, { childList: true, subtree: true });
+  setTimeout(updateThumb, 80);
+  let dragging = false, startY = 0, startST = 0;
+  thumb.addEventListener('mousedown', e => {
+    dragging = true; startY = e.clientY; startST = inner.scrollTop;
+    thumb.classList.add('dragging'); e.preventDefault();
+  });
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const trackH = track.offsetHeight;
+    const ratio = (inner.scrollHeight - inner.clientHeight) / (trackH - thumb.offsetHeight);
+    inner.scrollTop = startST + (e.clientY - startY) * ratio;
+  });
+  document.addEventListener('mouseup', () => { dragging = false; thumb.classList.remove('dragging'); });
+  track.addEventListener('click', e => {
+    if (e.target === thumb) return;
+    const rect = track.getBoundingClientRect();
+    inner.scrollTop = ((e.clientY - rect.top) / rect.height) * (inner.scrollHeight - inner.clientHeight);
   });
 }
 ;

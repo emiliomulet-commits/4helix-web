@@ -84,7 +84,22 @@
   </nav>
 
   
-  <!-- CHAT INDUSTRIA -->
+  <!-- HERO -->
+  <header style="max-width:1180px; margin:0 auto; padding:clamp(40px,7vh,72px) clamp(24px,5vw,64px) clamp(8px,2vh,20px);">
+    <div data-bg-clear style="display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:30px;">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#5d748c; margin-right:6px;">{{ t.position }}</span>
+      <sc-for list="{{ helixChips }}" as="c" hint-placeholder-count="4">
+        <a href="{{ c.href }}" style="{{ c.style }}">{{ c.label }}</a>
+      </sc-for>
+      <a href="Modelo.dc.html" style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.04em; color:#8aa0b8; margin-left:6px;" style-hover="color:#cfd6df;">{{ t.seeModel }} &#8594;</a>
+    </div>
+
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.26em; text-transform:uppercase; color:#e6c074; margin-bottom:20px;">{{ t.eyebrow }}</div>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.02em; line-height:1.05; font-size:clamp(30px,4.2vw,54px); margin:0; max-width:18ch; color:#eef2f6;">{{ t.title }}</h1>
+    <p style="font-size:clamp(16px,1.4vw,18px); line-height:1.62; color:#9aa0ac; max-width:50ch; margin:22px 0 0; font-weight:300;">{{ t.intro }}</p>
+  </header>
+
+<!-- CHAT INDUSTRIA -->
   <section class="fh-chat-section" data-system-prompt="Eres el asistente de 4Helix Ventures especializado para empresas e industria (Helice Industria). Ayuda a directores de innovacion y empresas a entender como colaborar con tecnologia de frontera. Explica las tres vias de colaboracion: co-desarrollo, licencia e integracion (M&A/joint venture). Orienta sobre que sectores tienen mas retos activos, como acceder a tecnologia cientifica y que ventajas competitivas aporta.">
     <div class="wrap">
       <div class="fh-chat-header">
@@ -118,21 +133,6 @@
     </div>
   </section>
   <!-- /CHAT INDUSTRIA -->
-
-<!-- HERO -->
-  <header style="max-width:1180px; margin:0 auto; padding:clamp(40px,7vh,72px) clamp(24px,5vw,64px) clamp(8px,2vh,20px);">
-    <div data-bg-clear style="display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:30px;">
-      <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#5d748c; margin-right:6px;">{{ t.position }}</span>
-      <sc-for list="{{ helixChips }}" as="c" hint-placeholder-count="4">
-        <a href="{{ c.href }}" style="{{ c.style }}">{{ c.label }}</a>
-      </sc-for>
-      <a href="Modelo.dc.html" style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.04em; color:#8aa0b8; margin-left:6px;" style-hover="color:#cfd6df;">{{ t.seeModel }} &#8594;</a>
-    </div>
-
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.26em; text-transform:uppercase; color:#e6c074; margin-bottom:20px;">{{ t.eyebrow }}</div>
-    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.02em; line-height:1.05; font-size:clamp(30px,4.2vw,54px); margin:0; max-width:18ch; color:#eef2f6;">{{ t.title }}</h1>
-    <p style="font-size:clamp(16px,1.4vw,18px); line-height:1.62; color:#9aa0ac; max-width:50ch; margin:22px 0 0; font-weight:300;">{{ t.intro }}</p>
-  </header>
 
   <!-- GIVE / GAIN -->
   <section style="max-width:1180px; margin:0 auto; padding:clamp(28px,4vh,48px) clamp(24px,5vw,64px) 0;">

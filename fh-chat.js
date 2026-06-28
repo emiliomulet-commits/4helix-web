@@ -193,6 +193,14 @@ function initChat(section) {
 function autoInit() {
   document.querySelectorAll('.fh-chat-section').forEach(initChat);
 }
+
+/* Use MutationObserver so dc.html deferred renders are caught */
+const _obs = new MutationObserver(() => {
+  document.querySelectorAll('.fh-chat-section:not([data-fh-chat-init])').forEach(initChat);
+});
+_obs.observe(document.body, { childList: true, subtree: true });
+
+/* Also run on DOMContentLoaded and immediately */
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', autoInit);
 } else {

@@ -14,6 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="4helix-favicon.svg">
 <script src="fh-config.js"></script>
 <script src="fh-assistant.js"></script>
+<script src="fh-chat.js"></script>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -73,7 +74,43 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  
+  <!-- CHAT ACTUALIDAD -->
+  <section class="fh-chat-section" data-system-prompt="Eres el asistente de 4Helix Ventures especializado en convocatorias de financiacion europea y nacional. Esta es la seccion de Actualidad (Fondos UE). Conoces los programas actuales: EIC Accelerator (hasta 17.5M, TRL 5-8, cierre oct 2026), EIC Pathfinder (TRL 1-4, cierre sept 2026), EIC Transition (TRL 3-6, cierre sept 2026), InvestEU (TRL 8-9, continua), CDTI Neotec (TRL 4-7, cerrada), EU Innovation Fund (TRL 7-9, cierre nov 2026). Orienta sobre elegibilidad, montos y plazos. Para detalles de una convocatoria especifica, dirige a la pagina Convocatoria.">
+    <div class="wrap">
+      <div class="fh-chat-header">
+        <div class="fh-chat-title-row">
+          <div class="fh-chat-logo-icon"><svg width="28" height="28" viewBox="0 0 40 40"><path d="M8 6 C8 18,32 22,32 34" fill="none" stroke="#34D6C6" stroke-width="2.6" stroke-linecap="round"/><path d="M32 6 C32 18,8 22,8 34" fill="none" stroke="#F0B429" stroke-width="2.6" stroke-linecap="round"/><path d="M8 6 C20 12,20 28,8 34" fill="none" stroke="#8E9BFF" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><path d="M32 6 C20 12,20 28,32 34" fill="none" stroke="#F47E6F" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><circle cx="20" cy="20" r="2.6" fill="#eef2f6"/></svg></div>
+          <div>
+            <h2 class="fh-chat-heading" data-es="Asistente — Fondos UE y Convocatorias" data-en="Assistant — EU Funds and Calls">Asistente — Fondos UE y Convocatorias</h2>
+            <p class="fh-chat-sub" data-es="Encuentra la financiacion europea o nacional que encaja con tu etapa y tecnologia." data-en="Find the European or national funding that fits your stage and technology.">Encuentra la financiacion europea o nacional que encaja con tu etapa y tecnologia.</p>
+          </div>
+          <div class="fh-chat-badge" data-es="IA ACTIVA" data-en="AI ACTIVE">IA ACTIVA</div>
+        </div>
+      </div>
+      <div class="fh-chat-box">
+        <div class="fh-chat-messages">
+          <div class="fh-msg bot" data-es="Hola. Soy tu asistente de financiacion. Puedo orientarte sobre las convocatorias europeas y nacionales actuales: EIC Accelerator, EIC Pathfinder, EIC Transition, InvestEU, Innovation Fund y mas. Dime en que TRL estas y cual es tu sector para ayudarte a encontrar el fondo mas adecuado." data-en="Hi! I am your funding assistant. I can guide you on current European and national calls: EIC Accelerator, EIC Pathfinder, EIC Transition, InvestEU, Innovation Fund and more. Tell me your TRL and sector to help you find the most suitable fund.">Hola. Soy tu asistente de financiacion. Puedo orientarte sobre las convocatorias europeas y nacionales actuales. Dime en que TRL estas y cual es tu sector para encontrar el fondo mas adecuado.</div>
+        </div>
+        <div class="fh-chat-chips">
+          <button class="fh-chip" data-q-es="Que fondos estan abiertos ahora mismo para deep-tech?" data-q-en="What funds are currently open for deep-tech?">Fondos abiertos ahora</button>
+          <button class="fh-chip" data-q-es="Cual es el mejor fondo para TRL 5 a 8?" data-q-en="What is the best fund for TRL 5 to 8?">Fondo para TRL 5-8</button>
+          <button class="fh-chip" data-q-es="Que diferencia hay entre EIC Accelerator y EIC Transition?" data-q-en="What is the difference between EIC Accelerator and EIC Transition?">Accelerator vs Transition</button>
+          <button class="fh-chip" data-q-es="Hasta cuanto financia el EIC Accelerator y cuando cierra?" data-q-en="How much does the EIC Accelerator fund and when does it close?">EIC Accelerator detalles</button>
+          <button class="fh-chip" data-q-es="Que es InvestEU y para que proyectos aplica?" data-q-en="What is InvestEU and for what projects does it apply?">Que es InvestEU</button>
+          <button class="fh-chip" data-q-es="Hay financiacion nacional para startups tecnologicas en Espana?" data-q-en="Is there national funding for tech startups in Spain?">Financiacion nacional</button>
+        </div>
+        <div class="fh-chat-input-row">
+          <textarea class="fh-chat-input" rows="1" placeholder="Pregunta sobre convocatorias y fondos..."></textarea>
+          <button class="fh-chat-send" aria-label="Enviar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D1428" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        </div>
+        <p class="fh-chat-disclaimer" data-es="Fechas e importes orientativos. Confirma siempre en la convocatoria oficial." data-en="Indicative dates and amounts. Always confirm with the official call.">Fechas e importes orientativos. Confirma siempre en la convocatoria oficial.</p>
+      </div>
+    </div>
+  </section>
+  <!-- /CHAT ACTUALIDAD -->
+
+<!-- HERO -->
   <header style="max-width:1180px; margin:0 auto; padding:clamp(44px,7vh,80px) clamp(24px,5vw,64px) clamp(20px,3vh,32px);">
     <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.26em; text-transform:uppercase; color:#88b0ee; margin-bottom:20px;">{{ t.eyebrow }}</div>
     <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.02em; line-height:1.05; font-size:clamp(30px,4.2vw,54px); margin:0; max-width:20ch; color:#eef2f6;">{{ t.title }}</h1>

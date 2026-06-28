@@ -14,6 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="4helix-favicon.svg">
 <script src="fh-config.js"></script>
 <script src="fh-assistant.js"></script>
+<script src="fh-chat.js"></script>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -84,7 +85,43 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  
+  <!-- CHAT MODELO -->
+  <section class="fh-chat-section" data-system-prompt="Eres el asistente de 4Helix Ventures especializado en el modelo de cuadruple helice. Explica como interactuan las cuatro helices: H1 Ciencia (universidades, IP), H2 Industria (mercado, escala), H3 Capital (financiacion, tolerancia al riesgo) y H4 El Eje (4Helix como orquestador). Cuando se pregunte por fondos, TRL o casos de exito, redirige a las secciones correspondientes.">
+    <div class="wrap">
+      <div class="fh-chat-header">
+        <div class="fh-chat-title-row">
+          <div class="fh-chat-logo-icon"><svg width="28" height="28" viewBox="0 0 40 40"><path d="M8 6 C8 18,32 22,32 34" fill="none" stroke="#34D6C6" stroke-width="2.6" stroke-linecap="round"/><path d="M32 6 C32 18,8 22,8 34" fill="none" stroke="#F0B429" stroke-width="2.6" stroke-linecap="round"/><path d="M8 6 C20 12,20 28,8 34" fill="none" stroke="#8E9BFF" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><path d="M32 6 C20 12,20 28,32 34" fill="none" stroke="#F47E6F" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><circle cx="20" cy="20" r="2.6" fill="#eef2f6"/></svg></div>
+          <div>
+            <h2 class="fh-chat-heading" data-es="Asistente — Modelo Cuadruple Helice" data-en="Assistant — Quadruple Helix Model">Asistente — Modelo Cuadruple Helice</h2>
+            <p class="fh-chat-sub" data-es="Explora como las cuatro helices generan innovacion que perdura." data-en="Explore how the four helices create lasting innovation.">Explora como las cuatro helices generan innovacion que perdura.</p>
+          </div>
+          <div class="fh-chat-badge" data-es="IA ACTIVA" data-en="AI ACTIVE">IA ACTIVA</div>
+        </div>
+      </div>
+      <div class="fh-chat-box">
+        <div class="fh-chat-messages">
+          <div class="fh-msg bot" data-es="Hola. Estoy aqui para explicarte el modelo de cuadruple helice de 4Helix: como la Ciencia, la Industria, el Capital y el Eje orquestador trabajan juntos para convertir investigacion en empresas que escalan." data-en="Hi! I am here to explain 4Helix's quadruple helix model: how Science, Industry, Capital and the Orchestrator work together to turn research into scaling companies.">Hola. Estoy aqui para explicarte el modelo de cuadruple helice de 4Helix: como la Ciencia, la Industria, el Capital y el Eje orquestador trabajan juntos para convertir investigacion en empresas que escalan.</div>
+        </div>
+        <div class="fh-chat-chips">
+          <button class="fh-chip" data-q-es="Que papel juega la Ciencia en el modelo de cuadruple helice?" data-q-en="What role does Science play in the quadruple helix?">Papel de la Ciencia</button>
+          <button class="fh-chip" data-q-es="Como aporta valor la Industria al modelo?" data-q-en="How does Industry add value to the model?">Papel de la Industria</button>
+          <button class="fh-chip" data-q-es="Que hace el Capital en el modelo y como entra?" data-q-en="What does Capital do in the model and how does it enter?">Papel del Capital</button>
+          <button class="fh-chip" data-q-es="Por que es clave el rol del Eje orquestador?" data-q-en="Why is the Orchestrator axis role key?">El Eje orquestador</button>
+          <button class="fh-chip" data-q-es="Que ventajas tiene el modelo de cuadruple helice frente al triple helice?" data-q-en="What advantages does quadruple helix have over triple helix?">Cuadruple vs triple helice</button>
+          <button class="fh-chip" data-q-es="Como empieza la colaboracion entre ciencia e industria?" data-q-en="How does collaboration between science and industry start?">Iniciar colaboracion</button>
+        </div>
+        <div class="fh-chat-input-row">
+          <textarea class="fh-chat-input" rows="1" placeholder="Pregunta sobre el modelo..."></textarea>
+          <button class="fh-chat-send" aria-label="Enviar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D1428" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        </div>
+        <p class="fh-chat-disclaimer" data-es="Informacion orientativa." data-en="Informational only.">Informacion orientativa.</p>
+      </div>
+    </div>
+  </section>
+  <!-- /CHAT MODELO -->
+
+<!-- HERO -->
   <header style="max-width:1180px; margin:0 auto; padding:clamp(48px,8vh,86px) clamp(24px,5vw,64px) clamp(20px,3vh,36px);">
     <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.28em; text-transform:uppercase; color:#7c93ab; margin-bottom:22px; display:flex; align-items:center; gap:12px;">
       <span style="width:26px; height:1px; background:#7c93ab; display:inline-block;"></span>{{ t.eyebrow }}

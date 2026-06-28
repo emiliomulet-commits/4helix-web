@@ -84,7 +84,16 @@
   </nav>
 
   
-  <!-- CHAT METODO -->
+  <!-- HERO -->
+  <header style="max-width:1180px; margin:0 auto; padding:clamp(48px,8vh,86px) clamp(24px,5vw,64px) clamp(20px,3vh,32px);">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.28em; text-transform:uppercase; color:#7c93ab; margin-bottom:22px; display:flex; align-items:center; gap:12px;">
+      <span style="width:26px; height:1px; background:#7c93ab; display:inline-block;"></span>{{ t.eyebrow }}
+    </div>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.02em; line-height:1.04; font-size:clamp(32px,4.6vw,60px); margin:0; max-width:16ch; background-image:linear-gradient(110deg,#7d828c 0%,#b8bdc6 18%,#ffffff 34%,#eef0f2 42%,#9197a1 58%,#c9ced6 74%,#7d828c 100%); background-size:220% auto; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; animation:silverShine 6.5s linear infinite;">{{ t.title }}</h1>
+    <p style="font-size:clamp(16px,1.4vw,18px); line-height:1.62; color:#9aa0ac; max-width:48ch; margin:24px 0 0; font-weight:300;">{{ t.intro }}</p>
+  </header>
+
+<!-- CHAT METODO -->
   <section class="fh-chat-section" data-system-prompt="Eres el asistente de 4Helix Ventures especializado en el Metodo TRL (Technology Readiness Level). Explica las 4 etapas: Descubrimiento (TRL 1-3), Validacion (TRL 4-6), Escalado (TRL 7-8) y Mercado (TRL 9). Describe como cambia el riesgo tecnico, quien participa en cada etapa y como se financia. Orienta a investigadores y empresas sobre en que etapa se encuentran.">
     <div class="wrap">
       <div class="fh-chat-header">
@@ -118,15 +127,6 @@
     </div>
   </section>
   <!-- /CHAT METODO -->
-
-<!-- HERO -->
-  <header style="max-width:1180px; margin:0 auto; padding:clamp(48px,8vh,86px) clamp(24px,5vw,64px) clamp(20px,3vh,32px);">
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.28em; text-transform:uppercase; color:#7c93ab; margin-bottom:22px; display:flex; align-items:center; gap:12px;">
-      <span style="width:26px; height:1px; background:#7c93ab; display:inline-block;"></span>{{ t.eyebrow }}
-    </div>
-    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.02em; line-height:1.04; font-size:clamp(32px,4.6vw,60px); margin:0; max-width:16ch; background-image:linear-gradient(110deg,#7d828c 0%,#b8bdc6 18%,#ffffff 34%,#eef0f2 42%,#9197a1 58%,#c9ced6 74%,#7d828c 100%); background-size:220% auto; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; animation:silverShine 6.5s linear infinite;">{{ t.title }}</h1>
-    <p style="font-size:clamp(16px,1.4vw,18px); line-height:1.62; color:#9aa0ac; max-width:48ch; margin:24px 0 0; font-weight:300;">{{ t.intro }}</p>
-  </header>
 
   <!-- TRL JOURNEY -->
   <section style="max-width:1180px; margin:0 auto; padding:clamp(16px,3vh,32px) clamp(24px,5vw,64px) clamp(64px,9vh,120px);">

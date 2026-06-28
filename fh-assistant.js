@@ -33,6 +33,7 @@
   }
 
   var KNOWLEDGE = null; // built from contenido.js
+  var CASES_KB = null;
   function loadKnowledge() {
     return import('./contenido.js').then(function (m) {
       var l = lang();
@@ -42,16 +43,22 @@
           '. Cierre: ' + (e.fund.deadline || 'continua') + '. Financiación: ' + e.fund.importe +
           '. ' + e.fund.trl + '. ' + c.summary + ' Encaje 4Helix: ' + c.fit;
       }).join('\n');
+      CASES_KB = m.ENTRIES.filter(function (e) { return e.category === 'casos' && e.caso; }).map(function (e) {
+        var c = e[l] || e.es;
+        var teach = e.caso.teaches ? (e.caso.teaches[l] || e.caso.teaches.es) : '';
+        return '- ' + c.title + ' (' + c.issuer + '): ' + c.summary + ' Lección: ' + teach;
+      }).join('\n');
       return KNOWLEDGE;
-    }).catch(function () { KNOWLEDGE = ''; return ''; });
+    }).catch(function () { KNOWLEDGE = ''; CASES_KB = ''; return ''; });
   }
 
   function systemPreamble(l) {
     var base = (l === 'en')
-      ? "You are the assistant of 4Helix Ventures, a deep-tech venture builder that turns science into companies, helping researchers, companies and funds cross the technological valley of death. Answer in English, concise and practical (max ~120 words). Help with European and national funding and with the quadruple-helix model (science, industry, capital and 4Helix as the axis). Base funding answers on the calls listed below; never invent deadlines or amounts — if unsure, say so and recommend checking the official EU Funding & Tenders Portal (https://ec.europa.eu/info/funding-tenders/opportunities/portal). For anything beyond your scope, suggest contacting hola@4helixventures.com."
-      : "Eres el asistente de 4Helix Ventures, un venture builder de deep-tech que convierte ciencia en empresas, ayudando a investigadores, empresas y fondos a cruzar el valle de la muerte tecnológico. Responde en español, breve y práctico (máx. ~120 palabras). Ayuda con financiación europea y nacional y con el modelo de cuádruple hélice (ciencia, industria, capital y 4Helix como eje). Fundamenta las respuestas de fondos en las convocatorias listadas abajo; nunca inventes fechas ni importes — si no estás seguro, dilo y recomienda consultar el portal oficial Funding & Tenders de la UE (https://ec.europa.eu/info/funding-tenders/opportunities/portal). Para lo que se salga de tu alcance, sugiere escribir a hola@4helixventures.com.";
+      ? "You are the assistant of 4Helix Ventures, a deep-tech venture builder that turns science into companies, helping researchers, companies and funds cross the technological valley of death. Answer in English, concise and practical (max ~120 words). Help with European and national funding, with the quadruple-helix model (science, industry, capital and 4Helix as the axis), and with European deep-tech success cases. Base funding answers on the calls listed below; never invent deadlines or amounts — if unsure, say so and recommend checking the official EU Funding & Tenders Portal (https://ec.europa.eu/info/funding-tenders/opportunities/portal). Success cases are European ecosystem references (not 4Helix's own portfolio). For anything beyond your scope, suggest contacting hola@4helixventures.com."
+      : "Eres el asistente de 4Helix Ventures, un venture builder de deep-tech que convierte ciencia en empresas, ayudando a investigadores, empresas y fondos a cruzar el valle de la muerte tecnológico. Responde en español, breve y práctico (máx. ~120 palabras). Ayuda con financiación europea y nacional, con el modelo de cuádruple hélice (ciencia, industria, capital y 4Helix como eje) y con casos de éxito deep-tech europeos. Fundamenta las respuestas de fondos en las convocatorias listadas abajo; nunca inventes fechas ni importes — si no estás seguro, dilo y recomienda consultar el portal oficial Funding & Tenders de la UE (https://ec.europa.eu/info/funding-tenders/opportunities/portal). Los casos de éxito son referentes del ecosistema europeo (no cartera propia de 4Helix). Para lo que se salga de tu alcance, sugiere escribir a hola@4helixventures.com.";
     var kb = KNOWLEDGE ? ('\n\n' + (l === 'en' ? 'Open/known calls:' : 'Convocatorias conocidas:') + '\n' + KNOWLEDGE) : '';
-    return base + kb;
+    var ck = CASES_KB ? ('\n\n' + (l === 'en' ? 'European success cases (ecosystem references):' : 'Casos de éxito europeos (referentes del ecosistema):') + '\n' + CASES_KB) : '';
+    return base + kb + ck;
   }
 
   function buildPrompt(history, l) {
@@ -84,7 +91,7 @@
         body: JSON.stringify({
           lang: l,
           messages: history,
-          context: KNOWLEDGE || '',
+          context: (KNOWLEDGE || '') + (CASES_KB ? ('\n\nCasos de éxito europeos (referentes del ecosistema, no cartera propia):\n' + CASES_KB) : ''),
           message: lastUser,
           history: priorHistory
         })

@@ -315,14 +315,20 @@ const NAV = {
     { label: 'Inicio', href: '4Helix Ventures.dc.html', key: 'home' },
     { label: 'Modelo', href: 'Modelo.dc.html', key: 'modelo' },
     { label: 'Método', href: 'Metodo.dc.html', key: 'metodo' },
-    { label: 'Actualidad', href: 'Actualidad.dc.html', key: 'actualidad' },
+    { label: 'Fondos UE', href: 'Actualidad.dc.html', key: 'fondos' },
+    { label: 'Topics', href: 'Topics.dc.html', key: 'topics' },
+    { label: 'Casos', href: 'Casos.dc.html', key: 'casos' },
+    { label: 'Gateway', href: 'Gateway.html', key: 'gateway' },
     { label: 'Contacto', href: '4Helix Ventures.dc.html#contacto', key: 'contacto' }
   ],
   en: [
     { label: 'Home', href: '4Helix Ventures.dc.html', key: 'home' },
     { label: 'Model', href: 'Modelo.dc.html', key: 'modelo' },
     { label: 'Method', href: 'Metodo.dc.html', key: 'metodo' },
-    { label: 'News', href: 'Actualidad.dc.html', key: 'actualidad' },
+    { label: 'Funding', href: 'Actualidad.dc.html', key: 'fondos' },
+    { label: 'Topics', href: 'Topics.dc.html', key: 'topics' },
+    { label: 'Cases', href: 'Casos.dc.html', key: 'casos' },
+    { label: 'Gateway', href: 'Gateway.html', key: 'gateway' },
     { label: 'Contact', href: '4Helix Ventures.dc.html#contacto', key: 'contacto' }
   ]
 };
@@ -788,7 +794,7 @@ class Component extends DCLogic {
     const isES = lang === 'es';
     const cats = this._cats || {};
     const ESTC = { abierta: '95,211,200', proxima: '230,192,116', cerrada: '136,146,163' };
-    const latest = (this.state.entries || []).slice().sort((a, b) => (a.date < b.date ? 1 : -1)).slice(0, 3).map((e) => {
+    const latest = (this.state.entries || []).filter((e) => e.category === 'fondos').slice().sort((a, b) => (a.date < b.date ? 1 : -1)).slice(0, 3).map((e) => {
       const c = e[lang]; const est = e.fund ? e.fund.estado : null;
       return {
         href: 'Convocatoria.dc.html?id=' + encodeURIComponent(e.id),

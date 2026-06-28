@@ -74,7 +74,7 @@
 
   <!-- ARTICLE -->
   <article style="max-width:920px; margin:0 auto; padding:clamp(36px,6vh,64px) clamp(24px,5vw,64px) clamp(64px,9vh,110px);">
-    <a href="Actualidad.dc.html" data-bg-clear style="display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.06em; color:#8aa0b8; margin-bottom:28px;" style-hover="color:#cfd6df;">&#8592; {{ t.back }}</a>
+    <a href="{{ backHref }}" data-bg-clear style="display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.06em; color:#8aa0b8; margin-bottom:28px;" style-hover="color:#cfd6df;">&#8592; {{ backLabel }}</a>
 
     <div data-bg-clear style="display:flex; align-items:center; gap:12px; margin-bottom:20px; flex-wrap:wrap;">
       <span style="{{ tagStyle }}">{{ catLabel }}</span>
@@ -87,7 +87,7 @@
     <p data-bg-clear style="font-size:clamp(17px,1.6vw,20px); line-height:1.6; color:#c4cbd4; margin:22px 0 0; font-weight:300;">{{ summary }}</p>
 
     <!-- fund fact card -->
-    <sc-if value="{{ hasFund }}" hint-placeholder-val="{{ true }}">
+    <sc-if value="{{ hasFacts }}" hint-placeholder-val="{{ true }}">
       <div data-bg-clear style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; margin:40px 0; border:1px solid rgba(220,225,232,0.1); border-radius:12px; overflow:hidden; background:rgba(220,225,232,0.08);">
         <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
           <div style="background:rgba(13,18,28,0.85); padding:20px 22px;">
@@ -105,15 +105,17 @@
       </sc-for>
     </div>
 
-    <!-- fit with 4Helix -->
+    <!-- fit with 4Helix / teaches -->
+    <sc-if value="{{ hasFit }}" hint-placeholder-val="{{ true }}">
     <div data-bg-clear style="margin-top:18px; border-left:3px solid #88b0ee; background:rgba(136,176,238,0.06); border-radius:0 10px 10px 0; padding:24px 28px;">
-      <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#88b0ee; margin-bottom:12px;">{{ t.fitLabel }}</div>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#88b0ee; margin-bottom:12px;">{{ fitLabel }}</div>
       <p style="font-size:16.5px; line-height:1.65; color:#dde2e8; margin:0; font-weight:300;">{{ fit }}</p>
     </div>
+    </sc-if>
 
     <!-- CTAs -->
     <div data-bg-clear style="display:flex; flex-wrap:wrap; gap:14px; margin-top:36px;">
-      <a href="{{ officialUrl }}" target="_blank" rel="noopener" style="{{ officialBtnStyle }}">{{ t.official }} &#8599;</a>
+      <a href="{{ officialUrl }}" target="_blank" rel="noopener" style="{{ officialBtnStyle }}">{{ officialLabel }} &#8599;</a>
       <a href="4Helix Ventures.dc.html#contacto" style="font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:15px; color:#0d0f14; background:linear-gradient(135deg,#cfe0ff,#88b0ee); padding:13px 26px; border-radius:999px;" style-hover="filter:brightness(1.06);">{{ t.helpCta }}</a>
     </div>
 
@@ -163,14 +165,20 @@ const NAV = {
     { label: 'Inicio', href: '4Helix Ventures.dc.html', key: 'home' },
     { label: 'Modelo', href: 'Modelo.dc.html', key: 'modelo' },
     { label: 'Método', href: 'Metodo.dc.html', key: 'metodo' },
-    { label: 'Actualidad', href: 'Actualidad.dc.html', key: 'actualidad' },
+    { label: 'Fondos UE', href: 'Actualidad.dc.html', key: 'fondos' },
+    { label: 'Topics', href: 'Topics.dc.html', key: 'topics' },
+    { label: 'Casos', href: 'Casos.dc.html', key: 'casos' },
+    { label: 'Gateway', href: 'Gateway.html', key: 'gateway' },
     { label: 'Contacto', href: '4Helix Ventures.dc.html#contacto', key: 'contacto' }
   ],
   en: [
     { label: 'Home', href: '4Helix Ventures.dc.html', key: 'home' },
     { label: 'Model', href: 'Modelo.dc.html', key: 'modelo' },
     { label: 'Method', href: 'Metodo.dc.html', key: 'metodo' },
-    { label: 'News', href: 'Actualidad.dc.html', key: 'actualidad' },
+    { label: 'Funding', href: 'Actualidad.dc.html', key: 'fondos' },
+    { label: 'Topics', href: 'Topics.dc.html', key: 'topics' },
+    { label: 'Cases', href: 'Casos.dc.html', key: 'casos' },
+    { label: 'Gateway', href: 'Gateway.html', key: 'gateway' },
     { label: 'Contact', href: '4Helix Ventures.dc.html#contacto', key: 'contacto' }
   ]
 };
@@ -185,16 +193,20 @@ function fhNavItems(lang, page) {
 
 const UI = {
   es: {
-    back: 'Volver a Actualidad', related: 'También te puede interesar',
+    back: 'Volver a Fondos UE', backCasos: 'Volver a Casos', related: 'También te puede interesar',
     fitLabel: 'Cómo encaja con 4Helix', official: 'Convocatoria oficial', helpCta: 'Habla con nosotros',
+    teachesLabel: 'Qué enseña este caso', sourceLabel: 'Fuente',
+    cf: { sector: 'Sector', country: 'País', inst: 'Origen', journey: 'El recorrido' },
     deadline: 'Fecha de cierre', noDeadline: 'Continua', notFound: 'No encontramos esta entrada.',
     estados: { abierta: 'Abierta', proxima: 'Próxima', cerrada: 'Cerrada' },
     facts: { programa: 'Programa', deadline: 'Fecha de cierre', importe: 'Financiación', trl: 'TRL elegible' },
     footerNote: '4Helix Ventures · nombre de trabajo · pendiente de registro de marca', locale: 'es-ES'
   },
   en: {
-    back: 'Back to News', related: 'You may also like',
+    back: 'Back to Funding', backCasos: 'Back to Cases', related: 'You may also like',
     fitLabel: 'How it fits with 4Helix', official: 'Official call', helpCta: 'Talk to us',
+    teachesLabel: 'What this case teaches', sourceLabel: 'Source',
+    cf: { sector: 'Sector', country: 'Country', inst: 'Origin', journey: 'The journey' },
     deadline: 'Deadline', noDeadline: 'Rolling', notFound: 'We could not find this entry.',
     estados: { abierta: 'Open', proxima: 'Upcoming', cerrada: 'Closed' },
     facts: { programa: 'Programme', deadline: 'Deadline', importe: 'Funding', trl: 'Eligible TRL' },
@@ -213,7 +225,7 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     import('./fh-common.js').then((m) => { this._net = m.startNetwork(this.bgCanvas.current); }).catch(() => {});
-    import('./contenido.js').then((m) => { this.setState({ entries: m.ENTRIES, cats: m.CATEGORIES }); }).catch(() => { this.setState({ entries: [], cats: {} }); });
+    import('./contenido.js').then((m) => { this._sectors = m.SECTORS || {}; this._countries = m.COUNTRIES || {}; this.setState({ entries: m.ENTRIES, cats: m.CATEGORIES }); }).catch(() => { this.setState({ entries: [], cats: {} }); });
   }
   componentWillUnmount() { if (this._net) this._net.stop(); }
   setLang(l) { fhWriteLang(l); this.setState({ lang: l }); }
@@ -226,28 +238,51 @@ class Component extends DCLogic {
     const baseBtn = { padding: '6px 14px', borderRadius: '999px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '12px', letterSpacing: '0.08em', cursor: 'pointer', border: 'none', background: 'transparent', color: '#7c828e', transition: 'all .2s' };
     const activeBtn = Object.assign({}, baseBtn, { background: 'rgba(220,225,232,0.13)', color: '#eef0f2' });
     const common = {
-      year: '2026', nav: fhNavItems(lang, 'actualidad'), bgCanvas: this.bgCanvas,
+      year: '2026', nav: fhNavItems(lang, 'fondos'), bgCanvas: this.bgCanvas,
       esBtnStyle: isES ? activeBtn : baseBtn, enBtnStyle: isES ? baseBtn : activeBtn,
-      setES: () => this.setLang('es'), setEN: () => this.setLang('en'), t: t
+      setES: () => this.setLang('es'), setEN: () => this.setLang('en'), t: t,
+      backHref: 'Actualidad.dc.html', backLabel: t.back
     };
 
     const entries = this.state.entries;
     const cats = this.state.cats || {};
-    if (!entries) return Object.assign({}, common, { title: '', issuer: '', summary: '', body: [], fit: '', hasFund: false, facts: [], hasRelated: false, related: [], catLabel: '', estadoLabel: '', estadoStyle: { display: 'none' }, tagStyle: {}, dateLabel: '', officialUrl: '#', officialBtnStyle: { display: 'none' } });
+    if (!entries) return Object.assign({}, common, { title: '', issuer: '', summary: '', body: [], fit: '', hasFit: false, fitLabel: '', hasFacts: false, hasFund: false, facts: [], hasRelated: false, related: [], catLabel: '', estadoLabel: '', estadoStyle: { display: 'none' }, tagStyle: {}, dateLabel: '', officialUrl: '#', officialLabel: '', officialBtnStyle: { display: 'none' } });
 
     let e = entries.find((x) => x.id === this.state.id) || entries.find((x) => x.featured) || entries[0];
-    if (!e) return Object.assign({}, common, { title: t.notFound, issuer: '', summary: '', body: [], fit: '', hasFund: false, facts: [], hasRelated: false, related: [], catLabel: '', estadoLabel: '', estadoStyle: { display: 'none' }, tagStyle: {}, dateLabel: '', officialUrl: 'Actualidad.dc.html', officialBtnStyle: { display: 'none' } });
+    if (!e) return Object.assign({}, common, { title: t.notFound, issuer: '', summary: '', body: [], fit: '', hasFit: false, fitLabel: '', hasFacts: false, hasFund: false, facts: [], hasRelated: false, related: [], catLabel: '', estadoLabel: '', estadoStyle: { display: 'none' }, tagStyle: {}, dateLabel: '', officialUrl: 'Actualidad.dc.html', officialLabel: '', officialBtnStyle: { display: 'none' } });
 
     const c = e[lang];
     const est = e.fund ? e.fund.estado : null;
+    const sectors = this._sectors || {};
+    const countries = this._countries || {};
     const tagStyleFor = (cat) => ({ fontFamily: "'IBM Plex Mono', monospace", fontSize: '10.5px', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '4px 9px', borderRadius: '5px', color: 'rgb(' + cats[cat].rgb + ')', background: 'rgba(' + cats[cat].rgb + ',0.12)' });
 
-    const facts = e.fund ? [
-      { k: t.facts.programa, v: e.fund.programa },
-      { k: t.facts.deadline, v: this.fmtDate(e.fund.deadline, t.locale) || t.noDeadline },
-      { k: t.facts.importe, v: e.fund.importe },
-      { k: t.facts.trl, v: e.fund.trl }
-    ] : [];
+    let facts, body, fit, fitLabel, officialUrl, officialLabel, hasOfficial;
+    if (e.fund) {
+      facts = [
+        { k: t.facts.programa, v: e.fund.programa },
+        { k: t.facts.deadline, v: this.fmtDate(e.fund.deadline, t.locale) || t.noDeadline },
+        { k: t.facts.importe, v: e.fund.importe },
+        { k: t.facts.trl, v: e.fund.trl }
+      ];
+      body = c.body || []; fit = c.fit || ''; fitLabel = t.fitLabel;
+      officialUrl = e.fund.url; officialLabel = t.official; hasOfficial = !!e.fund.url;
+    } else if (e.caso) {
+      const k = e.caso;
+      facts = [
+        { k: t.cf.sector, v: sectors[k.sector] ? sectors[k.sector][lang] : k.sector },
+        { k: t.cf.country, v: countries[k.country] ? countries[k.country][lang] : k.country },
+        { k: t.cf.inst, v: c.issuer },
+        { k: t.cf.journey, v: k.journey ? k.journey[lang] : '' }
+      ];
+      body = k.milestone ? [k.milestone[lang]] : [];
+      fit = c.teaches || (k.teaches ? k.teaches[lang] : ''); fitLabel = t.teachesLabel;
+      officialUrl = k.source ? k.source.url : '#';
+      officialLabel = k.source ? (t.sourceLabel + ' · ' + k.source.label) : t.sourceLabel;
+      hasOfficial = !!(k.source && k.source.url);
+    } else {
+      facts = []; body = c.body || []; fit = c.fit || ''; fitLabel = t.fitLabel; officialUrl = '#'; officialLabel = ''; hasOfficial = false;
+    }
 
     const related = entries.filter((x) => x.id !== e.id && x.category === e.category).slice(0, 3).map((x) => ({
       href: 'Convocatoria.dc.html?id=' + encodeURIComponent(x.id),
@@ -255,15 +290,19 @@ class Component extends DCLogic {
       catLabel: cats[x.category][lang], tagStyle: tagStyleFor(x.category)
     }));
 
+    const isCaso = !!e.caso;
     return Object.assign({}, common, {
-      title: c.title, issuer: c.issuer, summary: c.summary, body: c.body, fit: c.fit,
+      nav: fhNavItems(lang, isCaso ? 'casos' : 'fondos'),
+      backHref: isCaso ? 'Casos.dc.html' : 'Actualidad.dc.html',
+      backLabel: isCaso ? t.backCasos : t.back,
+      title: c.title, issuer: c.issuer, summary: c.summary, body: body, fit: fit, fitLabel: fitLabel, hasFit: !!fit,
       catLabel: cats[e.category][lang], tagStyle: tagStyleFor(e.category),
       estadoLabel: est ? t.estados[est] : '',
       estadoStyle: est ? { fontFamily: "'IBM Plex Mono', monospace", fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: '999px', color: 'rgb(' + ESTADO_COLOR[est] + ')', border: '1px solid rgba(' + ESTADO_COLOR[est] + ',0.4)' } : { display: 'none' },
       dateLabel: this.fmtDate(e.date, t.locale),
-      hasFund: !!e.fund, facts: facts,
-      officialUrl: e.fund ? e.fund.url : '#',
-      officialBtnStyle: e.fund ? { fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500, fontSize: '15px', color: '#dfe2e7', border: '1px solid rgba(220,225,232,0.22)', padding: '13px 26px', borderRadius: '999px' } : { display: 'none' },
+      hasFacts: facts.length > 0, facts: facts,
+      officialUrl: officialUrl, officialLabel: officialLabel,
+      officialBtnStyle: hasOfficial ? { fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500, fontSize: '15px', color: '#dfe2e7', border: '1px solid rgba(220,225,232,0.22)', padding: '13px 26px', borderRadius: '999px' } : { display: 'none' },
       hasRelated: related.length > 0, related: related
     });
   }

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="4helix-favicon.svg">
+<script src="fh-config.js"></script>
+<script src="fh-assistant.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: #061322; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  @keyframes logoDraw { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+  @keyframes logoPulse { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
+  @keyframes livePulse { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
+  .lg-stroke { stroke-dasharray: 100; stroke-dashoffset: 100; animation: logoDraw .55s ease forwards; }
+  .ls1 { animation-delay: 0s; } .ls2 { animation-delay: .4s; } .ls3 { animation-delay: .8s; } .ls4 { animation-delay: 1.2s; }
+  .lg-pulse { animation: logoPulse 2.6s ease-in-out infinite; }
+  .lg-diag, .lg-curve { transition: transform .3s ease; }
+  nav a:hover .lg-diag { transform: translate(1.1px,-1.1px); }
+  nav a:hover .lg-curve { transform: translate(-1.1px,1.1px); }
+  @media (prefers-reduced-motion: reduce) { .lg-stroke { animation: none; stroke-dashoffset: 0; } .lg-pulse { animation: none; } }
+  @media (max-width: 600px) { nav > div { flex-wrap: wrap !important; row-gap: 12px !important; } }
+  a { text-decoration: none; }
+  button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid #88b0ee; outline-offset: 3px; }
+  input::placeholder { color: #6b7686; }
+</style>
+</helmet>
+
+<div style="font-family:'Hanken Grotesk',sans-serif; color:#e8eaed; position:relative; z-index:0; background:radial-gradient(125% 95% at 64% 24%, #1c4673 0%, #102c49 42%, #08182a 72%, #061322 100%); min-height:100vh; overflow-x:hidden;">
+
+  <canvas ref="{{ bgCanvas }}" style="position:fixed; inset:0; width:100vw; height:100vh; z-index:-1; pointer-events:none;"></canvas>
+
+  <!-- NAV -->
+  <nav style="position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(8,9,12,0.62); border-bottom:1px solid rgba(220,225,232,0.07);">
+    <div style="max-width:1180px; margin:0 auto; padding:16px clamp(24px,5vw,64px); display:flex; align-items:center; justify-content:space-between; gap:24px;">
+      <a href="4Helix Ventures.dc.html" style="display:flex; align-items:center; gap:12px; color:#e8eaed;">
+        <svg width="26" height="26" viewBox="0 0 40 40" style="display:block; overflow:visible;">
+          <g class="lg-diag">
+            <path class="lg-stroke ls1" d="M8 6 C8 18, 32 22, 32 34" pathLength="100" style="fill:none; stroke:#34D6C6; stroke-width:2.4; stroke-linecap:round;"></path>
+            <path class="lg-stroke ls2" d="M32 6 C32 18, 8 22, 8 34" pathLength="100" style="fill:none; stroke:#F0B429; stroke-width:2.4; stroke-linecap:round;"></path>
+          </g>
+          <g class="lg-curve">
+            <path class="lg-stroke ls3" d="M8 6 C20 12, 20 28, 8 34" pathLength="100" style="fill:none; stroke:#8E9BFF; stroke-width:2.4; stroke-linecap:round; opacity:0.9;"></path>
+            <path class="lg-stroke ls4" d="M32 6 C20 12, 20 28, 32 34" pathLength="100" style="fill:none; stroke:#F47E6F; stroke-width:2.4; stroke-linecap:round; opacity:0.9;"></path>
+          </g>
+          <circle class="lg-pulse" cx="20" cy="20" r="2.6" style="fill:#eef2f6;"></circle>
+        </svg>
+        <span style="display:flex; align-items:baseline; gap:6px;">
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; letter-spacing:-0.01em; color:#E9ECF6;">4Helix</span>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:14px; color:#94A0BE;">Ventures</span>
+        </span>
+      </a>
+      <div style="display:flex; align-items:center; gap:clamp(18px,3vw,38px);">
+        <div style="display:flex; gap:clamp(18px,2.6vw,34px);">
+          <sc-for list="{{ nav }}" as="item" hint-placeholder-count="6">
+            <a href="{{ item.href }}" style="{{ item.style }}" style-hover="color:#e8eaed;">{{ item.label }}</a>
+          </sc-for>
+        </div>
+        <div style="display:flex; align-items:center; gap:2px; background:rgba(220,225,232,0.05); border:1px solid rgba(220,225,232,0.08); border-radius:999px; padding:3px;">
+          <button onClick="{{ setES }}" style="{{ esBtnStyle }}">ES</button>
+          <button onClick="{{ setEN }}" style="{{ enBtnStyle }}">EN</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header style="max-width:1180px; margin:0 auto; padding:clamp(44px,7vh,80px) clamp(24px,5vw,64px) clamp(20px,3vh,32px);">
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px; flex-wrap:wrap;">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.26em; text-transform:uppercase; color:#88b0ee;">{{ t.eyebrow }}</span>
+      <span style="{{ liveStyle }}"><span style="{{ liveDotStyle }}"></span>{{ liveLabel }}</span>
+    </div>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.02em; line-height:1.05; font-size:clamp(30px,4.2vw,54px); margin:0; max-width:20ch; color:#eef2f6;">{{ t.title }}</h1>
+    <p style="font-size:clamp(16px,1.4vw,18px); line-height:1.62; color:#9aa0ac; max-width:56ch; margin:22px 0 0; font-weight:300;">{{ t.intro }}</p>
+    <div data-bg-clear style="display:flex; flex-wrap:wrap; gap:clamp(24px,4vw,46px); margin-top:30px;">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+        <div style="display:flex; align-items:baseline; gap:9px;">
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,3vw,38px); letter-spacing:-0.01em; color:#eef2f6;">{{ s.n }}</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#88b0ee;">{{ s.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </header>
+
+  <!-- CONTROLS -->
+  <section style="max-width:1180px; margin:0 auto; padding:clamp(16px,2vh,28px) clamp(24px,5vw,64px) 0;">
+    <div data-bg-clear style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+      <sc-for list="{{ programChips }}" as="c" hint-placeholder-count="5">
+        <button onClick="{{ c.onSel }}" style="{{ c.style }}">{{ c.label }}<span style="{{ c.countStyle }}">{{ c.count }}</span></button>
+      </sc-for>
+    </div>
+    <div data-bg-clear style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+      <sc-for list="{{ selects }}" as="sel" hint-placeholder-count="3">
+        <div style="position:relative;">
+          <select onChange="{{ sel.onChange }}" value="{{ sel.value }}" style="appearance:none; -webkit-appearance:none; padding:10px 34px 10px 15px; border-radius:999px; border:1px solid rgba(220,225,232,0.14); background:rgba(13,18,28,0.6); color:#e8eaed; font-family:'Hanken Grotesk',sans-serif; font-size:13.5px; cursor:pointer; outline:none;">
+            <sc-for list="{{ sel.options }}" as="o" hint-placeholder-count="3">
+              <option value="{{ o.value }}">{{ o.label }}</option>
+            </sc-for>
+          </select>
+          <span style="position:absolute; right:14px; top:50%; transform:translateY(-50%); pointer-events:none; color:#6b7686; font-size:10px;">&#9660;</span>
+        </div>
+      </sc-for>
+      <div style="position:relative; flex:1; min-width:200px; max-width:300px;">
+        <span style="position:absolute; left:14px; top:50%; transform:translateY(-50%); pointer-events:none; color:#6b7686; font-size:15px;">&#9906;</span>
+        <input type="text" value="{{ query }}" onInput="{{ onSearch }}" placeholder="{{ t.searchPlaceholder }}" style="width:100%; padding:11px 14px 11px 38px; border-radius:999px; border:1px solid rgba(220,225,232,0.14); background:rgba(13,18,28,0.6); color:#e8eaed; font-family:'Hanken Grotesk',sans-serif; font-size:14.5px; outline:none;"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRID -->
+  <section style="max-width:1180px; margin:0 auto; padding:clamp(24px,3vh,40px) clamp(24px,5vw,64px) clamp(64px,9vh,110px);">
+    <div data-bg-clear style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em; color:#7c93ab; margin-bottom:18px;">{{ resultLabel }}</div>
+    <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+      <div data-bg-clear style="display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px;">
+        <sc-for list="{{ cards }}" as="c" hint-placeholder-count="6">
+          <a href="{{ c.url }}" target="_blank" rel="noopener" style="display:flex; flex-direction:column; border:1px solid rgba(220,225,232,0.09); border-radius:10px; background:rgba(15,18,24,0.55); padding:22px 22px 24px; color:inherit; cursor:pointer; transition:border-color .2s, background .2s;" style-hover="border-color:rgba(136,176,238,0.35); background:rgba(20,24,31,0.72);">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:13px; flex-wrap:wrap;">
+              <span style="{{ c.progStyle }}">{{ c.progLabel }}</span>
+              <span style="{{ c.clusterStyle }}">{{ c.clusterLabel }}</span>
+              <span style="{{ c.estadoStyle }}">{{ c.estadoLabel }}</span>
+            </div>
+            <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; line-height:1.2; margin:0; color:#eef2f6;">{{ c.title }}</h3>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.02em; color:#7c93ab; margin-top:8px;">{{ c.code }}</div>
+            <p style="font-size:13.5px; line-height:1.55; color:#9aa0ac; margin:13px 0 0; font-weight:300; flex:1;">{{ c.summary }}</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; margin-top:18px; padding-top:16px; border-top:1px solid rgba(220,225,232,0.07);">
+              <div>
+                <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:#5d748c;">{{ t.deadlineLabel }}</div>
+                <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#cfd6df; margin-top:3px;">{{ c.deadline }}</div>
+              </div>
+              <div>
+                <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:#5d748c;">{{ t.trlLabel }}</div>
+                <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#cfd6df; margin-top:3px;">{{ c.trl }}</div>
+              </div>
+              <div style="grid-column:1 / -1;">
+                <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:#5d748c;">{{ t.budgetLabel }}</div>
+                <div style="font-size:13px; color:#e2e6ec; margin-top:3px;">{{ c.budget }}</div>
+              </div>
+            </div>
+            <span style="display:inline-flex; align-items:center; gap:7px; margin-top:18px; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:13px; color:#88b0ee;">{{ t.openCall }} &#8599;</span>
+          </a>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+      <div data-bg-clear style="text-align:center; padding:60px 20px; border:1px dashed rgba(220,225,232,0.14); border-radius:12px;">
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:20px; color:#cfd6df;">{{ t.emptyTitle }}</div>
+        <p style="font-size:15px; color:#9aa0ac; margin:10px 0 0; font-weight:300;">{{ t.emptyBody }}</p>
+      </div>
+    </sc-if>
+
+    <div data-bg-clear style="margin-top:40px; border:1px solid rgba(220,225,232,0.08); border-radius:12px; background:rgba(13,18,28,0.45); padding:clamp(22px,3vw,30px);">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#88b0ee; margin-bottom:12px;">{{ t.sourceEyebrow }}</div>
+      <p style="font-size:14px; line-height:1.65; color:#9aa0ac; margin:0; font-weight:300; max-width:82ch;">{{ t.sourceBody }}</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid rgba(220,225,232,0.06);">
+    <div style="max-width:1180px; margin:0 auto; padding:40px clamp(24px,5vw,64px); display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:18px;">
+      <div style="display:flex; align-items:baseline; gap:8px;">
+        <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; color:#e8eaed;">4Helix</span>
+        <span style="font-size:13px; color:#888e9a;">Ventures</span>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.08em; color:#5d636e;">{{ t.footerNote }}</div>
+      <div style="font-size:12px; color:#5d636e;">© {{ year }}</div>
+    </div>
+  </footer>
+
+</div>
+
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" fill="#0e1116"/>
+    <g transform="translate(24 24)" fill="none" stroke="#88b0ee" stroke-width="2.6" stroke-linecap="round">
+      <rect x="0" y="0" width="22" height="22" rx="3"/><rect x="30" y="0" width="22" height="22" rx="3" stroke="#34D6C6"/>
+      <rect x="0" y="30" width="22" height="22" rx="3" stroke="#F0B429"/><rect x="30" y="30" width="22" height="22" rx="3" stroke="#F47E6F"/>
+    </g>
+  </svg>
+</template>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es'|'en'&quot;}}">
+const NAV = {
+  es: [
+    { label: 'Inicio', href: '4Helix Ventures.dc.html', key: 'home' },
+    { label: 'Modelo', href: 'Modelo.dc.html', key: 'modelo' },
+    { label: 'Método', href: 'Metodo.dc.html', key: 'metodo' },
+    { label: 'Fondos UE', href: 'Actualidad.dc.html', key: 'fondos' },
+    { label: 'Topics', href: 'Topics.dc.html', key: 'topics' },
+    { label: 'Casos', href: 'Casos.dc.html', key: 'casos' },
+    { label: 'Gateway', href: 'Gateway.html', key: 'gateway' }
+  ],
+  en: [
+    { label: 'Home', href: '4Helix Ventures.dc.html', key: 'home' },
+    { label: 'Model', href: 'Modelo.dc.html', key: 'modelo' },
+    { label: 'Method', href: 'Metodo.dc.html', key: 'metodo' },
+    { label: 'Funding', href: 'Actualidad.dc.html', key: 'fondos' },
+    { label: 'Topics', href: 'Topics.dc.html', key: 'topics' },
+    { label: 'Cases', href: 'Casos.dc.html', key: 'casos' },
+    { label: 'Gateway', href: 'Gateway.html', key: 'gateway' }
+  ]
+};
+function fhReadLang(fb) { try { return localStorage.getItem('fh_lang') || fb; } catch (e) { return fb; } }
+function fhWriteLang(l) { try { localStorage.setItem('fh_lang', l); } catch (e) {} }
+function fhNavItems(lang, page) {
+  return NAV[lang].map(function (it) {
+    const active = it.key === page;
+    return Object.assign({}, it, { style: { fontSize: '14px', letterSpacing: '0.01em', paddingBottom: '4px', whiteSpace: 'nowrap', color: active ? '#e8eaed' : '#9aa0ac', borderBottom: active ? '1.5px solid #88b0ee' : '1.5px solid transparent', transition: 'color .2s' } });
+  });
+}
+
+const UI = {
+  es: {
+    eyebrow: 'Topics 2026–2027',
+    title: 'Convocatorias de los programas europeos.',
+    intro: 'Explora los topics de los programas de la Comisión Europea. Filtra por programa, año, estado y cluster, o busca por palabra clave. El listado se conecta en vivo al Portal oficial; mientras tanto ves una selección curada.',
+    searchPlaceholder: 'Buscar por palabra clave…',
+    allProg: 'Todos los programas', allYear: 'Todos los años', allEstado: 'Todos los estados', allCluster: 'Todos los clusters',
+    statTopics: 'topics', statPrograms: 'programas', statYears: 'años',
+    deadlineLabel: 'Cierre', trlLabel: 'TRL', budgetLabel: 'Presupuesto orientativo', openCall: 'Abrir en el Portal UE',
+    emptyTitle: 'Sin resultados', emptyBody: 'Prueba con otra palabra o quita los filtros.',
+    estados: { abierta: 'Abierta', proxima: 'Próxima', cerrada: 'Cerrada' },
+    liveOn: 'Datos en vivo', liveOff: 'Demo curada',
+    resultOne: 'topic', resultMany: 'topics',
+    sourceEyebrow: 'Fuente de datos',
+    sourceBody: 'El engine de esta sección es el feed en vivo del Funding & Tenders Portal de la Comisión Europea (API SEDIA), servido a través de nuestro backend. Mientras el feed en vivo no está conectado, se muestra una selección curada de topics 2026–2027 con datos orientativos: confirma siempre código, fechas y presupuesto en el Portal oficial. Consulta: junio de 2026.',
+    footerNote: '4Helix Ventures · nombre de trabajo · pendiente de registro de marca',
+    locale: 'es-ES'
+  },
+  en: {
+    eyebrow: 'Topics 2026–2027',
+    title: 'Calls from the European programmes.',
+    intro: "Explore the topics of the European Commission's programmes. Filter by programme, year, status and cluster, or search by keyword. The list connects live to the official Portal; meanwhile you see a curated selection.",
+    searchPlaceholder: 'Search by keyword…',
+    allProg: 'All programmes', allYear: 'All years', allEstado: 'All statuses', allCluster: 'All clusters',
+    statTopics: 'topics', statPrograms: 'programmes', statYears: 'years',
+    deadlineLabel: 'Deadline', trlLabel: 'TRL', budgetLabel: 'Indicative budget', openCall: 'Open in EU Portal',
+    emptyTitle: 'No results', emptyBody: 'Try another word or clear the filters.',
+    estados: { abierta: 'Open', proxima: 'Upcoming', cerrada: 'Closed' },
+    liveOn: 'Live data', liveOff: 'Curated demo',
+    resultOne: 'topic', resultMany: 'topics',
+    sourceEyebrow: 'Data source',
+    sourceBody: "This section's engine is the live feed from the European Commission's Funding & Tenders Portal (SEDIA API), served through our backend. While the live feed is not connected, a curated selection of 2026–2027 topics is shown with indicative data: always confirm code, dates and budget on the official Portal. Accessed: June 2026.",
+    footerNote: '4Helix Ventures · working name · trademark pending',
+    locale: 'en-GB'
+  }
+};
+const ESTADO_COLOR = { abierta: '95,211,200', proxima: '230,192,116', cerrada: '136,146,163' };
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { lang: fhReadLang((props && props.defaultLang) || 'es'), programa: 'todos', year: 'todos', estado: 'todos', cluster: 'todos', query: '', topics: null, live: false };
+    this.bgCanvas = React.createRef();
+  }
+  componentDidMount() {
+    import('./fh-common.js').then((m) => { this._net = m.startNetwork(this.bgCanvas.current); }).catch(() => {});
+    import('./contenido.js').then((m) => {
+      this._programs = m.PROGRAMS || {};
+      this._clusters = m.CLUSTERS || {};
+      this._seed = m.TOPICS || [];
+      this.setState({ topics: this._seed });
+      this.tryLive();
+    }).catch(() => { this.setState({ topics: [] }); });
+  }
+  componentWillUnmount() { if (this._net) this._net.stop(); }
+  setLang(l) { fhWriteLang(l); this.setState({ lang: l }); }
+
+  tryLive() {
+    let ep = '';
+    try { ep = window.FH_TOPICS_ENDPOINT || ''; } catch (e) {}
+    if (!ep) return; // no live endpoint configured → keep curated demo
+    fetch(ep, { method: 'GET' })
+      .then((r) => r.ok ? r.json() : Promise.reject(new Error('bad')))
+      .then((d) => {
+        const arr = (d && (d.topics || d.results)) || [];
+        if (Array.isArray(arr) && arr.length) { this.setState({ topics: this.normalizeFeed(arr), live: true }); }
+      })
+      .catch(() => { /* keep curated demo silently */ });
+  }
+
+  normalizeFeed(arr) {
+    const EST = { 'próxima': 'proxima', 'proxima': 'proxima', 'forthcoming': 'proxima', 'abierta': 'abierta', 'open': 'abierta', 'cerrada': 'cerrada', 'closed': 'cerrada' };
+    const d10 = (s) => s ? String(s).slice(0, 10) : '';
+    return arr.map((x) => {
+      if (x && x.code && x.es && x.en) return x; // ya en forma 4Helix
+      const code = x.code || x.codigo || x.id || '';
+      const title = x.titulo || (x.es && x.es.title) || code;
+      const summary = x.resumen || (x.es && x.es.summary) || '';
+      const estRaw = String(x.estado || '').trim().toLowerCase();
+      const budget = x.presupuesto || x.budget || { es: '—', en: '—' };
+      return {
+        id: (code || '').toLowerCase(), code: code,
+        programa: x.programa || 'otros',
+        cluster: x.cluster || 'general',
+        year: (x.anio != null ? String(x.anio) : (x.year || '')),
+        estado: EST[estRaw] || estRaw,
+        opening: d10(x.apertura || x.opening),
+        deadline: d10(x.cierre || x.deadline),
+        budget: (budget && typeof budget === 'object') ? budget : { es: String(budget), en: String(budget) },
+        trl: x.trl || '—',
+        url: x.enlace || x.url || 'https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home',
+        keywords: x.palabrasClave || x.keywords || [],
+        es: { title: title, summary: summary },
+        en: { title: (x.en && x.en.title) || title, summary: (x.en && x.en.summary) || summary }
+      };
+    });
+  }
+
+  fmtDate(iso, locale) {
+    if (!iso) return '—';
+    try { return new Date(iso + 'T00:00:00').toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' }); } catch (e) { return iso; }
+  }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const t = UI[lang];
+    const isES = lang === 'es';
+    const programs = this._programs || {};
+    const clusters = this._clusters || {};
+    const today = new Date().toISOString().slice(0, 10);
+    const all = (this.state.topics || []).filter((x) => {
+      if (x.estado === 'cerrada') return false;        // fuera cerradas
+      if (x.deadline && x.deadline < today) return false; // fuera vencidas (arrastres mal etiquetados)
+      return true;
+    });
+    const { programa, year, estado, cluster, query, live } = this.state;
+    const q = query.trim().toLowerCase();
+
+    const baseBtn = { padding: '6px 14px', borderRadius: '999px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '12px', letterSpacing: '0.08em', cursor: 'pointer', border: 'none', background: 'transparent', color: '#7c828e', transition: 'all .2s' };
+    const activeBtn = Object.assign({}, baseBtn, { background: 'rgba(220,225,232,0.13)', color: '#eef0f2' });
+
+    // program chips
+    const progCounts = { todos: all.length };
+    Object.keys(programs).forEach((k) => { progCounts[k] = all.filter((x) => x.programa === k).length; });
+    const progDefs = [{ key: 'todos', label: isES ? 'Todos' : 'All', rgb: '180,190,205' }].concat(
+      Object.keys(programs).map((k) => ({ key: k, label: programs[k][lang], rgb: programs[k].rgb }))
+    );
+    const programChips = progDefs.filter((c) => c.key === 'todos' || progCounts[c.key] > 0).map((c) => {
+      const on = programa === c.key;
+      return {
+        label: c.label, count: progCounts[c.key] || 0,
+        onSel: () => this.setState({ programa: c.key }),
+        style: { display: 'inline-flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap', padding: '8px 15px', borderRadius: '999px', cursor: 'pointer', fontFamily: "'Hanken Grotesk', sans-serif", fontSize: '13.5px', fontWeight: 500, transition: 'all .2s', color: on ? '#eef2f6' : '#9aa0ac', border: '1px solid ' + (on ? 'rgba(' + c.rgb + ',0.6)' : 'rgba(220,225,232,0.12)'), background: on ? 'rgba(' + c.rgb + ',0.14)' : 'rgba(13,18,28,0.4)', outline: 'none' },
+        countStyle: { fontFamily: "'IBM Plex Mono', monospace", fontSize: '10.5px', color: on ? 'rgb(' + c.rgb + ')' : '#6b7686' }
+      };
+    });
+
+    // dropdowns: year, estado, cluster
+    const years = {}; all.forEach((x) => { if (x.year) years[x.year] = 1; });
+    const yearOpts = [{ value: 'todos', label: t.allYear }].concat(Object.keys(years).sort().map((y) => ({ value: y, label: y })));
+    const estadoOpts = [{ value: 'todos', label: t.allEstado }].concat(['abierta', 'proxima', 'cerrada'].filter((s) => all.some((x) => x.estado === s)).map((s) => ({ value: s, label: t.estados[s] })));
+    const clusterOpts = [{ value: 'todos', label: t.allCluster }].concat(Object.keys(clusters).filter((k) => all.some((x) => x.cluster === k)).map((k) => ({ value: k, label: clusters[k][lang] })));
+    const selects = [
+      { value: year, options: yearOpts, onChange: (e) => this.setState({ year: e.target.value }) },
+      { value: estado, options: estadoOpts, onChange: (e) => this.setState({ estado: e.target.value }) },
+      { value: cluster, options: clusterOpts, onChange: (e) => this.setState({ cluster: e.target.value }) }
+    ];
+
+    // filter
+    let list = all.slice();
+    if (programa !== 'todos') list = list.filter((x) => x.programa === programa);
+    if (year !== 'todos') list = list.filter((x) => x.year === year);
+    if (estado !== 'todos') list = list.filter((x) => x.estado === estado);
+    if (cluster !== 'todos') list = list.filter((x) => x.cluster === cluster);
+    if (q) list = list.filter((x) => {
+      const c = x[lang] || {};
+      const kw = (x.keywords || []).join(' ');
+      return ((c.title || '') + ' ' + (c.summary || '') + ' ' + (x.code || '') + ' ' + kw).toLowerCase().indexOf(q) !== -1;
+    });
+    // sort by deadline ascending
+    list.sort((a, b) => String(a.deadline || '').localeCompare(String(b.deadline || '')));
+
+    const progStyleFor = (k) => ({ fontFamily: "'IBM Plex Mono', monospace", fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '4px 9px', borderRadius: '5px', color: programs[k] ? 'rgb(' + programs[k].rgb + ')' : '#9aa0ac', background: programs[k] ? 'rgba(' + programs[k].rgb + ',0.12)' : 'rgba(150,160,175,0.1)' });
+    const estStyleFor = (s) => s ? { fontFamily: "'IBM Plex Mono', monospace", fontSize: '9.5px', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '3px 8px', borderRadius: '999px', color: 'rgb(' + (ESTADO_COLOR[s] || '136,146,163') + ')', border: '1px solid rgba(' + (ESTADO_COLOR[s] || '136,146,163') + ',0.4)' } : { display: 'none' };
+
+    const cards = list.map((x) => {
+      const c = x[lang] || {};
+      const hasCluster = x.cluster && x.cluster !== 'general' && clusters[x.cluster];
+      return {
+        url: x.url || 'https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home',
+        title: c.title || x.code || '—', code: x.code || '', summary: c.summary || '',
+        progLabel: programs[x.programa] ? programs[x.programa][lang] : x.programa, progStyle: progStyleFor(x.programa),
+        clusterLabel: hasCluster ? clusters[x.cluster][lang] : '', clusterStyle: hasCluster ? { fontFamily: "'IBM Plex Mono', monospace", fontSize: '10px', letterSpacing: '0.06em', padding: '4px 9px', borderRadius: '5px', color: '#9aa7b6', background: 'rgba(150,160,175,0.08)' } : { display: 'none' },
+        estadoLabel: x.estado ? t.estados[x.estado] : '', estadoStyle: estStyleFor(x.estado),
+        deadline: this.fmtDate(x.deadline, t.locale), trl: x.trl || '—', budget: (x.budget && typeof x.budget === 'object') ? (x.budget[lang] || x.budget.es || x.budget.en || '—') : (x.budget || '—')
+      };
+    });
+
+    const distinctPrograms = {}; const distinctYears = {};
+    all.forEach((x) => { if (x.programa) distinctPrograms[x.programa] = 1; if (x.year) distinctYears[x.year] = 1; });
+    const stats = [
+      { n: all.length, label: t.statTopics },
+      { n: Object.keys(distinctPrograms).length, label: t.statPrograms },
+      { n: Object.keys(distinctYears).length, label: t.statYears }
+    ];
+
+    return {
+      t: t, year: '2026', nav: fhNavItems(lang, 'topics'), bgCanvas: this.bgCanvas,
+      esBtnStyle: isES ? activeBtn : baseBtn, enBtnStyle: isES ? baseBtn : activeBtn,
+      setES: () => this.setLang('es'), setEN: () => this.setLang('en'),
+      programChips: programChips, selects: selects,
+      query: query, onSearch: (ev) => this.setState({ query: ev.target.value }),
+      stats: stats,
+      cards: cards, hasResults: cards.length > 0, noResults: cards.length === 0,
+      resultLabel: list.length + ' ' + (list.length === 1 ? t.resultOne : t.resultMany),
+      liveLabel: live ? t.liveOn : t.liveOff,
+      liveStyle: { display: 'inline-flex', alignItems: 'center', gap: '7px', whiteSpace: 'nowrap', fontFamily: "'IBM Plex Mono', monospace", fontSize: '10.5px', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '4px 11px', borderRadius: '999px', color: live ? '#7fdccf' : '#c9a86a', border: '1px solid ' + (live ? 'rgba(95,211,200,0.4)' : 'rgba(230,192,116,0.35)') },
+      liveDotStyle: { width: '6px', height: '6px', borderRadius: '50%', background: live ? '#5fd3c8' : '#e6c074', animation: 'livePulse 2s ease-in-out infinite' }
+    };
+  }
+}
+</script>
+</body>
+</html>

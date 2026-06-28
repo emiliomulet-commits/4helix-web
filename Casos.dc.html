@@ -78,6 +78,14 @@
     <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.26em; text-transform:uppercase; color:#88b0ee; margin-bottom:20px;">{{ t.eyebrow }}</div>
     <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.02em; line-height:1.05; font-size:clamp(30px,4.2vw,54px); margin:0; max-width:20ch; color:#eef2f6;">{{ t.title }}</h1>
     <p style="font-size:clamp(16px,1.4vw,18px); line-height:1.62; color:#9aa0ac; max-width:54ch; margin:22px 0 0; font-weight:300;">{{ t.intro }}</p>
+    <div data-bg-clear style="display:flex; flex-wrap:wrap; gap:clamp(24px,4vw,46px); margin-top:30px;">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+        <div style="display:flex; align-items:baseline; gap:9px;">
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,3vw,38px); letter-spacing:-0.01em; color:#eef2f6;">{{ s.n }}</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#88b0ee;">{{ s.label }}</span>
+        </div>
+      </sc-for>
+    </div>
   </header>
 
   <!-- CONTROLS -->
@@ -88,9 +96,19 @@
           <button onClick="{{ c.onSel }}" style="{{ c.style }}">{{ c.label }}<span style="{{ c.countStyle }}">{{ c.count }}</span></button>
         </sc-for>
       </div>
-      <div style="position:relative; flex:1; min-width:220px; max-width:340px;">
-        <span style="position:absolute; left:14px; top:50%; transform:translateY(-50%); pointer-events:none; color:#6b7686; font-size:15px;">&#9906;</span>
-        <input type="text" value="{{ query }}" onInput="{{ onSearch }}" placeholder="{{ t.searchPlaceholder }}" style="width:100%; padding:11px 14px 11px 38px; border-radius:999px; border:1px solid rgba(220,225,232,0.14); background:rgba(13,18,28,0.6); color:#e8eaed; font-family:'Hanken Grotesk',sans-serif; font-size:14.5px; outline:none;"/>
+      <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; flex:1; justify-content:flex-end;">
+        <div style="position:relative;">
+          <select onChange="{{ onCountry }}" value="{{ country }}" style="appearance:none; -webkit-appearance:none; padding:10px 34px 10px 15px; border-radius:999px; border:1px solid rgba(220,225,232,0.14); background:rgba(13,18,28,0.6); color:#e8eaed; font-family:'Hanken Grotesk',sans-serif; font-size:13.5px; cursor:pointer; outline:none;">
+            <sc-for list="{{ countryOpts }}" as="o" hint-placeholder-count="4">
+              <option value="{{ o.value }}">{{ o.label }}</option>
+            </sc-for>
+          </select>
+          <span style="position:absolute; right:14px; top:50%; transform:translateY(-50%); pointer-events:none; color:#6b7686; font-size:10px;">&#9660;</span>
+        </div>
+        <div style="position:relative; min-width:200px; max-width:300px;">
+          <span style="position:absolute; left:14px; top:50%; transform:translateY(-50%); pointer-events:none; color:#6b7686; font-size:15px;">&#9906;</span>
+          <input type="text" value="{{ query }}" onInput="{{ onSearch }}" placeholder="{{ t.searchPlaceholder }}" style="width:100%; padding:11px 14px 11px 38px; border-radius:999px; border:1px solid rgba(220,225,232,0.14); background:rgba(13,18,28,0.6); color:#e8eaed; font-family:'Hanken Grotesk',sans-serif; font-size:14.5px; outline:none;"/>
+        </div>
       </div>
     </div>
   </section>
@@ -140,6 +158,7 @@
               <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7c93ab;">{{ c.deadlineLabel }}</span>
               <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7c93ab;">{{ c.trl }}</span>
             </div>
+            <div style="{{ c.sourceStyle }}"><span style="color:#5d748c;">{{ c.sourcePrefix }}</span>&nbsp;{{ c.sourceLabel }}</div>
           </a>
         </sc-for>
       </div>
@@ -151,6 +170,12 @@
       </div>
     </sc-if>
     <div data-bg-clear style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.04em; color:#5d748c; margin-top:28px;">{{ t.disclaimer }}</div>
+
+    <div data-bg-clear style="margin-top:40px; border:1px solid rgba(220,225,232,0.08); border-radius:12px; background:rgba(13,18,28,0.45); padding:clamp(24px,3vw,34px);">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#88b0ee; margin-bottom:14px;">{{ t.methodEyebrow }}</div>
+      <p style="font-size:14.5px; line-height:1.65; color:#9aa0ac; margin:0 0 14px; font-weight:300; max-width:80ch;">{{ t.methodBody }}</p>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.04em; color:#5d748c;">{{ t.methodSources }}</div>
+    </div>
   </section>
 
   <!-- FOOTER -->
@@ -210,42 +235,53 @@ function fhNavItems(lang, page) {
 
 const UI = {
   es: {
-    eyebrow: 'Fondos UE',
-    title: 'Financiación europea y nacional.',
-    intro: 'El radar de 4Helix: convocatorias abiertas de financiación europea y nacional para llevar la ciencia al mercado. Filtra por estado o busca la convocatoria que necesites.',
-    searchPlaceholder: 'Buscar convocatorias…',
-    readMore: 'Leer más', allLabel: 'Todas',
+    eyebrow: 'Casos de éxito',
+    title: 'Del laboratorio al mercado: 100 casos europeos.',
+    intro: 'Referentes del ecosistema deep-tech europeo: spin-offs y empresas nacidas de la ciencia. Filtra por sector o país, o busca un caso — cada uno con su hito, recorrido y la lección que deja.',
+    searchPlaceholder: 'Buscar casos…',
+    readMore: 'Leer más', allLabel: 'Todos', countryAll: 'Todos los países',
+    statCases: 'casos', statCountries: 'países', statSectors: 'sectores',
+    sourcePrefix: 'Fuente:',
+    methodEyebrow: 'Nota metodológica',
+    methodBody: 'Esta selección recoge spin-offs y empresas de base científica del ecosistema deep-tech europeo, elegidas por su origen investigador verificado y su variedad sectorial y geográfica. No son proyectos de 4Helix: son referentes del ecosistema que ilustran el recorrido del laboratorio al mercado. Donde había cifras, programas o salidas confirmados se incluyen; donde no, la información se deja cualitativa en lugar de estimarla. Cada caso enlaza a su fuente.',
+    methodSources: 'Fuentes: webs oficiales de las empresas e instituciones (ETH, EPFL, imec, Max Planck, Fraunhofer, DTU, TU Delft…), informes de transferencia tecnológica y agregadores especializados (The Quantum Insider, IQT, Global Venturing). Consulta: junio de 2026.',
     emptyTitle: 'Sin resultados',
     emptyBody: 'Prueba con otra palabra o quita los filtros.',
     deadline: 'Cierre', noDeadline: 'Continua',
     estados: { abierta: 'Abierta', proxima: 'Próxima', cerrada: 'Cerrada' },
     facts: { programa: 'Programa', deadline: 'Fecha de cierre', importe: 'Financiación', trl: 'TRL elegible' },
-    disclaimer: 'Fechas e importes orientativos — confirma siempre en la convocatoria oficial.',
+    disclaimer: 'Casos del ecosistema europeo, no proyectos de 4Helix — con fines ilustrativos y educativos.',
     footerNote: '4Helix Ventures · nombre de trabajo · pendiente de registro de marca',
     locale: 'es-ES'
   },
   en: {
-    eyebrow: 'EU Funding',
-    title: 'European and national funding.',
-    intro: "4Helix's radar: open European and national funding calls to take science to market. Filter by status or search for the call you need.",
-    searchPlaceholder: 'Search calls…',
-    readMore: 'Read more', allLabel: 'All',
+    eyebrow: 'Success cases',
+    title: 'From lab to market: 100 European cases.',
+    intro: 'References from the European deep-tech ecosystem: spin-offs and companies born from science. Filter by sector or country, or search a case — each with its milestone, journey and the lesson it leaves.',
+    searchPlaceholder: 'Search cases…',
+    readMore: 'Read more', allLabel: 'All', countryAll: 'All countries',
+    statCases: 'cases', statCountries: 'countries', statSectors: 'sectors',
+    sourcePrefix: 'Source:',
+    methodEyebrow: 'Methodology note',
+    methodBody: 'This selection gathers spin-offs and science-based companies from the European deep-tech ecosystem, chosen for their verified research origin and their sector and geographic variety. They are not 4Helix projects: they are ecosystem references that illustrate the journey from lab to market. Where confirmed figures, programmes or exits existed they are included; where not, information is left qualitative rather than estimated. Each case links to its source.',
+    methodSources: 'Sources: official company and institution websites (ETH, EPFL, imec, Max Planck, Fraunhofer, DTU, TU Delft…), technology-transfer reports and specialised aggregators (The Quantum Insider, IQT, Global Venturing). Accessed: June 2026.',
     emptyTitle: 'No results',
     emptyBody: 'Try another word or clear the filters.',
     deadline: 'Deadline', noDeadline: 'Rolling',
     estados: { abierta: 'Open', proxima: 'Upcoming', cerrada: 'Closed' },
     facts: { programa: 'Programme', deadline: 'Deadline', importe: 'Funding', trl: 'Eligible TRL' },
-    disclaimer: 'Dates and amounts are indicative — always confirm in the official call.',
+    disclaimer: 'Cases from the European ecosystem, not 4Helix projects — for illustrative and educational purposes.',
     footerNote: '4Helix Ventures · working name · trademark pending',
     locale: 'en-GB'
   }
 };
 const ESTADO_COLOR = { abierta: '95,211,200', proxima: '230,192,116', cerrada: '136,146,163' };
+const FEATURED_ID = 'caso-biontech';
 
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { lang: fhReadLang((props && props.defaultLang) || 'es'), filter: 'todos', query: '', entries: null };
+    this.state = { lang: fhReadLang((props && props.defaultLang) || 'es'), filter: 'todos', country: 'todos', query: '', entries: null };
     this.bgCanvas = React.createRef();
   }
   componentDidMount() {
@@ -267,21 +303,37 @@ class Component extends DCLogic {
     const cats = this._cats || {};
     const sectors = this._sectors || {};
     const countries = this._countries || {};
-    const entries = (this.state.entries || []).filter((e) => e.category === 'fondos');
+    const entries = (this.state.entries || []).filter((e) => e.category === 'casos');
     const filter = this.state.filter;
+    const country = this.state.country;
     const query = this.state.query;
     const q = query.trim().toLowerCase();
 
     const baseBtn = { padding: '6px 14px', borderRadius: '999px', fontFamily: "'IBM Plex Mono', monospace", fontSize: '12px', letterSpacing: '0.08em', cursor: 'pointer', border: 'none', background: 'transparent', color: '#7c828e', transition: 'all .2s' };
     const activeBtn = Object.assign({}, baseBtn, { background: 'rgba(220,225,232,0.13)', color: '#eef0f2' });
 
-    // estado counts
-    const ESTADOS = ['abierta', 'proxima', 'cerrada'];
+    // stats band
+    const distinctCountries = {}; const distinctSectors = {};
+    entries.forEach((e) => { if (e.caso) { distinctCountries[e.caso.country] = 1; distinctSectors[e.caso.sector] = 1; } });
+    const stats = [
+      { n: entries.length, label: t.statCases },
+      { n: Object.keys(distinctCountries).length, label: t.statCountries },
+      { n: Object.keys(distinctSectors).length, label: t.statSectors }
+    ];
+
+    // country dropdown options
+    const countryOpts = [{ value: 'todos', label: t.countryAll }].concat(
+      Object.keys(countries).filter((k) => entries.some((e) => e.caso && e.caso.country === k))
+        .sort((a, b) => countries[a][lang].localeCompare(countries[b][lang]))
+        .map((k) => ({ value: k, label: countries[k][lang] + ' (' + entries.filter((e) => e.caso && e.caso.country === k).length + ')' }))
+    );
+
+    // sector counts
     const counts = { todos: entries.length };
-    ESTADOS.forEach((k) => { counts[k] = entries.filter((e) => e.fund && e.fund.estado === k).length; });
+    Object.keys(sectors).forEach((k) => { counts[k] = entries.filter((e) => e.caso && e.caso.sector === k).length; });
 
     const chipDefs = [{ key: 'todos', label: t.allLabel, rgb: '180,190,205' }].concat(
-      ESTADOS.map((k) => ({ key: k, label: t.estados[k], rgb: ESTADO_COLOR[k] }))
+      Object.keys(sectors).map((k) => ({ key: k, label: sectors[k][lang], rgb: sectors[k].rgb }))
     );
     const filterChips = chipDefs.filter((c) => c.key === 'todos' || counts[c.key] > 0).map((c) => {
       const on = filter === c.key;
@@ -295,7 +347,8 @@ class Component extends DCLogic {
 
     // filter + search
     let list = entries.slice().sort((a, b) => (a.date < b.date ? 1 : -1));
-    if (filter !== 'todos') list = list.filter((e) => e.fund && e.fund.estado === filter);
+    if (filter !== 'todos') list = list.filter((e) => e.caso && e.caso.sector === filter);
+    if (country !== 'todos') list = list.filter((e) => e.caso && e.caso.country === country);
     if (q) list = list.filter((e) => { const c = e[lang]; return (c.title + ' ' + c.issuer + ' ' + c.summary).toLowerCase().indexOf(q) !== -1; });
 
     const detailHref = (e) => 'Convocatoria.dc.html?id=' + encodeURIComponent(e.id);
@@ -304,20 +357,20 @@ class Component extends DCLogic {
     const tagStyleFor = (cat) => ({ fontFamily: "'IBM Plex Mono', monospace", fontSize: '10.5px', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '4px 9px', borderRadius: '5px', color: 'rgb(' + cats[cat].rgb + ')', background: 'rgba(' + cats[cat].rgb + ',0.12)' });
     const estadoStyleFor = (est) => est ? { fontFamily: "'IBM Plex Mono', monospace", fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: '999px', color: 'rgb(' + ESTADO_COLOR[est] + ')', border: '1px solid rgba(' + ESTADO_COLOR[est] + ',0.4)' } : { display: 'none' };
 
-    const showFeatured = !q && filter === 'todos';
+    const showFeatured = !q && filter === 'todos' && country === 'todos';
     let featuredEntry = null;
-    if (showFeatured) { featuredEntry = list.find((e) => e.featured) || list[0]; }
+    if (showFeatured) { featuredEntry = entries.find((e) => e.id === FEATURED_ID) || list.find((e) => e.featured) || list[0]; }
     const gridList = (showFeatured && featuredEntry) ? list.filter((e) => e.id !== featuredEntry.id) : list;
 
     let featured = null;
     if (featuredEntry) {
       const c = featuredEntry[lang];
       const est = estadoOf(featuredEntry);
-      const facts = featuredEntry.fund ? [
-        { k: t.facts.programa, v: featuredEntry.fund.programa },
-        { k: t.facts.deadline, v: this.fmtDate(featuredEntry.fund.deadline, t.locale) || t.noDeadline },
-        { k: t.facts.importe, v: featuredEntry.fund.importe },
-        { k: t.facts.trl, v: featuredEntry.fund.trl }
+      const facts = featuredEntry.caso ? [
+        { k: (isES ? 'Sector' : 'Sector'), v: sectors[featuredEntry.caso.sector] ? sectors[featuredEntry.caso.sector][lang] : featuredEntry.caso.sector },
+        { k: (isES ? 'País' : 'Country'), v: countries[featuredEntry.caso.country] ? countries[featuredEntry.caso.country][lang] : featuredEntry.caso.country },
+        { k: (isES ? 'Origen' : 'Origin'), v: c.issuer },
+        { k: (isES ? 'El recorrido' : 'The journey'), v: featuredEntry.caso.journey ? featuredEntry.caso.journey[lang] : '' }
       ] : [];
       featured = {
         href: detailHref(featuredEntry), title: c.title, issuer: c.issuer, summary: c.summary,
@@ -330,21 +383,26 @@ class Component extends DCLogic {
     const cards = gridList.map((e) => {
       const c = e[lang];
       const est = estadoOf(e);
+      const src = e.caso && e.caso.source ? e.caso.source : null;
       return {
         href: detailHref(e), title: c.title, issuer: c.issuer, summary: c.summary,
         catLabel: cats[e.category][lang], tagStyle: tagStyleFor(e.category),
         estadoLabel: est ? t.estados[est] : '', estadoStyle: estadoStyleFor(est),
         barStyle: { position: 'absolute', display: 'none' },
         deadlineLabel: e.fund ? (t.deadline + ': ' + (this.fmtDate(e.fund.deadline, t.locale) || t.noDeadline)) : (e.caso && sectors[e.caso.sector] ? sectors[e.caso.sector][lang] : this.fmtDate(e.date, t.locale)),
-        trl: e.fund ? e.fund.trl : (e.caso && countries[e.caso.country] ? countries[e.caso.country][lang] : '')
+        trl: e.fund ? e.fund.trl : (e.caso && countries[e.caso.country] ? countries[e.caso.country][lang] : ''),
+        sourcePrefix: t.sourcePrefix,
+        sourceLabel: src ? src.label : '',
+        sourceStyle: src ? { fontFamily: "'IBM Plex Mono', monospace", fontSize: '10.5px', letterSpacing: '0.02em', color: '#7c93ab', marginTop: '12px' } : { display: 'none' }
       };
     });
 
     return {
-      t: t, year: '2026', nav: fhNavItems(lang, 'fondos'), bgCanvas: this.bgCanvas,
+      t: t, year: '2026', nav: fhNavItems(lang, 'casos'), bgCanvas: this.bgCanvas,
       esBtnStyle: isES ? activeBtn : baseBtn, enBtnStyle: isES ? baseBtn : activeBtn,
       setES: () => this.setLang('es'), setEN: () => this.setLang('en'),
-      filterChips: filterChips,
+      filterChips: filterChips, stats: stats,
+      countryOpts: countryOpts, country: country, onCountry: (ev) => this.setState({ country: ev.target.value }),
       query: query, onSearch: (ev) => this.setState({ query: ev.target.value }),
       showFeatured: !!featured, featured: featured || {},
       cards: cards, hasResults: cards.length > 0, noResults: cards.length === 0 && !featured

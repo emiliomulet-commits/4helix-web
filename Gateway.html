@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4Helix Ventures — Corporate Innovation Gateway</title>
+<link rel="icon" type="image/svg+xml" href="4helix-favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+
+  :root{
+    --ink:#080D1C;
+    --ink-2:#0D1428;
+    --ink-3:#141D3A;
+    --line-dark:rgba(255,255,255,.10);
+    --ivory:#F2F0E8;
+    --ivory-2:#FBFAF5;
+    --line-light:rgba(20,28,58,.12);
+
+    --on-dark:#E9ECF6;
+    --on-dark-mut:#94A0BE;
+    --on-light:#17203A;
+    --on-light-mut:#5A647F;
+
+    --science:#34D6C6;   /* universidades / centros */
+    --industry:#F0B429;  /* empresas */
+    --capital:#8E9BFF;   /* fondos */
+    --org:#F47E6F;       /* 4Helix orquestador */
+
+    --display:"Space Grotesk",sans-serif;
+    --serif:"Newsreader",serif;
+    --body:"Inter",sans-serif;
+    --mono:"JetBrains Mono",monospace;
+
+    --maxw:1180px;
+    --pad:clamp(20px,5vw,64px);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--body);
+    background:var(--ink);
+    color:var(--on-dark);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--on-dark-mut);
+    display:inline-flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:currentColor;opacity:.6}
+  .eyebrow.on-light{color:var(--on-light-mut)}
+
+  h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.04;letter-spacing:-.02em}
+  .serif-em{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:-.01em}
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    backdrop-filter:blur(12px);
+    background:rgba(8,13,28,.62);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s,background .3s;
+  }
+  header.scrolled{border-bottom-color:var(--line-dark);background:rgba(8,13,28,.86)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01em}
+  .brand .mark{width:26px;height:26px;flex:none}
+  .nav-links{display:flex;gap:20px;align-items:center;margin-left:24px}
+  .nav-links a{font-size:13.5px;color:var(--on-dark-mut);transition:color .2s;white-space:nowrap}
+  .nav-links a:hover{color:var(--on-dark)}
+  .nav-links a.active{color:var(--on-dark)}
+  .nav-links a.active::after{content:"";display:block;height:2px;background:var(--science);border-radius:2px;margin-top:5px}
+  .nav-right{display:flex;align-items:center;gap:18px}
+  .lang{
+    font-family:var(--mono);font-size:12px;letter-spacing:.05em;
+    border:1px solid var(--line-dark);border-radius:999px;
+    padding:6px 12px;color:var(--on-dark-mut);cursor:pointer;background:none;
+    transition:border-color .2s,color .2s;
+  }
+  .lang:hover{border-color:rgba(255,255,255,.3);color:var(--on-dark)}
+  .lang b{color:var(--science)}
+  .btn{
+    font-family:var(--display);font-weight:500;font-size:14px;
+    padding:10px 18px;border-radius:999px;cursor:pointer;border:1px solid transparent;
+    transition:transform .15s,box-shadow .2s,background .2s,color .2s;display:inline-block;
+  }
+  .btn-primary{background:var(--science);color:#04231F;box-shadow:0 0 0 0 rgba(52,214,198,.5)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px -8px rgba(52,214,198,.55)}
+  .btn-ghost{border-color:var(--line-dark);color:var(--on-dark)}
+  .btn-ghost:hover{border-color:rgba(255,255,255,.35);transform:translateY(-2px)}
+  .nav .btn{padding:9px 16px}
+  .menu-toggle{display:none}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;padding-top:128px;padding-bottom:80px;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;min-height:72vh}
+  .hero h1{font-size:clamp(40px,6.4vw,82px);margin:22px 0 24px;font-weight:600}
+  .hero h1 .line2{color:var(--on-dark)}
+  .hero-sub{font-size:clamp(16px,1.5vw,20px);color:var(--on-dark-mut);max-width:30em;margin-bottom:34px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-cta .btn{padding:13px 24px;font-size:15px}
+  .hero-meta{margin-top:42px;display:flex;gap:30px;flex-wrap:wrap}
+  .hero-meta .item{font-family:var(--mono);font-size:12px;color:var(--on-dark-mut);letter-spacing:.04em}
+  .hero-meta .item b{display:block;font-family:var(--display);font-size:22px;color:var(--on-dark);letter-spacing:-.01em;margin-bottom:2px}
+
+  .helix-stage{position:relative;height:min(78vh,640px);display:flex;justify-content:center}
+  #helix{width:100%;height:100%;display:block}
+  .helix-label{position:absolute;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--on-dark-mut);white-space:nowrap}
+  .helix-label.top{top:4px}
+  .helix-label.bottom{bottom:4px}
+  .helix-label span{color:var(--science)}
+
+  .glow{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;z-index:-1;pointer-events:none}
+  .glow.a{width:420px;height:420px;background:rgba(52,214,198,.18);top:-60px;right:-40px}
+  .glow.b{width:360px;height:360px;background:rgba(142,155,255,.16);bottom:-120px;left:-80px}
+
+  /* ---------- SECTION SHELLS ---------- */
+  .section{padding-top:clamp(72px,9vw,120px);padding-bottom:clamp(72px,9vw,120px);position:relative}
+  .section-light{background:var(--ivory);color:var(--on-light)}
+  .section-light h2{color:var(--on-light)}
+  .section-head{max-width:42rem;margin-bottom:54px}
+  .section-head h2{font-size:clamp(30px,4.4vw,52px);margin:18px 0 16px}
+  .section-head p{font-size:clamp(16px,1.4vw,18px);color:var(--on-dark-mut)}
+  .section-light .section-head p{color:var(--on-light-mut)}
+
+  /* ---------- PROBLEM / VALLEY ---------- */
+  .valley{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .valley p.lead{font-size:clamp(17px,1.6vw,21px);color:var(--on-light);font-family:var(--serif);line-height:1.5}
+  .valley .note{margin-top:20px;color:var(--on-light-mut);font-size:15px}
+  .valley-figure{position:relative}
+  .valley-figure svg{width:100%;height:auto;display:block}
+  .vf-caption{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--on-light-mut);margin-top:14px;text-align:center}
+  .vf-why{display:flex;flex-wrap:wrap;gap:14px 22px;justify-content:center;margin-top:20px}
+  .vf-why span{display:inline-flex;align-items:center;gap:8px}
+  .vf-why i{width:8px;height:8px;border-radius:50%;flex:none}
+  .vf-why b{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--on-light-mut);letter-spacing:.02em}
+
+  /* ---------- HELICES (model) ---------- */
+  .helix-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .hcard{
+    background:var(--ink-2);border:1px solid var(--line-dark);border-radius:18px;
+    padding:26px 22px 28px;position:relative;overflow:hidden;
+    transition:transform .25s,border-color .25s;
+  }
+  .hcard:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.22)}
+  .hcard .strand{position:absolute;top:0;left:0;width:100%;height:3px}
+  .hcard .idx{font-family:var(--mono);font-size:12px;color:var(--on-dark-mut);letter-spacing:.1em}
+  .hcard h3{font-size:19px;margin:16px 0 10px;font-weight:600}
+  .hcard p{font-size:14.5px;color:var(--on-dark-mut);line-height:1.55}
+  .hcard{position:relative}
+  .hcard-link{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-family:var(--display);font-weight:500;font-size:13.5px;color:var(--on-dark)}
+  .hcard-link:hover{gap:10px}
+  .hcard .tag{display:inline-block;margin-top:16px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:4px 10px;border-radius:999px}
+
+  /* ---------- METHOD ---------- */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line-light)}
+  .step{padding:30px 22px 30px 0;border-right:1px solid var(--line-light);position:relative}
+  .step:last-child{border-right:none}
+  .step .num{font-family:var(--display);font-weight:700;font-size:13px;color:var(--on-light-mut);letter-spacing:.1em}
+  .step .bar{height:3px;width:36px;margin:14px 0 18px;border-radius:3px}
+  .step h3{font-size:20px;color:var(--on-light);margin-bottom:10px}
+  .step p{font-size:14.5px;color:var(--on-light-mut)}
+
+  /* ---------- METRICS ---------- */
+  .metrics{background:var(--ink-2);border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark)}
+  .metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
+  .metric{padding:8px 0}
+  .metric b{font-family:var(--display);font-weight:600;font-size:clamp(34px,4.5vw,52px);letter-spacing:-.02em;display:block;background:linear-gradient(120deg,var(--science),var(--capital));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .metric span{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--on-dark-mut);text-transform:uppercase}
+
+  /* ---------- DOORS ---------- */
+  .doors{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .door{
+    background:var(--ink-2);border:1px solid var(--line-dark);border-radius:20px;padding:32px 28px 30px;
+    display:flex;flex-direction:column;transition:transform .25s,border-color .25s;
+  }
+  .door:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.22)}
+  .door .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;margin-bottom:20px;font-family:var(--mono);font-weight:600}
+  .door h3{font-size:23px;margin-bottom:12px}
+  .door p{font-size:15px;color:var(--on-dark-mut);flex:1;margin-bottom:22px}
+  .door .doorlink{font-family:var(--display);font-weight:500;font-size:15px;display:inline-flex;align-items:center;gap:8px;color:var(--on-dark)}
+  .door .doorlink .arrow{transition:transform .2s}
+  .door:hover .doorlink .arrow{transform:translateX(5px)}
+
+  /* ---------- FINAL CTA ---------- */
+  .final{text-align:center;position:relative;overflow:hidden}
+  .final h2{font-size:clamp(32px,5vw,60px);margin-bottom:18px}
+  .final p{font-size:clamp(16px,1.6vw,20px);color:var(--on-dark-mut);max-width:32em;margin:0 auto 34px}
+  .final .btn{padding:15px 32px;font-size:16px}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line-dark);padding:54px 0 40px}
+  .foot-grid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;align-items:flex-start}
+  .foot-brand{max-width:24rem}
+  .foot-brand p{color:var(--on-dark-mut);font-size:14px;margin-top:14px}
+  .foot-cols{display:flex;gap:60px;flex-wrap:wrap}
+  .foot-col h4{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-dark-mut);margin-bottom:14px}
+  .foot-col a{display:block;font-size:14px;color:var(--on-dark);margin-bottom:9px;opacity:.85;transition:opacity .2s}
+  .foot-col a:hover{opacity:1}
+  .foot-bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:48px;padding-top:24px;border-top:1px solid var(--line-dark);font-family:var(--mono);font-size:11.5px;color:var(--on-dark-mut);letter-spacing:.03em}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:920px){
+    .hero-grid{grid-template-columns:1fr;gap:10px}
+    .helix-stage{height:380px;order:-1}
+    .helix-cards{grid-template-columns:repeat(2,1fr)}
+    .steps{grid-template-columns:1fr 1fr}
+    .step{border-right:none;border-bottom:1px solid var(--line-light)}
+    .metrics-grid{grid-template-columns:1fr 1fr;gap:26px}
+    .doors{grid-template-columns:1fr}
+    .valley{grid-template-columns:1fr;gap:34px}
+    .nav-links{display:none}
+  }
+  @media(max-width:520px){
+    .helix-cards{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr}
+    .metrics-grid{grid-template-columns:1fr 1fr}
+    .hero-meta{gap:20px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+  }
+
+
+  .nav-links a.active{color:var(--on-dark)}
+  .nav-links a.active::after{content:"";display:block;height:2px;background:var(--science);border-radius:2px;margin-top:5px}
+  .page-hero{padding-top:138px;padding-bottom:14px}
+  .page-hero h1{font-size:clamp(32px,5vw,60px);margin:16px 0 16px;font-weight:600}
+  .page-hero p{font-size:clamp(16px,1.5vw,19px);color:var(--on-dark-mut);max-width:46rem}
+  .crumb{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--on-dark-mut);text-transform:uppercase}
+  .framing{margin-top:22px;padding:14px 18px;border:1px solid var(--line-dark);border-radius:12px;background:var(--ink-2);font-size:13.5px;color:var(--on-dark-mut);max-width:46rem}
+  .framing b{color:var(--on-dark);font-weight:600}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+  .stat b{font-family:var(--display);font-weight:600;font-size:clamp(30px,4vw,46px);letter-spacing:-.02em;display:block;background:linear-gradient(120deg,var(--science),var(--capital));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .stat span{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--on-dark-mut)}
+  .src{font-family:var(--mono);font-size:11px;color:var(--on-dark-mut);margin-top:26px;opacity:.8}
+  .ladder{margin-top:18px}
+  .lad-axis{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--on-light-mut);margin-bottom:6px;padding-left:172px}
+  .lad-axis span{flex:1;text-align:center}.lad-axis span.hot{color:var(--org);font-weight:600}
+  .lad-row{display:grid;grid-template-columns:160px 1fr;gap:12px;align-items:center;margin-bottom:9px}
+  .lad-name{font-family:var(--mono);font-size:12px;color:var(--on-light);text-align:right;line-height:1.3}
+  .lad-track{position:relative;height:26px;background:rgba(20,28,58,.06);border-radius:8px}
+  .lad-valley{position:absolute;top:-4px;bottom:-4px;background:rgba(244,126,111,.08);border-left:1px dashed rgba(244,126,111,.4);border-right:1px dashed rgba(244,126,111,.4);border-radius:6px;pointer-events:none}
+  .lad-bar{position:absolute;top:0;bottom:0;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10.5px;color:#08130f;font-weight:600;transition:transform .2s,filter .2s;overflow:hidden;white-space:nowrap}
+  .lad-bar:hover{transform:translateY(-1px);filter:brightness(1.06)}
+  .lad-bar.on{outline:2px solid var(--on-light);outline-offset:1px}
+  .lad-panel{margin-top:18px;background:var(--ink-2);border:1px solid var(--line-dark);border-radius:16px;padding:22px 24px;color:var(--on-dark)}
+  .lad-panel .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px}
+  .lad-panel h4{font-family:var(--display);font-size:20px;margin:8px 0 8px}
+  .lad-panel p{font-size:14.5px;color:var(--on-dark-mut)}
+  .filters{display:flex;flex-direction:column;gap:12px;margin-bottom:26px}
+  .filt-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .filt-row .lab{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-dark-mut);margin-right:6px;min-width:70px}
+  .chip{font-family:var(--mono);font-size:12px;padding:7px 13px;border-radius:999px;border:1px solid var(--line-dark);color:var(--on-dark-mut);cursor:pointer;background:none;transition:.2s}
+  .chip:hover{color:var(--on-dark);border-color:rgba(255,255,255,.3)}
+  .chip.on{color:#04231F;background:var(--science);border-color:transparent}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .case{background:var(--ink-2);border:1px solid var(--line-dark);border-radius:16px;padding:24px;display:flex;flex-direction:column;transition:transform .2s,border-color .2s}
+  .case:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.22)}
+  .case .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:4px}
+  .case h3{font-size:19px;font-weight:600}
+  .case .ctry{font-family:var(--mono);font-size:11px;color:var(--on-dark-mut);white-space:nowrap}
+  .case .inst{font-family:var(--mono);font-size:11px;color:var(--on-dark-mut);margin-bottom:13px}
+  .case p.desc{font-size:14px;color:var(--on-dark-mut);line-height:1.55}
+  .case .block{margin-top:14px;font-size:13px;line-height:1.5}
+  .case .block .l{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mc,var(--science));margin-bottom:3px}
+  .case .milestone{color:var(--on-dark)}
+  .case .journey{margin-top:14px;font-size:12.5px;color:var(--on-dark);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .case .journey i{font-style:normal;color:var(--on-dark-mut)}
+  .case .lesson{color:var(--on-dark-mut);border-top:1px solid var(--line-dark);padding-top:14px}
+  .case .sct{display:inline-block;margin-top:16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:4px 10px;border-radius:999px;align-self:flex-start}
+  .case .source{margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--on-dark-mut);align-self:flex-start;border:1px solid var(--line-dark);padding:5px 11px;border-radius:999px;transition:.2s;text-decoration:none}
+  .case .source:hover{color:var(--on-dark);border-color:rgba(255,255,255,.3)}
+  .count{font-family:var(--mono);font-size:12px;color:var(--on-dark-mut);margin-bottom:14px}
+  @media(max-width:880px){.stats{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr 1fr}.lad-row{grid-template-columns:120px 1fr}.lad-axis{padding-left:132px}.lad-name{font-size:11px}}
+  @media(max-width:560px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+
+
+  /* ===== Open500 page ===== */
+  .o-hero{padding:120px 0 40px;position:relative}
+  .o-hero h1{font-size:clamp(34px,6vw,68px);max-width:14ch}
+  .o-hero h1 em{font-family:var(--serif);font-style:italic;font-weight:500;color:var(--industry)}
+  .o-hero .lead{font-size:clamp(16px,1.6vw,20px);color:var(--on-dark-mut);max-width:46ch;margin-top:22px}
+  .o-note{margin-top:26px;border:1px solid var(--line-dark);border-radius:14px;padding:18px 20px;background:rgba(240,180,41,.05);max-width:62ch;font-size:14.5px;color:var(--on-dark-mut)}
+  .o-note b{color:var(--on-dark);font-weight:600}
+
+  .oband{background:var(--ivory);color:var(--on-light);padding:46px 0}
+  .oband .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+  .oband .s b{font-family:var(--display);font-size:clamp(26px,3.4vw,40px);font-weight:600;letter-spacing:-.02em;display:block;background:linear-gradient(90deg,var(--science),var(--capital));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .oband .s span{font-family:var(--mono);font-size:12.5px;color:var(--on-light-mut);display:block;margin-top:8px;line-height:1.5}
+  .oband .src{font-family:var(--mono);font-size:11.5px;color:var(--on-light-mut);margin-top:24px;opacity:.85}
+  @media(max-width:760px){.oband .grid{grid-template-columns:repeat(2,1fr);gap:20px}}
+
+  .osec{padding:64px 0 30px}
+  .ofilters{display:flex;flex-direction:column;gap:14px;margin:26px 0 30px}
+  .ofilters .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .ofilters .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark-mut);min-width:74px}
+  .ocount{font-family:var(--mono);font-size:12.5px;color:var(--on-dark-mut);margin-bottom:22px}
+
+  .ogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px}
+  .corp{border:1px solid var(--line-dark);border-radius:16px;padding:22px 22px 20px;background:linear-gradient(180deg,var(--ink-2),var(--ink));display:flex;flex-direction:column;gap:13px;transition:border-color .25s,transform .25s}
+  .corp:hover{border-color:rgba(240,180,41,.4);transform:translateY(-3px)}
+  .corp .top{display:flex;align-items:center;gap:13px}
+  .corp .logo{width:44px;height:44px;border-radius:11px;flex:0 0 44px;display:grid;place-items:center;font-family:var(--display);font-weight:600;font-size:17px;color:var(--ink);background:linear-gradient(135deg,var(--industry),#f7cf6b)}
+  .corp .nm{font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:-.01em;line-height:1.15}
+  .corp .reg{font-family:var(--mono);font-size:11.5px;color:var(--on-dark-mut);margin-top:3px}
+  .corp .prog{font-family:var(--mono);font-size:12px;color:var(--industry);letter-spacing:.02em}
+  .corp .desc{font-size:14px;color:var(--on-dark-mut);line-height:1.55;flex:1}
+  .corp .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .corp .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;padding:4px 9px;border-radius:999px;border:1px solid var(--line-dark);color:var(--on-dark-mut)}
+  .corp .tag.ty{border-color:rgba(142,155,255,.4);color:var(--capital)}
+  .corp .go{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12.5px;color:var(--science);margin-top:2px}
+  .corp .go:hover{text-decoration:underline}
+  .corp .go svg{width:13px;height:13px}
+
+  .octa{padding:80px 0 90px;text-align:center}
+  .octa h2{font-size:clamp(26px,4vw,44px);max-width:18ch;margin:0 auto}
+  .octa h2 em{font-family:var(--serif);font-style:italic;font-weight:500;color:var(--science)}
+  .octa p{color:var(--on-dark-mut);max-width:50ch;margin:18px auto 30px;font-size:16px}
+
+  .ometh{border-top:1px solid var(--line-dark);padding:34px 0 0;margin-top:30px;font-size:13px;color:var(--on-dark-mut);line-height:1.7}
+  .ometh b{color:var(--on-dark);font-weight:600}
+
+
+  /* ===== Asistente Gateway ===== */
+  .asst{padding:60px 0 10px}
+  .asst .card{border:1px solid var(--line-dark);border-radius:20px;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));padding:clamp(20px,3vw,34px)}
+  .asst .head{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+  .asst .badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:999px;border:1px solid var(--line-dark);color:var(--science)}
+  .asst .badge.live{color:var(--org);border-color:rgba(244,126,111,.4)}
+  .asst h2{font-size:clamp(24px,3.4vw,38px)}
+  .asst .sub{color:var(--on-dark-mut);max-width:60ch;margin-top:10px;font-size:15.5px}
+  .asst .facets{display:flex;flex-direction:column;gap:14px;margin:22px 0 8px}
+  .asst .facet .flbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-dark-mut);margin-bottom:8px}
+  .asst .facet .opts{display:flex;flex-wrap:wrap;gap:7px}
+  .asst textarea{width:100%;margin-top:10px;background:var(--ink);border:1px solid var(--line-dark);border-radius:14px;color:var(--on-dark);font-family:var(--body);font-size:15px;padding:14px 16px;line-height:1.55;resize:vertical;min-height:96px}
+  .asst textarea:focus{outline:none;border-color:rgba(52,214,198,.5)}
+  .asst .runrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:16px}
+  .asst .runrow .btn{padding:13px 26px;font-size:15px}
+  .asst .mode{font-family:var(--mono);font-size:11.5px;color:var(--on-dark-mut)}
+  .asst .mode b{color:var(--science)}
+  .asst .mode.live b{color:var(--org)}
+  .asst .cfg{margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--on-dark-mut)}
+  .asst .cfg a{color:var(--science);cursor:pointer;text-decoration:underline}
+  .asst .cfgbox{display:none;margin-top:10px;gap:8px;flex-wrap:wrap;align-items:center}
+  .asst .cfgbox.show{display:flex}
+  .asst .cfgbox input{flex:1;min-width:240px;background:var(--ink);border:1px solid var(--line-dark);border-radius:10px;color:var(--on-dark);font-family:var(--mono);font-size:12.5px;padding:9px 12px}
+  .asst .cfgbox button{font-family:var(--mono);font-size:12px;padding:9px 14px;border-radius:10px;border:1px solid var(--line-dark);background:none;color:var(--on-dark);cursor:pointer}
+  .asst .out{margin-top:26px;display:none;flex-direction:column;gap:14px}
+  .asst .out.show{display:flex}
+  .asst .botmsg{border:1px solid var(--line-dark);border-left:3px solid var(--science);border-radius:0 12px 12px 0;background:rgba(52,214,198,.05);padding:14px 16px;color:var(--on-dark);font-size:15px;line-height:1.6;white-space:pre-wrap}
+  .asst .recs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+  .asst .rec{border:1px solid var(--line-dark);border-radius:14px;padding:16px 16px 14px;background:var(--ink);display:flex;flex-direction:column;gap:9px}
+  .asst .rec .rt{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .asst .rec .rn{font-family:var(--display);font-weight:600;font-size:16px}
+  .asst .rec .score{font-family:var(--mono);font-size:11px;color:#04231F;background:var(--science);border-radius:999px;padding:3px 9px;font-weight:600}
+  .asst .rec .rp{font-family:var(--mono);font-size:11.5px;color:var(--industry)}
+  .asst .rec .rmeta{font-family:var(--mono);font-size:11px;color:var(--on-dark-mut)}
+  .asst .rec .why{font-size:13.5px;color:var(--on-dark-mut);line-height:1.5}
+  .asst .rec .go{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;color:var(--science)}
+  .asst .empty{color:var(--on-dark-mut);font-size:14.5px}
+  .asst .spin{display:inline-block;width:14px;height:14px;border:2px solid var(--line-dark);border-top-color:var(--science);border-radius:50%;animation:gwspin .7s linear infinite;vertical-align:-2px;margin-right:8px}
+  @keyframes gwspin{to{transform:rotate(360deg)}}
+
+</style></head>
+<body>
+<header id="header"><div class="wrap nav">
+  <a class="brand" href="4Helix Ventures.dc.html" aria-label="4Helix Ventures"><svg class="mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <path d="M8 6 C8 18, 32 22, 32 34" stroke="#34D6C6" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M32 6 C32 18, 8 22, 8 34" stroke="#F0B429" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M8 6 C20 12, 20 28, 8 34" stroke="#8E9BFF" stroke-width="2.4" stroke-linecap="round" opacity=".9"/>
+        <path d="M32 6 C20 12, 20 28, 32 34" stroke="#F47E6F" stroke-width="2.4" stroke-linecap="round" opacity=".9"/>
+      </svg>4Helix<span style="color:var(--on-dark-mut);font-weight:500">&nbsp;Ventures</span></a>
+  <nav class="nav-links" aria-label="Principal">
+    <a href="4Helix Ventures.dc.html" data-es="Inicio" data-en="Home">Inicio</a>
+    <a href="Modelo.dc.html" data-es="Modelo" data-en="Model">Modelo</a>
+    <a href="Metodo.dc.html" data-es="Método" data-en="Method">Método</a>
+    <a href="Actualidad.dc.html" data-es="Fondos UE" data-en="Funding">Fondos UE</a>
+    <a href="Topics.dc.html" data-es="Topics" data-en="Topics">Topics</a>
+    <a href="Casos.dc.html" data-es="Casos" data-en="Cases">Casos</a>
+    <a href="Gateway.html" class="active" data-es="Gateway" data-en="Gateway">Gateway</a>
+    <a href="4Helix Ventures.dc.html#contacto" data-es="Contacto" data-en="Contact">Contacto</a>
+  </nav>
+  <div class="nav-right">
+    <button class="lang" id="langBtn" aria-label="Cambiar idioma"><b>ES</b> / EN</button>
+    <a href="4Helix Ventures.dc.html#contacto" class="btn btn-primary" data-es="Hablemos" data-en="Let\'s talk">Hablemos</a>
+  </div>
+</div></header>
+<main>
+<section class="o-hero"><div class="wrap reveal">
+  <span class="eyebrow" data-es="Innovación abierta corporativa" data-en="Corporate open innovation">Innovación abierta corporativa</span>
+  <h1 data-es="Una puerta directa a la <em>innovación abierta</em> de las grandes corporaciones" data-en="A direct door to the <em>open innovation</em> of the world’s top corporations">Una puerta directa a la <em>innovación abierta</em> de las grandes corporaciones</h1>
+  <p class="lead" data-es="Retos, programas y oportunidades de cooperación de las mayores empresas de Europa, EE. UU., Japón, Corea y Taiwán — reunidos en un solo directorio, con enlace directo a cada programa oficial." data-en="Challenges, programmes and cooperation opportunities from the largest companies in Europe, the USA, Japan, Korea and Taiwan — gathered in a single directory, with a direct link to each official programme.">Retos, programas y oportunidades de cooperación de las mayores empresas de Europa, EE. UU., Japón, Corea y Taiwán — reunidos en un solo directorio, con enlace directo a cada programa oficial.</p>
+  <div class="o-note" data-es="<b>Cómo funciona.</b> El Corporate Innovation Gateway es un directorio curado: cada ficha enlaza al portal oficial de innovación abierta de la corporación. No es un feed en tiempo real — el estado de cada convocatoria (abierta o cerrada) cambia, así que verifica siempre en la web del programa. Vamos ampliando el directorio por fases hasta las 500 empresas." data-en="<b>How it works.</b> The Corporate Innovation Gateway is a curated directory: each card links to the corporation’s official open-innovation portal. It is not a real-time feed — each call’s status (open or closed) changes, so always check on the programme’s own site. We are expanding the directory in phases up to 500 companies."><b>Cómo funciona.</b> El Corporate Innovation Gateway es un directorio curado: cada ficha enlaza al portal oficial de innovación abierta de la corporación. No es un feed en tiempo real — el estado de cada convocatoria (abierta o cerrada) cambia, así que verifica siempre en la web del programa. Vamos ampliando el directorio por fases hasta las 500 empresas.</div>
+</div></section>
+
+<section class="oband"><div class="wrap reveal">
+  <div class="grid">
+    <div class="s"><b>500</b><span data-es="corporaciones objetivo en 5 regiones tecnológicas" data-en="target corporations across 5 tech regions">corporaciones objetivo en 5 regiones tecnológicas</span></div>
+    <div class="s"><b>5</b><span data-es="ecosistemas: Europa, EE. UU., Japón, Corea y Taiwán" data-en="ecosystems: Europe, USA, Japan, Korea and Taiwan">ecosistemas: Europa, EE. UU., Japón, Corea y Taiwán</span></div>
+    <div class="s"><b id="liveCount">30</b><span data-es="programas ya cargados en esta primera fase" data-en="programmes already loaded in this first phase">programas ya cargados en esta primera fase</span></div>
+    <div class="s"><b>4</b><span data-es="tipos: reto, corporate VC, aceleradora y partnership" data-en="types: challenge, corporate VC, accelerator and partnership">tipos: reto, corporate VC, aceleradora y partnership</span></div>
+  </div>
+  <div class="src" data-es="Fase 1 · fichas verificadas a partir de portales oficiales y del EIC Corporate Partnership Programme · consulta: junio 2026." data-en="Phase 1 · cards verified from official portals and the EIC Corporate Partnership Programme · consulted: June 2026.">Fase 1 · fichas verificadas a partir de portales oficiales y del EIC Corporate Partnership Programme · consulta: junio 2026.</div>
+</div></section>
+
+
+<section class="asst" id="assistant"><div class="wrap reveal">
+  <div class="card">
+    <div class="head">
+      <span class="eyebrow" style="margin:0" data-es="Asistente inteligente" data-en="Smart assistant">Asistente inteligente</span>
+      <span class="badge" id="asstMode" data-es="Modo demostración" data-en="Demo mode">Modo demostración</span>
+    </div>
+    <h2 data-es="Cuéntanos tu proyecto y encuentra tu oportunidad" data-en="Tell us about your project and find your opportunity">Cuéntanos tu proyecto y encuentra tu oportunidad</h2>
+    <p class="sub" data-es="Selecciona tu perfil y describe tu proyecto. El asistente busca en la base de datos de oportunidades de open innovation y te recomienda las que mejor encajan, explicándote por qué." data-en="Pick your profile and describe your project. The assistant searches the open-innovation opportunities database and recommends the best matches, explaining why.">Selecciona tu perfil y describe tu proyecto. El asistente busca en la base de datos de oportunidades de open innovation y te recomienda las que mejor encajan, explicándote por qué.</p>
+
+    <div class="facets">
+      <div class="facet"><div class="flbl" data-es="Sector de tu proyecto" data-en="Your project sector">Sector de tu proyecto</div><div class="opts" id="afSect"></div></div>
+      <div class="facet"><div class="flbl" data-es="Región objetivo" data-en="Target region">Región objetivo</div><div class="opts" id="afReg"></div></div>
+      <div class="facet"><div class="flbl" data-es="Fase de madurez (TRL)" data-en="Maturity stage (TRL)">Fase de madurez (TRL)</div><div class="opts" id="afTrl"></div></div>
+      <div class="facet"><div class="flbl" data-es="Tipo de oportunidad que buscas" data-en="Opportunity type you seek">Tipo de oportunidad que buscas</div><div class="opts" id="afType"></div></div>
+    </div>
+
+    <textarea id="asstText" data-ph-es="Ej.: Hemos desarrollado en la universidad un sensor de bajo coste para detectar fugas de hidrógeno en plantas industriales. Buscamos un piloto con una gran corporación energética en Europa." data-ph-en="E.g.: We developed at university a low-cost sensor to detect hydrogen leaks in industrial plants. We are looking for a pilot with a large energy corporation in Europe." placeholder=""></textarea>
+
+    <div class="runrow">
+      <button class="btn btn-primary" id="asstRun" data-es="Buscar oportunidades" data-en="Find opportunities">Buscar oportunidades</button>
+      <span class="mode" id="asstModeLine" data-es="Funcionando con el motor local. Conecta tu backend de IA para respuestas conversacionales." data-en="Running on the local engine. Connect your AI backend for conversational answers.">Funcionando con el motor local. Conecta tu backend de IA para respuestas conversacionales.</span>
+    </div>
+
+    <div class="cfg">
+      <a id="cfgToggle" data-es="⚙ Conectar IA real (backend)" data-en="⚙ Connect real AI (backend)">⚙ Conectar IA real (backend)</a>
+      <div class="cfgbox" id="cfgBox">
+        <input id="cfgUrl" type="url" placeholder="https://tu-backend.workers.dev"/>
+        <button id="cfgSave" data-es="Guardar" data-en="Save">Guardar</button>
+        <button id="cfgClear" data-es="Quitar" data-en="Clear">Quitar</button>
+      </div>
+    </div>
+
+    <div class="out" id="asstOut"></div>
+  </div>
+</div></section>
+
+<section class="osec"><div class="wrap">
+  <span class="eyebrow reveal" data-es="El directorio" data-en="The directory">El directorio</span>
+  <h2 class="reveal" style="font-size:clamp(26px,4vw,42px);margin-top:14px" data-es="Explora por región, sector y tipo de oportunidad" data-en="Explore by region, sector and opportunity type">Explora por región, sector y tipo de oportunidad</h2>
+
+  <div class="ofilters reveal">
+    <div class="row"><span class="lbl" data-es="Región" data-en="Region">Región</span><div id="fReg" class="rowchips"></div></div>
+    <div class="row"><span class="lbl" data-es="Sector" data-en="Sector">Sector</span><div id="fSect" class="rowchips"></div></div>
+    <div class="row"><span class="lbl" data-es="Tipo" data-en="Type">Tipo</span><div id="fType" class="rowchips"></div></div>
+  </div>
+  <div class="ocount" id="oCount">Mostrando 30 de 30 programas</div>
+  <div class="ogrid" id="oGrid"></div>
+
+  <div class="ometh reveal" data-es="<b>Metodología y aviso.</b> Cada enlace apunta a la página oficial del programa de innovación abierta, capital corporativo o aceleradora de la empresa. El Gateway no gestiona las convocatorias ni garantiza que estén abiertas en cada momento; actúa como punto de partida. Antes de publicar, conviene reverificar cada URL. Próximas fases: ampliación hasta 500 empresas por lotes, priorizando las que tienen programa activo." data-en="<b>Methodology and notice.</b> Each link points to the company’s official open-innovation, corporate-VC or accelerator page. The Gateway does not manage the calls nor guarantee they are open at any given time; it acts as a starting point. Before publishing, re-verify each URL. Next phases: expansion to 500 companies in batches, prioritising those with an active programme."><b>Metodología y aviso.</b> Cada enlace apunta a la página oficial del programa de innovación abierta, capital corporativo o aceleradora de la empresa. El Gateway no gestiona las convocatorias ni garantiza que estén abiertas en cada momento; actúa como punto de partida. Antes de publicar, conviene reverificar cada URL. Próximas fases: ampliación hasta 500 empresas por lotes, priorizando las que tienen programa activo.</div>
+</div></section>
+
+
+<section class="osec" style="padding-top:20px"><div class="wrap">
+  <span class="eyebrow reveal" data-es="Capa de retos vivos" data-en="Live-challenges layer">Capa de retos vivos</span>
+  <h2 class="reveal" style="font-size:clamp(26px,4vw,42px);margin-top:14px" data-es="Retos abiertos ahora mismo, v\u00eda plataformas agregadoras" data-en="Challenges open right now, via aggregator platforms">Retos abiertos ahora mismo, v\u00eda plataformas agregadoras</h2>
+  <p class="reveal" style="color:var(--on-dark-mut);max-width:60ch;margin-top:14px" data-es="Adem\u00e1s del directorio de 500 puertas, conectamos con las plataformas que ya re\u00fanen retos vivos de decenas de corporaciones a la vez. Estos son los accesos directos a sus convocatorias abiertas \u2014 el lugar donde encontrar\u00e1s retos con fecha l\u00edmite y formulario de aplicaci\u00f3n." data-en="Beyond the directory of 500 doors, we connect to the platforms that already gather live challenges from dozens of corporations at once. These are the direct links to their open calls \u2014 where you will find challenges with deadlines and application forms.">Adem\u00e1s del directorio de 500 puertas, conectamos con las plataformas que ya re\u00fanen retos vivos de decenas de corporaciones a la vez. Estos son los accesos directos a sus convocatorias abiertas \u2014 el lugar donde encontrar\u00e1s retos con fecha l\u00edmite y formulario de aplicaci\u00f3n.</p>
+  <div class="ogrid reveal" style="margin-top:26px">
+    <div class="corp"><div class="top"><div class="logo">EI</div><div><div class="nm">EIC Corporate Partnership</div><div class="reg" data-es="\ud83c\uddea\ud83c\uddfa Europa \u00b7 +120 corporaciones" data-en="\ud83c\uddea\ud83c\uddfa Europe \u00b7 120+ corporates">\ud83c\uddea\ud83c\uddfa Europa \u00b7 +120 corporaciones</div></div></div><div class="desc" data-es="Programa del Consejo Europeo de Innovaci\u00f3n que conecta a innovadores con ABB, Airbus, BMW, Roche, Siemens Energy y mucho m\u00e1s." data-en="European Innovation Council programme connecting innovators with ABB, Airbus, BMW, Roche, Siemens Energy and many more.">Programa del Consejo Europeo de Innovaci\u00f3n que conecta a innovadores con ABB, Airbus, BMW, Roche, Siemens Energy y mucho m\u00e1s.</div><a class="go" href="https://eic.ec.europa.eu/" target="_blank" rel="noopener" data-es="Ver convocatorias \u2197" data-en="See open calls \u2197">Ver convocatorias \u2197</a></div>
+    <div class="corp"><div class="top"><div class="logo">PP</div><div><div class="nm">Plug and Play</div><div class="reg" data-es="\ud83c\udf0d Global \u00b7 cientos de corporaciones" data-en="\ud83c\udf0d Global \u00b7 hundreds of corporates">\ud83c\udf0d Global \u00b7 cientos de corporaciones</div></div></div><div class="desc" data-es="Programas tem\u00e1ticos que emparejan startups con cientos de corporaciones en movilidad, fintech, salud, industria y m\u00e1s." data-en="Themed programmes matching startups with hundreds of corporations in mobility, fintech, health, industry and more.">Programas tem\u00e1ticos que emparejan startups con cientos de corporaciones en movilidad, fintech, salud, industria y m\u00e1s.</div><a class="go" href="https://www.plugandplaytechcenter.com/" target="_blank" rel="noopener" data-es="Ver programas \u2197" data-en="See programmes \u2197">Ver programas \u2197</a></div>
+    <div class="corp"><div class="top"><div class="logo">SA</div><div><div class="nm">STARTUP AUTOBAHN</div><div class="reg" data-es="\ud83c\udde9\ud83c\uddea Europa \u00b7 +20 corporaciones" data-en="\ud83c\udde9\ud83c\uddea Europe \u00b7 20+ corporates">\ud83c\udde9\ud83c\uddea Europa \u00b7 +20 corporaciones</div></div></div><div class="desc" data-es="Plataforma de innovaci\u00f3n abierta en movilidad (Plug and Play) con Mercedes-Benz, Porsche, Bosch, ZF y m\u00e1s." data-en="Mobility open-innovation platform (Plug and Play) with Mercedes-Benz, Porsche, Bosch, ZF and more.">Plataforma de innovaci\u00f3n abierta en movilidad (Plug and Play) con Mercedes-Benz, Porsche, Bosch, ZF y m\u00e1s.</div><a class="go" href="https://www.startup-autobahn.com/" target="_blank" rel="noopener" data-es="Ver retos \u2197" data-en="See challenges \u2197">Ver retos \u2197</a></div>
+    <div class="corp"><div class="top"><div class="logo">MW</div><div><div class="nm">MWC / ISE Open Innovation</div><div class="reg" data-es="\ud83c\uddea\ud83c\uddf8 Barcelona \u00b7 corporaciones + pymes" data-en="\ud83c\uddea\ud83c\uddf8 Barcelona \u00b7 corporates + SMEs">\ud83c\uddea\ud83c\uddf8 Barcelona \u00b7 corporaciones + pymes</div></div></div><div class="desc" data-es="Retos de matchmaking organizados por ACCI\u00d3 y la Enterprise Europe Network en torno al MWC y al ISE." data-en="Matchmaking challenges organised by ACCI\u00d3 and the Enterprise Europe Network around MWC and ISE.">Retos de matchmaking organizados por ACCI\u00d3 y la Enterprise Europe Network en torno al MWC y al ISE.</div><a class="go" href="https://www.b2match.com/e/mwc-open-innovation-challenge-2026" target="_blank" rel="noopener" data-es="Ver retos \u2197" data-en="See challenges \u2197">Ver retos \u2197</a></div>
+  </div>
+  <div class="o-note reveal" style="margin-top:24px" data-es="<b>Pr\u00f3xima fase.</b> Estas plataformas son el cimiento de la capa de retos vivos: desde aqu\u00ed podremos integrar, para las que ofrecen feed estructurado, un listado de retos con su fecha l\u00edmite directamente en esta p\u00e1gina." data-en="<b>Next phase.</b> These platforms are the foundation of the live-challenges layer: from here we can integrate, for those offering a structured feed, a list of challenges with their deadlines directly on this page."><b>Pr\u00f3xima fase.</b> Estas plataformas son el cimiento de la capa de retos vivos: desde aqu\u00ed podremos integrar, para las que ofrecen feed estructurado, un listado de retos con su fecha l\u00edmite directamente en esta p\u00e1gina.</div>
+</div></section>
+
+<section class="octa"><div class="wrap reveal">
+  <h2 data-es="¿Buscas el <em>socio corporativo</em> adecuado para tu tecnología?" data-en="Looking for the right <em>corporate partner</em> for your technology?">¿Buscas el <em>socio corporativo</em> adecuado para tu tecnología?</h2>
+  <p data-es="En 4Helix te ayudamos a identificar el programa adecuado, preparar la propuesta y gestionar la relación con la corporación." data-en="At 4Helix we help you identify the right programme, prepare the proposal and manage the relationship with the corporation.">En 4Helix te ayudamos a identificar el programa adecuado, preparar la propuesta y gestionar la relación con la corporación.</p>
+  <a href="4Helix Ventures.dc.html#contacto" class="btn btn-primary" data-es="Hablemos" data-en="Let\'s talk">Hablemos</a>
+</div></section>
+</main>
+<footer><div class="wrap">
+  <div class="foot-grid">
+    <div class="foot-brand"><a class="brand" href="4Helix Ventures.dc.html"><svg class="mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <path d="M8 6 C8 18, 32 22, 32 34" stroke="#34D6C6" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M32 6 C32 18, 8 22, 8 34" stroke="#F0B429" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M8 6 C20 12, 20 28, 8 34" stroke="#8E9BFF" stroke-width="2.4" stroke-linecap="round" opacity=".9"/>
+        <path d="M32 6 C20 12, 20 28, 32 34" stroke="#F47E6F" stroke-width="2.4" stroke-linecap="round" opacity=".9"/>
+      </svg>4Helix<span style="color:var(--on-dark-mut);font-weight:500">&nbsp;Ventures</span></a>
+      <p data-es="Del laboratorio al mercado, bajo el modelo de cuádruple hélice: universidad, industria, capital y gestión, alineados en una sola trayectoria." data-en="From the lab to the market, under the quadruple-helix model: university, industry, capital and management, aligned into a single trajectory.">Del laboratorio al mercado, bajo el modelo de cuádruple hélice: universidad, industria, capital y gestión, alineados en una sola trayectoria.</p></div>
+    <div class="foot-cols">
+      <div class="foot-col"><h4 data-es="Navegar" data-en="Navigate">Navegar</h4>
+        <a href="4Helix Ventures.dc.html" data-es="Inicio" data-en="Home">Inicio</a>
+        <a href="Modelo.dc.html" data-es="Modelo" data-en="Model">Modelo</a>
+        <a href="Metodo.dc.html" data-es="Método" data-en="Method">Método</a>
+        <a href="Casos.dc.html" data-es="Casos" data-en="Cases">Casos</a></div>
+      <div class="foot-col"><h4 data-es="Contacto" data-en="Contact">Contacto</h4>
+        <a href="mailto:hola@4helixventures.com">hola@4helixventures.com</a>
+        <a href="#" data-es="Madrid · España" data-en="Madrid · Spain">Madrid · España</a></div>
+    </div>
+  </div>
+  <div class="foot-bottom"><span>© 2026 4Helix Ventures</span><span data-es="Nombre de trabajo · pendiente de registro de marca" data-en="Working name · trademark registration pending">Nombre de trabajo · pendiente de registro de marca</span></div>
+</div></footer>
+<script>
+(function(){var lang='es';var btn=document.getElementById('langBtn');var nodes=document.querySelectorAll('[data-es]');
+function apply(){nodes.forEach(function(n){if(n.dataset[lang]!==undefined){if(/<[a-z]/i.test(n.dataset[lang])){n.innerHTML=n.dataset[lang];}else{n.textContent=n.dataset[lang];}}});document.documentElement.lang=lang;btn.innerHTML=lang==='es'?'<b>ES</b> / EN':'ES / <b>EN</b>';document.dispatchEvent(new CustomEvent('langchange',{detail:lang}));}
+btn.addEventListener('click',function(){lang=lang==='es'?'en':'es';apply();});window.__lang=function(){return lang;};apply();})();
+(function(){var h=document.getElementById('header');window.addEventListener('scroll',function(){h.classList.toggle('scrolled',window.scrollY>20);},{passive:true});})();
+(function(){var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver'in window)){els.forEach(function(e){e.classList.add('in')});return;}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12});els.forEach(function(e){io.observe(e)});})();
+</script>
+<script>
+(function(){
+  var REG={eu:'\ud83c\uddea\ud83c\uddfa Europa|\ud83c\uddea\ud83c\uddfa Europe',us:'\ud83c\uddfa\ud83c\uddf8 EE. UU.|\ud83c\uddfa\ud83c\uddf8 USA',jp:'\ud83c\uddef\ud83c\uddf5 Jap\u00f3n|\ud83c\uddef\ud83c\uddf5 Japan',kr:'\ud83c\uddf0\ud83c\uddf7 Corea|\ud83c\uddf0\ud83c\uddf7 Korea',tw:'\ud83c\uddf9\ud83c\uddfc Taiw\u00e1n|\ud83c\uddf9\ud83c\uddfc Taiwan'};
+var SECT={mob:'Movilidad y automoci\u00f3n|Mobility & automotive',ind:'Industria y energ\u00eda|Industry & energy',semi:'Semiconductores y electr\u00f3nica|Semiconductors & electronics',health:'Salud y farma|Health & pharma',ict:'TIC, software e IA|ICT, software & AI',cons:'Consumo y materiales|Consumer & materials',multi:'Transversal|Cross-sector'};
+var TYPE={ch:'Reto / Venture client|Challenge / Venture client',cvc:'Corporate VC|Corporate VC',acc:'Aceleradora|Accelerator',prog:'Programa / Partnership|Programme / Partnership'};
+var C=[
+    {n:'Bosch',r:'eu',s:'ind',ty:'ch',prog:'Open Bosch',u:'https://innovate-bosch.com/',d:{es:'Programa de co-innovación con startups para co-desarrollar productos y tecnologías; retos publicados por áreas de interés.',en:'Co-innovation programme with startups to co-develop products and technologies; challenges published by fields of interest.'}},
+    {n:'BMW Group',r:'eu',s:'mob',ty:'ch',prog:'Startup Garage',u:'https://www.bmwgroup.com/en/innovation/open-innovation.html',d:{es:'Unidad de venture client del grupo BMW: evalúa startups para integrarlas como socias a largo plazo, más BMW Crowd Innovation.',en:'BMW Group venture-client unit: evaluates startups to onboard them as long-term partners, plus BMW Crowd Innovation.'}},
+    {n:'Mercedes-Benz',r:'eu',s:'mob',ty:'acc',prog:'STARTUP AUTOBAHN',u:'https://www.startup-autobahn.com/',d:{es:'Plataforma de innovacion abierta en movilidad (con Plug and Play y la Universidad de Stuttgart); pilotos rapidos con startups.',en:'Open-innovation mobility platform (with Plug and Play and University of Stuttgart); fast pilots with startups.'}},
+    {n:'Siemens',r:'eu',s:'ind',ty:'cvc',prog:'next47',u:'https://www.next47.com/',d:{es:'Brazo de capital riesgo corporativo de Siemens, enfocado en deep tech industrial, automatizacion e IA aplicada.',en:'Siemens corporate venture arm, focused on industrial deep tech, automation and applied AI.'}},
+    {n:'Airbus',r:'eu',s:'mob',ty:'acc',prog:'Airbus Scale / Ventures',u:'https://www.airbus.com/en/innovation',d:{es:'Aceleradora y fondo de Airbus para tecnologias aeroespaciales, nuevos materiales y movilidad aerea avanzada.',en:'Airbus accelerator and fund for aerospace technologies, new materials and advanced air mobility.'}},
+    {n:'Enel',r:'eu',s:'ind',ty:'ch',prog:'Openinnovability',u:'https://openinnovability.enel.com/',d:{es:'Plataforma de innovacion abierta de Enel: publica retos concretos en energia y sostenibilidad buscando soluciones externas.',en:'Enel open-innovation platform: posts concrete energy and sustainability challenges seeking external solutions.'}},
+    {n:'Telefonica',r:'eu',s:'ict',ty:'acc',prog:'Wayra',u:'https://www.wayra.com/',d:{es:'Hub de innovacion abierta y venture client de Telefonica; conecta startups con las unidades de negocio del grupo.',en:'Telefonica open-innovation and venture-client hub; connects startups with the group business units.'}},
+    {n:'L\'Oreal',r:'eu',s:'cons',ty:'ch',prog:'Open Innovation',u:'https://www.loreal.com/en/open-innovation/',d:{es:'Programa de innovacion abierta en belleza y tecnologia de consumo; retos y colaboraciones con startups y centros.',en:'Open-innovation programme in beauty and consumer tech; challenges and collaborations with startups and labs.'}},
+    {n:'Saint-Gobain',r:'eu',s:'cons',ty:'cvc',prog:'NOVA External Venturing',u:'https://www.saint-gobain.com/en/nova',d:{es:'Unidad de venturing externo de Saint-Gobain para materiales avanzados y construccion sostenible.',en:'Saint-Gobain external-venturing unit for advanced materials and sustainable construction.'}},
+    {n:'Bayer',r:'eu',s:'health',ty:'cvc',prog:'Leaps by Bayer / G4A',u:'https://leaps.bayer.com/',d:{es:'Brazo de inversion en biotech disruptiva (Leaps) y programa de salud digital (G4A) para colaborar con startups.',en:'Disruptive-biotech investment arm (Leaps) and digital-health programme (G4A) to collaborate with startups.'}},
+    {n:'Roche',r:'eu',s:'health',ty:'prog',prog:'Roche Partnering',u:'https://www.roche.com/partnering',d:{es:'Portal de colaboracion y partnering de Roche para innovaciones en diagnostico y farma.',en:'Roche partnering and collaboration portal for diagnostics and pharma innovations.'}},
+    {n:'EIC Corporate Partnership',r:'eu',s:'multi',ty:'prog',prog:'EIC Corporate Partnership Programme',u:'https://eic.ec.europa.eu/',d:{es:'Puerta de la UE que conecta innovadores con mas de 120 grandes corporaciones europeas (ABB, Airbus, BMW, Roche, Siemens Energy...).',en:'EU gateway connecting innovators with 120+ large European corporations (ABB, Airbus, BMW, Roche, Siemens Energy...).'}},
+    {n:'Microsoft',r:'us',s:'ict',ty:'acc',prog:'Microsoft for Startups',u:'https://www.microsoft.com/en-us/startups',d:{es:'Programa global para startups: creditos cloud, acceso a tecnologia y co-venta con Microsoft.',en:'Global startup programme: cloud credits, technology access and co-selling with Microsoft.'}},
+    {n:'Google',r:'us',s:'ict',ty:'acc',prog:'Google for Startups',u:'https://startup.google.com/',d:{es:'Red global de programas, mentoria y creditos para startups en distintas fases y verticales.',en:'Global network of programmes, mentorship and credits for startups across stages and verticals.'}},
+    {n:'NVIDIA',r:'us',s:'ict',ty:'acc',prog:'NVIDIA Inception',u:'https://www.nvidia.com/en-us/startups/',d:{es:'Programa para startups de IA y computacion acelerada: creditos, hardware y acceso a su ecosistema tecnico.',en:'Programme for AI and accelerated-computing startups: credits, hardware and access to its technical ecosystem.'}},
+    {n:'Intel',r:'us',s:'semi',ty:'cvc',prog:'Intel Capital',u:'https://www.intelcapital.com/',d:{es:'Uno de los mayores fondos de capital riesgo corporativo del mundo, centrado en semiconductores, IA y computacion.',en:'One of the world largest corporate VC funds, focused on semiconductors, AI and computing.'}},
+    {n:'Qualcomm',r:'us',s:'semi',ty:'cvc',prog:'Qualcomm Ventures',u:'https://www.qualcommventures.com/',d:{es:'Brazo inversor de Qualcomm en conectividad, 5G, IA en el edge y nuevos dispositivos.',en:'Qualcomm investment arm in connectivity, 5G, edge AI and new devices.'}},
+    {n:'Johnson & Johnson',r:'us',s:'health',ty:'acc',prog:'JLABS',u:'https://jlabs.jnjinnovation.com/',d:{es:'Red global de incubadoras de J&J para startups de salud, sin tomar participacion ni propiedad intelectual.',en:'J&J global incubator network for health startups, taking no equity or IP.'}},
+    {n:'Cisco',r:'us',s:'ict',ty:'cvc',prog:'Cisco Investments',u:'https://www.ciscoinvestments.com/',d:{es:'Brazo de inversion y colaboracion de Cisco en redes, ciberseguridad y software empresarial.',en:'Cisco investment and collaboration arm in networking, cybersecurity and enterprise software.'}},
+    {n:'Plug and Play',r:'us',s:'multi',ty:'acc',prog:'Plug and Play',u:'https://www.plugandplaytechcenter.com/',d:{es:'Plataforma global que conecta startups con cientos de corporaciones mediante programas tematicos de innovacion.',en:'Global platform connecting startups with hundreds of corporations via themed innovation programmes.'}},
+    {n:'Toyota',r:'jp',s:'mob',ty:'cvc',prog:'Toyota Ventures',u:'https://www.toyota.ventures/',d:{es:'Fondo de Toyota para startups en fase temprana de movilidad, energia, robotica e IA.',en:'Toyota fund for early-stage startups in mobility, energy, robotics and AI.'}},
+    {n:'Sony',r:'jp',s:'semi',ty:'acc',prog:'Sony Startup Acceleration Program',u:'https://sony-startup-acceleration-program.com/',d:{es:'Programa de aceleracion de Sony que apoya nuevos negocios y startups, internas y externas.',en:'Sony acceleration programme supporting new businesses and startups, internal and external.'}},
+    {n:'Hitachi',r:'jp',s:'ind',ty:'cvc',prog:'Hitachi Ventures',u:'https://www.hitachiventures.com/',d:{es:'Fondo de capital riesgo de Hitachi en deep tech industrial, energia, salud y movilidad.',en:'Hitachi venture fund in industrial deep tech, energy, health and mobility.'}},
+    {n:'SoftBank',r:'jp',s:'ict',ty:'cvc',prog:'SoftBank Vision Fund',u:'https://visionfund.com/',d:{es:'Uno de los mayores fondos tecnologicos del mundo, invierte en IA y plataformas a gran escala.',en:'One of the world largest technology funds, investing in AI and platforms at scale.'}},
+    {n:'Samsung',r:'kr',s:'semi',ty:'cvc',prog:'Samsung NEXT / C-Lab',u:'https://www.samsungnext.com/',d:{es:'Brazo de inversion e innovacion de Samsung (NEXT) y su programa interno-externo de startups (C-Lab).',en:'Samsung investment and innovation arm (NEXT) and its internal-external startup programme (C-Lab).'}},
+    {n:'LG',r:'kr',s:'semi',ty:'acc',prog:'LG NOVA',u:'https://www.lgnova.com/',d:{es:'Centro de innovacion de LG en Norteamerica: co-crea nuevos negocios con startups mediante retos anuales.',en:'LG North-America innovation center: co-creates new businesses with startups via annual challenges.'}},
+    {n:'Hyundai',r:'kr',s:'mob',ty:'acc',prog:'Hyundai CRADLE / ZER01NE',u:'https://www.hyundaicradle.com/',d:{es:'Red de innovacion abierta y venturing de Hyundai en movilidad, robotica y nuevas energias.',en:'Hyundai open-innovation and venturing network in mobility, robotics and new energy.'}},
+    {n:'TSMC',r:'tw',s:'semi',ty:'prog',prog:'Open Innovation Platform',u:'https://www.tsmc.com/english/dedicatedFoundry/oip',d:{es:'Plataforma de TSMC que integra a socios de diseno y startups para reducir barreras y acelerar el exito en silicio.',en:'TSMC platform integrating design partners and startups to lower barriers and accelerate silicon success.'}},
+    {n:'MediaTek',r:'tw',s:'semi',ty:'cvc',prog:'MediaTek Ventures',u:'https://www.mediatek.com/',d:{es:'Brazo inversor de MediaTek en semiconductores, conectividad e IA para nuevos dispositivos.',en:'MediaTek investment arm in semiconductors, connectivity and AI for new devices.'}},
+    {n:'Foxconn (Hon Hai)',r:'tw',s:'semi',ty:'prog',prog:'Hon Hai Research Institute',u:'https://www.honhai.com/en-us/technology',d:{es:'Programa tecnologico de Foxconn en semiconductores, vehiculo electrico y IA, abierto a colaboracion industrial.',en:'Foxconn technology programme in semiconductors, EV and AI, open to industrial collaboration.'}},
+    {n:'Volkswagen Group',r:'eu',s:'mob',ty:'ch',prog:'Open Innovation / Future Mobility Incubator',u:'https://www.openinnovation-volkswagengroup.com/',d:{es:'Retos de innovacion abierta en movilidad y co-creacion con las marcas del grupo; incubadora de movilidad en Dresde.',en:'Open-innovation mobility challenges and co-creation with the group brands; mobility incubator in Dresden.'}},
+    {n:'ABB',r:'eu',s:'ind',ty:'prog',prog:'Open Innovation',u:'https://www.abb.com/global/en/company/innovation/open-innovation',d:{es:'Ecosistema de innovacion abierta de ABB: alianzas con clientes, universidades e inversion en startups industriales.',en:'ABB open-innovation ecosystem: partnerships with customers, universities and investment in industrial startups.'}},
+    {n:'Schneider Electric',r:'eu',s:'ind',ty:'cvc',prog:'SE Ventures',u:'https://www.se.com/ww/en/about-us/investors/',d:{es:'Brazo de inversion y co-creacion de Schneider Electric en energia, automatizacion y sostenibilidad.',en:'Schneider Electric investment and co-creation arm in energy, automation and sustainability.'}},
+    {n:'Philips',r:'eu',s:'health',ty:'prog',prog:'Philips Health Tech / partnering',u:'https://www.philips.com/a-w/about/innovation.html',d:{es:'Programa de innovacion abierta de Philips en tecnologia de la salud y co-desarrollo con startups y centros.',en:'Philips open-innovation programme in health technology and co-development with startups and labs.'}},
+    {n:'Repsol',r:'eu',s:'ind',ty:'ch',prog:'Open Innovation',u:'https://www.repsol.com/en/innovation/open-innovation/index.cshtml',d:{es:'Plataforma de innovacion abierta de Repsol en energia: retos para convertir desafios del sector en oportunidades.',en:'Repsol open-innovation energy platform: challenges to turn sector problems into opportunities.'}},
+    {n:'Unilever',r:'eu',s:'cons',ty:'ch',prog:'Open Innovation Portal',u:'https://oiportal.yet2.com/',d:{es:'Portal de retos de innovacion de Unilever en consumo; las propuestas las evalua la agencia externa yet2.',en:'Unilever consumer-innovation challenge portal; submissions reviewed by external agency yet2.'}},
+    {n:'Nestle',r:'eu',s:'cons',ty:'acc',prog:'Accelerator powered by Nestle R&D',u:'https://www.nestle.com/randd',d:{es:'Aceleradora de I+D de Nestle en alimentacion, bebidas, salud y nutricion, con pilotos junto a startups.',en:'Nestle R&D accelerator in food, beverage, health and nutrition, with startup pilots.'}},
+    {n:'Vodafone',r:'eu',s:'ict',ty:'ch',prog:'Open Innovation (Tec Labs)',u:'https://www.vodafone.com/about-vodafone/how-we-operate/innovation',d:{es:'Programa de innovacion abierta de Vodafone para pilotar tecnologias de telecomunicaciones con startups.',en:'Vodafone open-innovation programme to pilot telecom technologies with startups.'}},
+    {n:'Porsche',r:'eu',s:'mob',ty:'cvc',prog:'Porsche Ventures',u:'https://www.porsche.com/international/aboutporsche/porscheventures/',d:{es:'Brazo de capital riesgo de Porsche, invierte en startups desde fase temprana hasta crecimiento en movilidad y digital.',en:'Porsche venture arm, investing in startups from early stage to growth in mobility and digital.'}},
+    {n:'Airbus (BizLab)',r:'eu',s:'mob',ty:'acc',prog:'Airbus BizLab',u:'https://www.airbus.com/en/innovation/disruptive-concepts/airbus-bizlab',d:{es:'Aceleradora aeroespacial global de Airbus que acompana a startups y proyectos internos hacia el mercado.',en:'Airbus global aerospace accelerator guiding startups and internal projects to market.'}},
+    {n:'Orange',r:'eu',s:'ict',ty:'acc',prog:'Orange Fab / Orange Ventures',u:'https://orangefab.com/',d:{es:'Red de aceleradoras (Orange Fab) y fondo (Orange Ventures) del operador frances para escalar startups.',en:'French operator network of accelerators (Orange Fab) and fund (Orange Ventures) to scale startups.'}},
+    {n:'Deutsche Telekom',r:'eu',s:'ict',ty:'acc',prog:'hubraum',u:'https://www.hubraum.com/',d:{es:'Incubadora tecnologica de Deutsche Telekom; trabaja con startups en 5G, IA y nuevas tecnologias.',en:'Deutsche Telekom tech incubator; works with startups on 5G, AI and emerging technologies.'}},
+    {n:'Iberdrola',r:'eu',s:'ind',ty:'acc',prog:'PERSEO Startup Programme',u:'https://www.iberdrola.com/innovation/startups-perseo',d:{es:'Programa internacional de startups de Iberdrola (PERSEO) en energia limpia, redes y electrificacion.',en:'Iberdrola international startup programme (PERSEO) in clean energy, grids and electrification.'}},
+    {n:'BBVA',r:'eu',s:'ict',ty:'cvc',prog:'BBVA Spark / Open Innovation',u:'https://www.bbva.com/en/innovation/',d:{es:'Unidad de innovacion abierta y financiacion de BBVA para startups tecnologicas y fintech.',en:'BBVA open-innovation and funding unit for tech and fintech startups.'}},
+    {n:'Santander',r:'eu',s:'ict',ty:'cvc',prog:'Santander X',u:'https://www.santanderx.com/',d:{es:'Plataforma global de Santander que conecta startups y pymes con retos, premios y financiacion.',en:'Santander global platform connecting startups and SMEs with challenges, awards and funding.'}},
+    {n:'Total Energies',r:'eu',s:'ind',ty:'acc',prog:'TotalEnergies On',u:'https://www.totalenergies.com/news/startup',d:{es:'Programa de la energetica francesa para colaborar con startups en energia baja en carbono y digital.',en:'French energy major programme to collaborate with startups on low-carbon energy and digital.'}},
+    {n:'Shell',r:'eu',s:'ind',ty:'acc',prog:'Shell GameChanger',u:'https://www.shell.com/business-customers/shell-gamechanger.html',d:{es:'Programa pionero de Shell que financia ideas tecnologicas en fase temprana y de alto riesgo en energia.',en:'Shell pioneering programme funding early-stage, high-risk energy technology ideas.'}},
+    {n:'Solvay',r:'eu',s:'cons',ty:'cvc',prog:'Solvay Ventures',u:'https://www.solvay.com/en/innovation',d:{es:'Brazo inversor y de innovacion de la quimica belga Solvay en materiales avanzados y sostenibilidad.',en:'Belgian chemicals group Solvay investment and innovation arm in advanced materials and sustainability.'}},
+    {n:'Air Liquide',r:'eu',s:'ind',ty:'acc',prog:'ALIAD',u:'https://www.airliquide.com/group/innovation',d:{es:'Capital riesgo corporativo (ALIAD) de Air Liquide en gases, hidrogeno y deep tech industrial.',en:'Air Liquide corporate venture (ALIAD) in gases, hydrogen and industrial deep tech.'}},
+    {n:'Michelin',r:'eu',s:'mob',ty:'acc',prog:'Michelin Open Innovation',u:'https://www.michelin.com/en/innovation/',d:{es:'Programa de innovacion abierta de Michelin en materiales, movilidad e hidrogeno.',en:'Michelin open-innovation programme in materials, mobility and hydrogen.'}},
+    {n:'Henkel',r:'eu',s:'cons',ty:'cvc',prog:'Henkel Ventures / dx Ventures',u:'https://www.henkel.com/innovation',d:{es:'Inversion corporativa y co-innovacion de Henkel en quimica de consumo, adhesivos y digital.',en:'Henkel corporate venturing and co-innovation in consumer chemistry, adhesives and digital.'}},
+    {n:'Merck KGaA',r:'eu',s:'health',ty:'cvc',prog:'M Ventures',u:'https://www.emdgroup.com/en/research/open-innovation.html',d:{es:'Brazo de capital riesgo (M Ventures) e innovacion abierta de Merck en salud, ciencias de la vida y electronica.',en:'Merck corporate venture (M Ventures) and open innovation in health, life science and electronics.'}},
+    {n:'Siemens Energy',r:'eu',s:'ind',ty:'ch',prog:'Open Innovation',u:'https://www.siemens-energy.com/global/en/home/company/innovation.html',d:{es:'Retos de Siemens Energy en generacion, redes e hidrogeno, dentro del EIC Corporate Partnership.',en:'Siemens Energy challenges in generation, grids and hydrogen, within the EIC Corporate Partnership.'}},
+    {n:'SAP',r:'eu',s:'ict',ty:'acc',prog:'SAP.iO',u:'https://sap.io/',d:{es:'Fondo y aceleradoras (SAP.iO) que integran startups B2B en el ecosistema de software empresarial de SAP.',en:'SAP fund and accelerators (SAP.iO) integrating B2B startups into SAP enterprise software ecosystem.'}},
+    {n:'Novartis',r:'eu',s:'health',ty:'acc',prog:'Novartis Biome',u:'https://www.novartis.com/research-development/novartis-biome',d:{es:'Red global de hubs de innovacion digital de Novartis para co-crear soluciones de salud con startups.',en:'Novartis global network of digital-innovation hubs to co-create health solutions with startups.'}},
+    {n:'Maersk',r:'eu',s:'ind',ty:'cvc',prog:'Maersk Growth',u:'https://www.maerskgrowth.com/',d:{es:'Brazo de capital riesgo de Maersk en logistica, cadena de suministro y descarbonizacion del transporte.',en:'Maersk venture arm in logistics, supply chain and transport decarbonisation.'}},
+    {n:'Amazon (AWS)',r:'us',s:'ict',ty:'acc',prog:'AWS for Startups / Accelerators',u:'https://aws.amazon.com/startups/',d:{es:'Programas, creditos cloud y aceleradoras de AWS para startups en cualquier fase, con foco creciente en IA.',en:'AWS programmes, cloud credits and accelerators for startups at any stage, with a growing AI focus.'}},
+    {n:'IBM',r:'us',s:'ict',ty:'acc',prog:'IBM for Startups / Sofia Accelerator',u:'https://www.ibm.com/think/startups',d:{es:'Programa de IBM con creditos cloud, modelos Granite, mentoria y aceleradoras regionales (p. ej. Sofia).',en:'IBM programme with cloud credits, Granite models, mentorship and regional accelerators (e.g. Sofia).'}},
+    {n:'Salesforce',r:'us',s:'ict',ty:'acc',prog:'Salesforce Accelerate',u:'https://www.salesforce.com/',d:{es:'Programa virtual que integra startups en el ecosistema y marketplace AppExchange de Salesforce.',en:'Virtual programme integrating startups into the Salesforce ecosystem and AppExchange marketplace.'}},
+    {n:'Boeing',r:'us',s:'mob',ty:'cvc',prog:'Boeing HorizonX / StartupBoeing',u:'https://www.boeing.com/principles/innovation',d:{es:'Inversion (HorizonX) y programas de Boeing para startups de aviacion, aeroespacial y nuevas aerolineas.',en:'Boeing investment (HorizonX) and programmes for aviation, aerospace and new-airline startups.'}},
+    {n:'Pfizer',r:'us',s:'health',ty:'ch',prog:'Pfizer Center for Digital Innovation',u:'https://centerfordigitalinnovation.pfizer.com/',d:{es:'Retos y tracks de aceleracion de Pfizer (Start4Health, INDovation) para startups de salud digital.',en:'Pfizer challenges and acceleration tracks (Start4Health, INDovation) for digital-health startups.'}},
+    {n:'Visa',r:'us',s:'ict',ty:'ch',prog:'Visa Everywhere Initiative',u:'https://visaeverywhereinitiative.visa.com/',d:{es:'Competicion global de Visa que reta a startups a resolver problemas de pagos y servicios financieros.',en:'Visa global competition challenging startups to solve payments and financial-services problems.'}},
+    {n:'Mastercard',r:'us',s:'ict',ty:'acc',prog:'Mastercard Start Path',u:'https://www.mastercard.com/news/start-path/',d:{es:'Programa de Mastercard que integra fintechs y startups en su red global de pagos.',en:'Mastercard programme integrating fintechs and startups into its global payments network.'}},
+    {n:'Dell',r:'us',s:'ict',ty:'prog',prog:'Dell for Startups',u:'https://www.dell.com/en-us/dt/what-we-do/dell-for-startups.htm',d:{es:'Programa de Dell con asesoria tecnologica, precios y red para empresas en fase temprana.',en:'Dell programme with technology advice, pricing and network for early-stage companies.'}},
+    {n:'Johnson Controls',r:'us',s:'ind',ty:'cvc',prog:'JCI Ventures',u:'https://www.johnsoncontrols.com/',d:{es:'Inversion corporativa en edificios inteligentes, eficiencia energetica y sostenibilidad.',en:'Corporate investment in smart buildings, energy efficiency and sustainability.'}},
+    {n:'GE Aerospace / Vernova',r:'us',s:'ind',ty:'cvc',prog:'GE Ventures legacy / Edison',u:'https://www.ge.com/',d:{es:'Programas de innovacion y colaboracion de GE en aviacion, energia y fabricacion avanzada.',en:'GE innovation and collaboration programmes in aviation, energy and advanced manufacturing.'}},
+    {n:'Verizon',r:'us',s:'ict',ty:'acc',prog:'Verizon 5G Studio / Ventures',u:'https://www.verizon.com/about/our-company/innovation',d:{es:'Laboratorios y aceleracion de Verizon para co-crear casos de uso sobre 5G y edge.',en:'Verizon labs and acceleration to co-create 5G and edge use cases.'}},
+    {n:'Walmart',r:'us',s:'cons',ty:'cvc',prog:'Store N8 / Walmart Ventures',u:'https://www.walmart.com/',d:{es:'Brazo de innovacion de Walmart en retail, cadena de suministro y tecnologia de consumo.',en:'Walmart innovation arm in retail, supply chain and consumer technology.'}},
+    {n:'Ford',r:'us',s:'mob',ty:'cvc',prog:'Ford X / Ventures',u:'https://corporate.ford.com/',d:{es:'Unidad de nuevos negocios e inversion de Ford en movilidad conectada y electrificacion.',en:'Ford new-business and investment unit in connected mobility and electrification.'}},
+    {n:'Chevron',r:'us',s:'ind',ty:'cvc',prog:'Chevron Technology Ventures',u:'https://www.chevron.com/what-we-do/technology',d:{es:'Capital riesgo corporativo de Chevron en energia, digital y descarbonizacion.',en:'Chevron corporate venture in energy, digital and decarbonisation.'}},
+    {n:'NTT Group',r:'jp',s:'ict',ty:'ch',prog:'NTT Startup Challenge',u:'https://group.ntt/en/',d:{es:'Programa de retos del grupo NTT para co-crear nuevos negocios con startups en Japon y Asia.',en:'NTT Group challenge programme to co-create new businesses with startups in Japan and Asia.'}},
+    {n:'NTT Docomo Ventures',r:'jp',s:'ict',ty:'cvc',prog:'NTT DOCOMO Ventures',u:'https://www.nttdocomo-v.com/en/',d:{es:'Brazo de capital riesgo del grupo NTT y puerta de entrada a su ecosistema de open innovation.',en:'NTT Group corporate venture arm and gateway to its open-innovation ecosystem.'}},
+    {n:'Panasonic',r:'jp',s:'semi',ty:'cvc',prog:'Panasonic / Conductive Ventures',u:'https://www.panasonic.com/global/corporate.html',d:{es:'Inversion y co-creacion de Panasonic en electronica, energia y tecnologia industrial.',en:'Panasonic investment and co-creation in electronics, energy and industrial technology.'}},
+    {n:'Fujitsu',r:'jp',s:'ict',ty:'acc',prog:'Fujitsu Accelerator',u:'https://www.fujitsu.com/global/about/businesspolicy/tech/start-up/',d:{es:'Programa de Fujitsu que pilota soluciones de startups con sus clientes y unidades de negocio.',en:'Fujitsu programme piloting startup solutions with its clients and business units.'}},
+    {n:'NEC',r:'jp',s:'ict',ty:'cvc',prog:'NEC X',u:'https://nec-x.com/',d:{es:'Estudio de innovacion de NEC en Silicon Valley que transforma su tecnologia y startups en negocios.',en:'NEC innovation studio in Silicon Valley turning its technology and startups into businesses.'}},
+    {n:'Denso',r:'jp',s:'mob',ty:'cvc',prog:'DENSO / NEXT Mobility',u:'https://www.denso.com/global/en/',d:{es:'Innovacion e inversion de Denso (grupo Toyota) en componentes, software de vehiculo y semiconductores.',en:'Denso (Toyota group) innovation and investment in components, vehicle software and semiconductors.'}},
+    {n:'Mitsubishi',r:'jp',s:'ind',ty:'cvc',prog:'Mitsubishi / MUFG Innovation',u:'https://www.mitsubishicorp.com/',d:{es:'Vehiculos de innovacion e inversion de los grupos Mitsubishi en industria, energia y fintech.',en:'Mitsubishi groups innovation and investment vehicles in industry, energy and fintech.'}},
+    {n:'Rakuten',r:'jp',s:'ict',ty:'cvc',prog:'Rakuten Capital',u:'https://global.rakuten.com/corp/investors/',d:{es:'Brazo inversor de Rakuten en comercio electronico, fintech y plataformas digitales.',en:'Rakuten investment arm in e-commerce, fintech and digital platforms.'}},
+    {n:'SK Group',r:'kr',s:'ind',ty:'cvc',prog:'SK / SK Telecom Open Innovation',u:'https://www.sk.com/en/',d:{es:'Programas e inversion del grupo SK en semiconductores, telecomunicaciones, bateria y energia.',en:'SK Group programmes and investment in semiconductors, telecom, battery and energy.'}},
+    {n:'Naver',r:'kr',s:'ict',ty:'cvc',prog:'Naver D2 Startup Factory',u:'https://d2startup.com/',d:{es:'Aceleradora e inversion en deep tech del gigante coreano de internet Naver.',en:'Deep-tech accelerator and investment by Korean internet giant Naver.'}},
+    {n:'Kakao',r:'kr',s:'ict',ty:'cvc',prog:'Kakao Ventures',u:'https://www.kakao.vc/',d:{es:'Fondo de capital riesgo de Kakao en startups tecnologicas en fase temprana.',en:'Kakao venture fund investing in early-stage technology startups.'}},
+    {n:'POSCO',r:'kr',s:'ind',ty:'acc',prog:'POSCO / Idea Marketplace',u:'https://www.posco.co.kr/',d:{es:'Programa de la siderurgica coreana POSCO para startups en materiales, bateria y descarbonizacion.',en:'Korean steelmaker POSCO programme for startups in materials, battery and decarbonisation.'}},
+    {n:'KT',r:'kr',s:'ict',ty:'acc',prog:'KT Open Innovation',u:'https://corp.kt.com/eng/',d:{es:'Programas del operador KT para pilotar 5G, IA y nube con startups coreanas e internacionales.',en:'Operator KT programmes to pilot 5G, AI and cloud with Korean and international startups.'}},
+    {n:'Hanwha',r:'kr',s:'ind',ty:'cvc',prog:'Hanwha / Dreamplus',u:'https://www.dreamplus.asia/',d:{es:'Plataforma de innovacion abierta (Dreamplus) del grupo Hanwha en fintech, energia y aeroespacial.',en:'Hanwha Group open-innovation platform (Dreamplus) in fintech, energy and aerospace.'}},
+    {n:'Lotte',r:'kr',s:'cons',ty:'cvc',prog:'Lotte Ventures',u:'https://www.lotteventures.com/',d:{es:'Brazo inversor del grupo Lotte en consumo, retail, alimentacion y tecnologia.',en:'Lotte Group investment arm in consumer, retail, food and technology.'}},
+    {n:'UMC',r:'tw',s:'semi',ty:'prog',prog:'UMC / supplier & innovation',u:'https://www.umc.com/en/',d:{es:'Programas de colaboracion del fundidor taiwanes UMC con socios de diseno y proveedores.',en:'Taiwanese foundry UMC collaboration programmes with design partners and suppliers.'}},
+    {n:'ASUS',r:'tw',s:'semi',ty:'cvc',prog:'ASUS / AICS Ventures',u:'https://www.asus.com/',d:{es:'Inversion e innovacion de ASUS en hardware, IA y plataformas de cliente.',en:'ASUS investment and innovation in hardware, AI and consumer platforms.'}},
+    {n:'Acer',r:'tw',s:'semi',ty:'acc',prog:'Acer / StartupTerrace',u:'https://www.acer.com/',d:{es:'Iniciativas de Acer para colaborar con startups en hardware, IA y nuevos dispositivos.',en:'Acer initiatives to collaborate with startups in hardware, AI and new devices.'}},
+    {n:'Delta Electronics',r:'tw',s:'ind',ty:'cvc',prog:'Delta Electronics / Capital',u:'https://www.deltaww.com/',d:{es:'Inversion e innovacion de Delta en electronica de potencia, energia y automatizacion.',en:'Delta investment and innovation in power electronics, energy and automation.'}},
+    {n:'Pegatron',r:'tw',s:'semi',ty:'prog',prog:'Pegatron / innovation',u:'https://www.pegatroncorp.com/',d:{es:'Colaboracion industrial de Pegatron en electronica, IoT y manufactura avanzada.',en:'Pegatron industrial collaboration in electronics, IoT and advanced manufacturing.'}},
+    {n:'Startup Autobahn',r:'eu',s:'mob',ty:'acc',prog:'STARTUP AUTOBAHN (Plug and Play)',u:'https://www.startup-autobahn.com/',d:{es:'Plataforma paraguas que conecta startups con mas de 20 corporaciones industriales en movilidad.',en:'Umbrella platform connecting startups with 20+ industrial corporations in mobility.'}},
+    {n:'MWC Open Innovation',r:'eu',s:'multi',ty:'ch',prog:'MWC / ISE Open Innovation Challenge',u:'https://www.b2match.com/e/mwc-open-innovation-challenge-2026',d:{es:'Evento de matchmaking (ACCIO + Enterprise Europe Network) entre corporaciones y proveedores tecnologicos.',en:'Matchmaking event (ACCIO + Enterprise Europe Network) between corporations and tech providers.'}}
+  ];
+  window.GWDATA={C:C,REG:REG,SECT:SECT,TYPE:TYPE};
+  function L(pair){var l=(window.__lang?window.__lang():'es');var p=pair.split('|');return l==='es'?p[0]:(p[1]||p[0]);}
+  var fReg='all',fSect='all',fType='all';
+  function mono(name){var c=name.replace(/[^A-Za-z0-9]/g,'');return (c.slice(0,2)||'4H').toUpperCase();}
+  function chips(host,map,cur,setter){
+    var l=(window.__lang?window.__lang():'es');
+    var html='<button class="chip'+(cur==='all'?' on':'')+'" data-k="all">'+(l==='es'?'Todos':'All')+'</button>';
+    Object.keys(map).forEach(function(k){html+='<button class="chip'+(cur===k?' on':'')+'" data-k="'+k+'">'+L(map[k])+'</button>';});
+    host.innerHTML=html;
+    host.querySelectorAll('.chip').forEach(function(b){b.onclick=function(){setter(b.dataset.k);render();};});
+  }
+  function render(){
+    chips(document.getElementById('fReg'),REG,fReg,function(k){fReg=k;});
+    chips(document.getElementById('fSect'),SECT,fSect,function(k){fSect=k;});
+    chips(document.getElementById('fType'),TYPE,fType,function(k){fType=k;});
+    var l=(window.__lang?window.__lang():'es');
+    var list=C.filter(function(x){return (fReg==='all'||x.r===fReg)&&(fSect==='all'||x.s===fSect)&&(fType==='all'||x.ty===fType);});
+    var g=document.getElementById('oGrid');g.innerHTML='';
+    list.forEach(function(x){
+      var regL=L(REG[x.r]), secL=L(SECT[x.s]), tyL=L(TYPE[x.ty]);
+      var el=document.createElement('div');el.className='corp';
+      el.innerHTML='<div class="top"><div class="logo">'+mono(x.n)+'</div><div><div class="nm">'+x.n+'</div><div class="reg">'+regL+'</div></div></div>'+
+        '<div class="prog">'+x.prog+'</div>'+
+        '<div class="desc">'+x.d[l]+'</div>'+
+        '<div class="tags"><span class="tag ty">'+tyL+'</span><span class="tag">'+secL+'</span></div>'+
+        '<a class="go" href="'+x.u+'" target="_blank" rel="noopener">'+(l==='es'?'Ir al programa':'Go to programme')+' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></a>';
+      g.appendChild(el);
+    });
+    var cnt=document.getElementById('oCount');
+    cnt.textContent=(l==='es'?'Mostrando '+list.length+' de '+C.length+' programas':'Showing '+list.length+' of '+C.length+' programmes');
+    document.getElementById('liveCount').textContent=C.length;
+  }
+  render();
+  document.addEventListener('langchange',render);
+})();
+</script>
+
+<script>
+(function(){
+  function lang(){return (window.__lang?window.__lang():'es');}
+  function gw(){return window.GWDATA||{C:[],REG:{},SECT:{},TYPE:{}};}
+  function Lp(pair){var p=String(pair).split('|');return lang()==='es'?p[0]:(p[1]||p[0]);}
+  // state
+  var sel={sect:'any',reg:'any',trl:'any',type:'any'};
+  var AUTO={sect:false,reg:false,trl:false};
+  var SECTKW={
+    mob:['movil','mobil','automo','vehicul','vehicle','coche',' car ','conduccion','autonom','aeroespacial','aerospace','avion','aviation','drone',' dron','maritim','naval','logistic','transport','urban air'],
+    ind:['industr','energ','hidrogen','hydrogen','solar','eolic','wind',' grid','red electrica','fabricacion','manufactur','automatiz','automation','descarboniz','renovable','renewable',' oil ','petrole',' gas ','siderurg','steel','mineri','turbina','bateria','battery'],
+    semi:['semiconduct','chip','oblea','wafer','electronic','microelectronic','foundry','fundicion','fotonic','photonic','transistor','hardware','sensor'],
+    health:['salud','health','farma','pharma','medic','clinic','biotech','terapia','therap','diagnostic','drug','anticuerp','antibody','paciente','patient','hospital','genomic','vacuna','vaccine','oncolog','enfermedad','disease'],
+    ict:['software','inteligencia artificial','artificial intelligence','machine learning','aprendizaje automatico',' ia ',' ai ','big data',' datos','cloud',' nube','ciberseg','cybersec','fintech','pagos','payment','5g','telecom','saas','blockchain','algoritm',' app ','aplicacion','plataforma digital','platform'],
+    cons:['consumo','consumer','retail','aliment',' food','bebida','beverage','cosmet','beauty','belleza','material','packaging','envase','textil','textile','agricultura',' agri','nutricion','nutrition']
+  };
+  var REGKW={
+    eu:['europ',' ue ',' eu ','espana','spain','aleman','german','franc','italia',' ital','reino unido',' uk ','britain','paises bajos','netherlands','holand','belgic','belgium','suiza','switzerland','suec','sweden','dinamarc','denmark','norueg','norway','finland','portugal','madrid','barcelona','berlin','paris','londres','london','munich','eindhoven','delft'],
+    us:['estados unidos','ee uu','eeuu',' usa ','united states','estadounidense','silicon valley','california','new york','nueva york','boston'],
+    jp:['japon','japan','japanese','nipon','tokyo','tokio','osaka'],
+    kr:['corea','korea','korean','seoul','seul'],
+    tw:['taiwan','taiwanes','taipei']
+  };
+  var TRLKW={
+    idea:['investigacion','research','laboratorio',' lab ','universidad','university','concepto','concept','descubrimiento','fase temprana','early stage',' idea ','trl 1','trl 2','trl 3','basic research','spin-off','spinoff','spin off'],
+    proto:['prototip','prototype','demostrador','demonstrator',' mvp',' poc','prueba de concepto','proof of concept',' demo','trl 4','trl 5','minimo viable'],
+    pilot:['piloto','pilot','validacion','validation','testbed','banco de pruebas','demostracion industrial','pre-comercial','precomercial','primeros clientes','first customers','trl 6','trl 7'],
+    market:['mercado',' market','comercial','commercial','ventas',' sales',' clientes','customers','facturacion','revenue','lanzado','launched','crecimiento','growth','serie a','series a','trl 8','trl 9','escalando','en produccion']
+  };
+  function detect(text){
+    var nt=' '+norm(text).replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ')+' ';
+    function best(dict,order){var bk=null,bn=0;order.forEach(function(k){var arr=dict[k]||[],n=0;for(var i=0;i<arr.length;i++){if(nt.indexOf(arr[i])>=0)n++;}if(n>bn){bn=n;bk=k;}});return bn>0?bk:null;}
+    return {sect:best(SECTKW,['health','semi','mob','ind','cons','ict']),reg:best(REGKW,['eu','us','jp','kr','tw']),trl:best(TRLKW,['idea','proto','pilot','market'])};
+  }
+  var BK='';try{BK=localStorage.getItem('gw_backend')||'';}catch(e){}
+  var TRL={idea:'Idea / investigaci\u00f3n (TRL 1-3)|Idea / research (TRL 1-3)',proto:'Prototipo (TRL 3-6)|Prototype (TRL 3-6)',pilot:'Listo para piloto (TRL 5-8)|Pilot-ready (TRL 5-8)',market:'En mercado (TRL 7-9)|On market (TRL 7-9)'};
+
+  function chip(host,map,key,withAny){
+    var h='';
+    if(withAny)h+='<button class="chip'+(sel[key]==='any'?' on':'')+'" data-k="any">'+(lang()==='es'?'Cualquiera':'Any')+'</button>';
+    Object.keys(map).forEach(function(k){h+='<button class="chip'+(sel[key]===k?' on':'')+'" data-k="'+k+'">'+Lp(map[k])+'</button>';});
+    host.innerHTML=h;
+    host.querySelectorAll('.chip').forEach(function(b){b.onclick=function(){sel[key]=b.dataset.k;if(AUTO[key]!==undefined)AUTO[key]=false;paintFacets();};});
+  }
+  function paintFacets(){
+    var d=gw();
+    chip(document.getElementById('afSect'),d.SECT,'sect',true);
+    chip(document.getElementById('afReg'),d.REG,'reg',true);
+    chip(document.getElementById('afTrl'),TRL,'trl',true);
+    chip(document.getElementById('afType'),d.TYPE,'type',true);
+  }
+
+  // ---- text utils ----
+  function norm(t){return (t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+  var STOP=new Set(('de la el los las un una y o en con para por que del al se su sus nuestra nuestro buscamos hemos somos una the a an of to for and or in with our we are have looking project startup empresa proyecto').split(' '));
+  function toks(t){return norm(t).split(/[^a-z0-9]+/).filter(function(w){return w.length>3 && !STOP.has(w);});}
+
+  // ---- local recommender ----
+  function trlFitsType(trl,ty){
+    if(trl==='any')return 0;
+    var map={idea:{acc:1.5,prog:.5,ch:.3,cvc:0},proto:{acc:1.2,ch:1,prog:.6,cvc:.3},pilot:{ch:1.5,prog:1,cvc:.8,acc:.3},market:{cvc:1.5,ch:.8,prog:.8,acc:.2}};
+    return (map[trl] && map[trl][ty])||0;
+  }
+  function scoreLocal(text){
+    var d=gw(),l=lang(),qt=toks(text);
+    var res=[];
+    d.C.forEach(function(x){
+      var sc=0,reasons=[];
+      if(sel.reg!=='any'){ if(x.r===sel.reg){sc+=3;reasons.push(l==='es'?'regi\u00f3n coincide':'region matches');} else if(x.r==='us'||x.r==='eu'||x.r==='jp'||x.r==='kr'||x.r==='tw'){ /*different region*/ } }
+      if(sel.sect!=='any'){ if(x.s===sel.sect){sc+=3;reasons.push(l==='es'?'sector coincide':'sector matches');} else if(x.s==='multi'){sc+=1.2;reasons.push(l==='es'?'programa transversal':'cross-sector programme');} }
+      else if(x.s==='multi'){sc+=.4;}
+      if(sel.type!=='any'){ if(x.ty===sel.type){sc+=2;reasons.push(l==='es'?'tipo solicitado':'requested type');} }
+      var tf=trlFitsType(sel.trl,x.ty); if(tf>0){sc+=tf; if(tf>=1)reasons.push(l==='es'?'encaja con tu fase':'fits your stage');}
+      // keyword overlap with prog+desc
+      var ot=toks(x.prog+' '+(x.d[l]||x.d.es));
+      var set=new Set(ot),hits=[];
+      qt.forEach(function(w){if(set.has(w)&&hits.indexOf(w)<0)hits.push(w);});
+      if(hits.length){var kw=Math.min(4,hits.length*1.3);sc+=kw;reasons.push((l==='es'?'menciona: ':'mentions: ')+hits.slice(0,4).join(', '));}
+      if(sc>0)res.push({x:x,sc:sc,reasons:reasons});
+    });
+    res.sort(function(a,b){return b.sc-a.sc;});
+    return res.slice(0,8);
+  }
+
+  function profileText(){
+    var d=gw(),l=lang(),bits=[];
+    if(sel.sect!=='any')bits.push((l==='es'?'sector ':'sector ')+Lp(d.SECT[sel.sect]));
+    if(sel.reg!=='any')bits.push((l==='es'?'regi\u00f3n ':'region ')+Lp(d.REG[sel.reg]));
+    if(sel.trl!=='any')bits.push(Lp(TRL[sel.trl]));
+    if(sel.type!=='any')bits.push(Lp(d.TYPE[sel.type]));
+    return bits.join(' \u00b7 ');
+  }
+
+  function renderRecs(list,intro){
+    var l=lang(),d=gw();
+    var html='<div class="botmsg">'+intro+'</div>';
+    if(!list.length){
+      html+='<div class="empty">'+(l==='es'?'No encontramos coincidencias claras. Prueba a ampliar el sector o la regi\u00f3n a \u201cCualquiera\u201d, o describe el proyecto con m\u00e1s detalle.':'No clear matches. Try widening sector or region to \u201cAny\u201d, or describe your project in more detail.')+'</div>';
+    } else {
+      html+='<div class="recs">';
+      list.forEach(function(r){
+        var x=r.x, max=12, pct=Math.min(99,Math.round(r.sc/max*100));
+        html+='<div class="rec"><div class="rt"><span class="rn">'+x.n+'</span><span class="score">'+pct+'%</span></div>'+
+          '<div class="rp">'+x.prog+'</div>'+
+          '<div class="rmeta">'+Lp(d.REG[x.r])+' \u00b7 '+Lp(d.SECT[x.s])+' \u00b7 '+Lp(d.TYPE[x.ty])+'</div>'+
+          '<div class="why">'+(l==='es'?'Por qu\u00e9: ':'Why: ')+(r.reasons.join('; ')||(l==='es'?'coincidencia general':'general match'))+'.</div>'+
+          '<a class="go" href="'+x.u+'" target="_blank" rel="noopener">'+(l==='es'?'Ir al programa \u2197':'Go to programme \u2197')+'</a></div>';
+      });
+      html+='</div>';
+    }
+    var out=document.getElementById('asstOut');out.className='out show';out.innerHTML=html;
+  }
+
+  function runLocal(){
+    var text=document.getElementById('asstText').value||'';
+    var l=lang(), d=gw();
+    var det=detect(text), filled=[];
+    ['sect','reg','trl'].forEach(function(k){
+      if(sel[k]==='any' || AUTO[k]){
+        if(det[k]){ if(sel[k]!==det[k]||sel[k]==='any'){sel[k]=det[k];} AUTO[k]=true; filled.push(k); }
+        else if(AUTO[k]){ sel[k]='any'; AUTO[k]=false; }
+      }
+    });
+    paintFacets();
+    var list=scoreLocal(text);
+    var prof=profileText();
+    var detText=filled.map(function(k){return k==='sect'?Lp(d.SECT[sel.sect]):k==='reg'?Lp(d.REG[sel.reg]):Lp(TRL[sel.trl]);}).join(' \u00b7 ');
+    var intro;
+    if(filled.length){
+      intro=(l==='es'
+        ?('He le\u00eddo tu descripci\u00f3n y he detectado autom\u00e1ticamente \u2192 '+detText+'. Puedes ajustar cualquier filtro de arriba. Estas son las oportunidades que mejor encajan:')
+        :('I read your description and automatically detected \u2192 '+detText+'. You can adjust any filter above. Here are the best-matching opportunities:'));
+    } else {
+      intro=(l==='es'
+        ?('Seg\u00fan tu perfil ('+(prof||'sin filtros')+') y tu descripci\u00f3n, estas son las oportunidades que mejor encajan. Sugerencia: describe el sector, la regi\u00f3n y la fase para afinar la b\u00fasqueda.')
+        :('Based on your profile ('+(prof||'no filters')+') and your description, here are the best matches. Tip: mention the sector, region and stage to refine the search.'));
+    }
+    renderRecs(list,intro);
+  }
+
+  // ---- LLM mode ----
+  function compactOps(){
+    var d=gw(),l=lang();
+    return d.C.map(function(x){return {name:x.n,program:x.prog,region:Lp(d.REG[x.r]),sector:Lp(d.SECT[x.s]),type:Lp(d.TYPE[x.ty]),url:x.u,about:(x.d[l]||x.d.es)};});
+  }
+  function runLLM(){
+    var l=lang(), out=document.getElementById('asstOut');
+    out.className='out show';
+    out.innerHTML='<div class="botmsg"><span class="spin"></span>'+(l==='es'?'Consultando a la IA\u2026':'Asking the AI\u2026')+'</div>';
+    var payload={lang:l,profile:{sector:sel.sect,region:sel.reg,trl:sel.trl,type:sel.type},project:document.getElementById('asstText').value||'',opportunities:compactOps()};
+    fetch(BK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+      .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+      .then(function(j){
+        var reply=(j&&(j.reply||j.text||j.content))||'';
+        if(!reply){throw new Error('empty');}
+        out.innerHTML='<div class="botmsg">'+String(reply).replace(/</g,'&lt;')+'</div>';
+        // also show local recs underneath as quick links
+        var list=scoreLocal(payload.project);
+        if(list.length){var d=gw();var h='<div class="recs">';list.slice(0,4).forEach(function(r){var x=r.x;h+='<div class="rec"><div class="rt"><span class="rn">'+x.n+'</span></div><div class="rp">'+x.prog+'</div><a class="go" href="'+x.u+'" target="_blank" rel="noopener">'+(l==='es'?'Ir al programa \u2197':'Go to programme \u2197')+'</a></div>';});h+='</div>';out.innerHTML+=h;}
+      })
+      .catch(function(e){
+        out.innerHTML='<div class="botmsg">'+(l==='es'?'No se pudo contactar con el backend de IA ('+e.message+'). Mostrando resultados del motor local:':'Could not reach the AI backend ('+e.message+'). Showing local engine results:')+'</div>';
+        setTimeout(runLocal,50);
+      });
+  }
+
+  function updateModeUI(){
+    var live=!!BK, l=lang();
+    var b=document.getElementById('asstMode');
+    b.className='badge'+(live?' live':'');
+    b.textContent=live?(l==='es'?'IA conectada':'AI connected'):(l==='es'?'Modo demostraci\u00f3n':'Demo mode');
+    var ml=document.getElementById('asstModeLine');
+    ml.className='mode'+(live?' live':'');
+    ml.textContent=live?(l==='es'?'Conectado a tu IA: '+BK:'Connected to your AI: '+BK):(l==='es'?'Funcionando con el motor local. Conecta tu backend de IA para respuestas conversacionales.':'Running on the local engine. Connect your AI backend for conversational answers.');
+    var cu=document.getElementById('cfgUrl'); if(cu&&!cu.value)cu.value=BK;
+  }
+
+  function setPlaceholder(){var t=document.getElementById('asstText');var k=lang()==='es'?'phEs':'phEn';t.placeholder=t.dataset[k]||'';}
+
+  function boot(){
+    if(!document.getElementById('assistant'))return;
+    paintFacets(); updateModeUI(); setPlaceholder();
+    document.getElementById('asstRun').onclick=function(){ if(BK)runLLM(); else runLocal(); };
+    document.getElementById('cfgToggle').onclick=function(){document.getElementById('cfgBox').classList.toggle('show');};
+    document.getElementById('cfgSave').onclick=function(){var v=(document.getElementById('cfgUrl').value||'').trim();BK=v;try{localStorage.setItem('gw_backend',v);}catch(e){}updateModeUI();};
+    document.getElementById('cfgClear').onclick=function(){BK='';try{localStorage.removeItem('gw_backend');}catch(e){}document.getElementById('cfgUrl').value='';updateModeUI();};
+    document.addEventListener('langchange',function(){paintFacets();updateModeUI();setPlaceholder();});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
+</script>
+
+</body></html>

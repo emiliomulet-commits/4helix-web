@@ -14,6 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="4helix-favicon.svg">
 <script src="fh-config.js"></script>
 <script src="fh-assistant.js"></script>
+<script src="fh-chat.js"></script>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -82,7 +83,43 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  
+  <!-- CHAT CIENCIA -->
+  <section class="fh-chat-section" data-system-prompt="Eres el asistente de 4Helix Ventures especializado para investigadores y centros de investigacion (Helice Ciencia). Ayuda a investigadores a decidir entre crear un spin-off o licenciar su tecnologia. Explica la propiedad intelectual, las patentes, los TRL iniciales, como colaborar con 4Helix, y los fondos disponibles para etapas tempranas (EIC Pathfinder, EIC Transition, grants de investigacion).">
+    <div class="wrap">
+      <div class="fh-chat-header">
+        <div class="fh-chat-title-row">
+          <div class="fh-chat-logo-icon"><svg width="28" height="28" viewBox="0 0 40 40"><path d="M8 6 C8 18,32 22,32 34" fill="none" stroke="#34D6C6" stroke-width="2.6" stroke-linecap="round"/><path d="M32 6 C32 18,8 22,8 34" fill="none" stroke="#F0B429" stroke-width="2.6" stroke-linecap="round"/><path d="M8 6 C20 12,20 28,8 34" fill="none" stroke="#8E9BFF" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><path d="M32 6 C20 12,20 28,32 34" fill="none" stroke="#F47E6F" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><circle cx="20" cy="20" r="2.6" fill="#eef2f6"/></svg></div>
+          <div>
+            <h2 class="fh-chat-heading" data-es="Asistente — Para Investigadores" data-en="Assistant — For Researchers">Asistente — Para Investigadores</h2>
+            <p class="fh-chat-sub" data-es="Orienta tu tecnologia: spin-off, licencia, propiedad intelectual y primeros pasos." data-en="Orient your technology: spin-off, license, intellectual property and first steps.">Orienta tu tecnologia: spin-off, licencia, propiedad intelectual y primeros pasos.</p>
+          </div>
+          <div class="fh-chat-badge" data-es="IA ACTIVA" data-en="AI ACTIVE">IA ACTIVA</div>
+        </div>
+      </div>
+      <div class="fh-chat-box">
+        <div class="fh-chat-messages">
+          <div class="fh-msg bot" data-es="Hola. Soy tu asistente para investigadores. Si tienes una tecnologia con potencial de mercado, puedo ayudarte a decidir entre crear un spin-off o licenciar, proteger tu IP, identificar en que TRL estas y que fondos o apoyos existen para tu caso." data-en="Hi! I am your assistant for researchers. If you have a technology with market potential, I can help you decide between creating a spin-off or licensing, protecting your IP, identifying your TRL and what funds or support exist for your case.">Hola. Soy tu asistente para investigadores. Si tienes una tecnologia con potencial de mercado, puedo ayudarte a decidir entre crear un spin-off o licenciar, proteger tu IP, identificar en que TRL estas y que fondos o apoyos existen para tu caso.</div>
+        </div>
+        <div class="fh-chat-chips">
+          <button class="fh-chip" data-q-es="Debo crear un spin-off o licenciar mi tecnologia?" data-q-en="Should I create a spin-off or license my technology?">Spin-off o licencia?</button>
+          <button class="fh-chip" data-q-es="Como protejo la propiedad intelectual de mi investigacion?" data-q-en="How do I protect my research intellectual property?">Proteger mi IP</button>
+          <button class="fh-chip" data-q-es="Que necesito para crear un spin-off desde la universidad?" data-q-en="What do I need to create a university spin-off?">Crear mi spin-off</button>
+          <button class="fh-chip" data-q-es="Que fondos europeos existen para ciencia en TRL 1 a 4?" data-q-en="What European funds exist for science at TRL 1 to 4?">Fondos TRL temprano</button>
+          <button class="fh-chip" data-q-es="Como puede ayudarme 4Helix si soy investigador?" data-q-en="How can 4Helix help me if I am a researcher?">Como ayuda 4Helix</button>
+          <button class="fh-chip" data-q-es="Que es el EIC Pathfinder y para que etapa es?" data-q-en="What is the EIC Pathfinder and for what stage?">EIC Pathfinder</button>
+        </div>
+        <div class="fh-chat-input-row">
+          <textarea class="fh-chat-input" rows="1" placeholder="Pregunta sobre tu tecnologia o spin-off..."></textarea>
+          <button class="fh-chat-send" aria-label="Enviar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D1428" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        </div>
+        <p class="fh-chat-disclaimer" data-es="Informacion orientativa. Consulta siempre con especialistas legales para decisiones de IP." data-en="Informational only. Always consult legal specialists for IP decisions.">Informacion orientativa. Consulta siempre con especialistas legales para decisiones de IP.</p>
+      </div>
+    </div>
+  </section>
+  <!-- /CHAT CIENCIA -->
+
+<!-- HERO -->
   <header style="max-width:1180px; margin:0 auto; padding:clamp(40px,7vh,72px) clamp(24px,5vw,64px) clamp(8px,2vh,20px);">
     <!-- helix selector -->
     <div data-bg-clear style="display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:30px;">

@@ -443,7 +443,7 @@ function typewriterMsg(text, msgs) {
     }
 
     typing.remove();
-    typewriterMsg(reply, msgs)
+    typewriterMsg(reply, msgArea)
     updateNavPanel(reply, section);;
     history.push({ role: 'assistant', content: reply });
 

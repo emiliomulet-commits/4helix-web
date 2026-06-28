@@ -385,6 +385,31 @@ function initChat(section) {
   }
 
 /* ── Typewriter effect for bot replies ─────────────────────────── */
+function renderMd(text) {
+  let t = text;
+  // Headings
+  t = t.replace(/^### (.+)$/gm,'<h3>$1</h3>');
+  t = t.replace(/^## (.+)$/gm,'<h2>$1</h2>');
+  t = t.replace(/^# (.+)$/gm,'<h2>$1</h2>');
+  // Bold/italic
+  t = t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  t = t.replace(/\*(.+?)\*/g,'<em>$1</em>');
+  // Horizontal rule
+  t = t.replace(/^---+$/gm,'<hr>');
+  // Numbered list
+  t = t.replace(/^\d+\.\s+(.+)$/gm,'<li>$1</li>');
+  t = t.replace(/(<li>.*<\/li>)/s, '<ol>$1</ol>');
+  // Bullet list
+  t = t.replace(/^[-*]\s+(.+)$/gm,'<li>$1</li>');
+  // Paragraphs: double newline
+  t = t.split(/\n\n+/).map(p => {
+    p = p.trim();
+    if (!p) return '';
+    if (/^<(h[1-6]|hr|ol|ul|li)/.test(p)) return p;
+    return '<p>' + p.replace(/\n/g,' ') + '</p>';
+  }).join('');
+  return t;
+}
 function typewriterMsg(text, msgs) {
   const d = document.createElement('div');
   d.className = 'fh-msg bot';
@@ -392,11 +417,16 @@ function typewriterMsg(text, msgs) {
   msgs.scrollTop = msgs.scrollHeight;
   const words = text.split(' ');
   let idx = 0;
+  let raw = '';
   const SPEED = 28; // ms per word
   function tick() {
-    if (idx >= words.length) return;
-    d.textContent += (idx === 0 ? '' : ' ') + words[idx];
-    idx++;
+    if (idx >= words.length) {
+      d.innerHTML = renderMd(raw);
+      msgs.scrollTop = msgs.scrollHeight;
+      return;
+    }
+    raw += (idx === 0 ? '' : ' ') + words[idx++];
+    d.textContent = raw;
     msgs.scrollTop = msgs.scrollHeight;
     setTimeout(tick, SPEED);
   }

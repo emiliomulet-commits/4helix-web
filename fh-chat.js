@@ -19,7 +19,7 @@ const CSS = `
 @keyframes fhChatPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 .fh-chat-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden}
 .fh-chat-messages{min-height:160px;max-height:360px;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
-.fh-chat-messages::-webkit-scrollbar{width:4px}.fh-chat-messages::-webkit-scrollbar-track{background:transparent}.fh-chat-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:2px}
+.fh-chat-messages::-webkit-scrollbar{width:8px}.fh-chat-messages::-webkit-scrollbar-track{background:rgba(6,19,34,.8);border-radius:4px}.fh-chat-messages::-webkit-scrollbar-thumb{background:linear-gradient(to bottom,#34D6C6 0%,#a8d8a8 40%,#d4d888 70%,#F0B429 100%);border-radius:4px;border:1px solid rgba(255,255,255,.15)}.fh-chat-messages::-webkit-scrollbar-thumb:hover{background:linear-gradient(to bottom,#3ee8d7 0%,#b8e8b8 40%,#e4e898 70%,#f5c43e 100%)}
 .fh-msg{max-width:78%;padding:10px 14px;border-radius:12px;font-size:14px;line-height:1.6;word-break:break-word}
 .fh-msg.bot{align-self:flex-start;background:rgba(52,214,198,.1);border:1px solid rgba(52,214,198,.18);color:var(--on-dark)}
 .fh-msg.user{align-self:flex-end;background:rgba(52,214,198,.22);border:1px solid rgba(52,214,198,.35);color:var(--on-dark)}

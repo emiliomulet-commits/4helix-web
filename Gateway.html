@@ -400,6 +400,143 @@
   </div>
 </div></header>
 <main>
+
+<!-- ============================================================ -->
+<!-- GATEWAY CHAT — Asistente de Innovación Abierta              -->
+<!-- ============================================================ -->
+<section id="gateway-chat" class="gw-chat-section">
+  <div class="wrap">
+    <div class="gw-chat-header">
+      <div class="gw-chat-title-row">
+        <div class="gw-logo-icon"><svg width="28" height="28" viewBox="0 0 40 40"><path d="M8 6 C8 18,32 22,32 34" fill="none" stroke="#34D6C6" stroke-width="2.6" stroke-linecap="round"/><path d="M32 6 C32 18,8 22,8 34" fill="none" stroke="#F0B429" stroke-width="2.6" stroke-linecap="round"/><path d="M8 6 C20 12,20 28,8 34" fill="none" stroke="#8E9BFF" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><path d="M32 6 C20 12,20 28,32 34" fill="none" stroke="#F47E6F" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><circle cx="20" cy="20" r="2.6" fill="#eef2f6"/></svg></div>
+        <div>
+          <h2 class="gw-chat-heading" data-es="Asistente de Innovación Abierta" data-en="Open Innovation Assistant">Asistente de Innovación Abierta</h2>
+          <p class="gw-chat-sub" data-es="Explora retos, fondos UE y oportunidades de colaboración corporativa" data-en="Explore challenges, EU funds and corporate collaboration opportunities">Explora retos, fondos UE y oportunidades de colaboración corporativa</p>
+        </div>
+        <div class="gw-chat-badge" data-es="IA activa" data-en="AI active">IA activa</div>
+      </div>
+    </div>
+    <div class="gw-chat-body">
+      <div id="gwMessages" class="gw-messages" role="log" aria-live="polite">
+        <div class="gw-msg gw-msg--bot">
+          <div class="gw-msg-avatar"><svg width="18" height="18" viewBox="0 0 40 40"><path d="M8 6 C8 18,32 22,32 34" fill="none" stroke="#34D6C6" stroke-width="2.6" stroke-linecap="round"/><path d="M32 6 C32 18,8 22,8 34" fill="none" stroke="#F0B429" stroke-width="2.6" stroke-linecap="round"/></svg></div>
+          <div class="gw-msg-bubble"><p data-es="Hola 👋 Soy el asistente de innovación abierta de 4Helix. Puedo ayudarte a explorar retos corporativos activos, fondos europeos y oportunidades de colaboración con grandes empresas. ¿Qué quieres saber?" data-en="Hi 👋 I'm the 4Helix open innovation assistant. I can help you explore active corporate challenges, EU funds and collaboration opportunities. What would you like to know?">Hola 👋 Soy el asistente de innovación abierta de 4Helix. Puedo ayudarte a explorar retos corporativos activos, fondos europeos y oportunidades de colaboración con grandes empresas. ¿Qué quieres saber?</p></div>
+        </div>
+      </div>
+      <div id="gwChips" class="gw-chips">
+        <button class="gw-chip" data-q-es="¿Qué retos corporativos están abiertos ahora?" data-q-en="What corporate challenges are currently open?">¿Qué retos están abiertos?</button>
+        <button class="gw-chip" data-q-es="¿Qué fondos UE están disponibles para deep-tech?" data-q-en="What EU funds are available for deep-tech?">Fondos UE deep-tech</button>
+        <button class="gw-chip" data-q-es="¿Cómo funciona el modelo de cuádruple hélice?" data-q-en="How does the quadruple helix model work?">Modelo cuádruple hélice</button>
+        <button class="gw-chip" data-q-es="¿Qué es el EIC Accelerator y quién puede aplicar?" data-q-en="What is the EIC Accelerator and who can apply?">EIC Accelerator</button>
+        <button class="gw-chip" data-q-es="¿Cómo puedo hacer un spin-off desde la universidad?" data-q-en="How can I create a university spin-off?">Spin-off universitario</button>
+        <button class="gw-chip" data-q-es="¿Qué sectores tienen más retos de innovación abierta?" data-q-en="Which sectors have the most open innovation challenges?">Sectores con más retos</button>
+      </div>
+      <div class="gw-input-row">
+        <textarea id="gwInput" class="gw-input" rows="1" placeholder="Pregunta sobre innovación abierta, fondos UE, retos corporativos…" data-ph-es="Pregunta sobre innovación abierta, fondos UE, retos corporativos…" data-ph-en="Ask about open innovation, EU funds, corporate challenges…"></textarea>
+        <button id="gwSend" class="gw-send-btn" aria-label="Enviar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+      </div>
+      <p class="gw-disclaimer" data-es="Información orientativa — confirma siempre en los portales oficiales." data-en="Indicative information — always confirm on official portals.">Información orientativa — confirma siempre en los portales oficiales.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+.gw-chat-section{padding:calc(68px + 40px) 0 0;background:linear-gradient(180deg,rgba(8,13,28,1) 0%,rgba(13,20,40,1) 100%);position:relative;z-index:1}
+.gw-chat-section .wrap{max-width:860px}
+.gw-chat-header{margin-bottom:20px}
+.gw-chat-title-row{display:flex;align-items:flex-start;gap:16px}
+.gw-logo-icon{width:44px;height:44px;background:rgba(52,214,198,.1);border:1px solid rgba(52,214,198,.25);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:4px}
+.gw-chat-heading{font-family:var(--display);font-size:clamp(20px,2.8vw,28px);font-weight:600;letter-spacing:-.02em;color:var(--on-dark);margin-bottom:6px}
+.gw-chat-sub{font-size:14px;color:var(--on-dark-mut);max-width:44em}
+.gw-chat-badge{margin-left:auto;flex-shrink:0;background:rgba(52,214,198,.12);border:1px solid rgba(52,214,198,.3);color:var(--science);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.gw-chat-badge::before{content:"";width:6px;height:6px;background:var(--science);border-radius:50%;animation:gwPulse 2s infinite}
+@keyframes gwPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.gw-chat-body{background:rgba(255,255,255,.04);border:1px solid var(--line-dark);border-radius:20px;overflow:hidden;backdrop-filter:blur(8px)}
+.gw-messages{max-height:340px;overflow-y:auto;padding:24px 24px 16px;display:flex;flex-direction:column;gap:16px;scroll-behavior:smooth}
+.gw-messages::-webkit-scrollbar{width:4px}.gw-messages::-webkit-scrollbar-track{background:transparent}.gw-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+.gw-msg{display:flex;gap:10px;align-items:flex-start;animation:gwFadeIn .3s ease}
+@keyframes gwFadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.gw-msg--user{flex-direction:row-reverse}
+.gw-msg-avatar{width:28px;height:28px;border-radius:50%;background:rgba(52,214,198,.12);border:1px solid rgba(52,214,198,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gw-msg--user .gw-msg-avatar{background:rgba(142,155,255,.12);border-color:rgba(142,155,255,.2)}
+.gw-msg-bubble{max-width:78%;background:rgba(255,255,255,.05);border:1px solid var(--line-dark);border-radius:16px;border-top-left-radius:4px;padding:12px 16px;font-size:14px;line-height:1.6;color:var(--on-dark)}
+.gw-msg--user .gw-msg-bubble{background:rgba(52,214,198,.1);border-color:rgba(52,214,198,.2);border-top-left-radius:16px;border-top-right-radius:4px}
+.gw-msg-bubble p{margin:0}
+.gw-typing-dots{display:inline-flex;gap:4px;padding:4px 0}
+.gw-typing-dots span{width:6px;height:6px;background:var(--on-dark-mut);border-radius:50%;animation:gwBounce .9s infinite}
+.gw-typing-dots span:nth-child(2){animation-delay:.15s}.gw-typing-dots span:nth-child(3){animation-delay:.3s}
+@keyframes gwBounce{0%,80%,100%{transform:scale(.8);opacity:.5}40%{transform:scale(1.1);opacity:1}}
+.gw-chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 20px 16px}
+.gw-chip{font-family:var(--body);font-size:12.5px;color:var(--on-dark-mut);background:rgba(255,255,255,.04);border:1px solid var(--line-dark);border-radius:999px;padding:6px 14px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.gw-chip:hover{background:rgba(52,214,198,.1);border-color:rgba(52,214,198,.35);color:var(--science)}
+.gw-input-row{display:flex;align-items:flex-end;gap:10px;padding:0 20px 16px}
+.gw-input{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 16px;font-family:var(--body);font-size:14px;color:var(--on-dark);resize:none;outline:none;transition:border-color .2s;min-height:44px;max-height:120px;line-height:1.5}
+.gw-input::placeholder{color:var(--on-dark-mut)}
+.gw-input:focus{border-color:rgba(52,214,198,.4)}
+.gw-send-btn{width:44px;height:44px;background:var(--science);border:none;border-radius:12px;color:#04231F;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s,box-shadow .2s;padding:0}
+.gw-send-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px -6px rgba(52,214,198,.5)}
+.gw-send-btn:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
+.gw-disclaimer{padding:0 20px 16px;font-family:var(--mono);font-size:10.5px;color:rgba(148,160,190,.55);letter-spacing:.03em}
+@media(max-width:600px){.gw-chat-title-row{flex-wrap:wrap}.gw-chat-badge{margin-left:0}.gw-messages{max-height:260px;padding:16px}.gw-chips{padding:0 12px 12px}.gw-input-row{padding:0 12px 12px}}
+</style>
+
+<script id="gw-chat-script">
+(function(){
+'use strict';
+var gwHistory=[],gwBusy=false;
+function gwLang(){try{return localStorage.getItem('fh_lang')==='en'?'en':'es';}catch(e){return'es';}}
+function gwEsc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/
+/g,'<br>');}
+function gwAddMsg(role,html){
+  var msgs=document.getElementById('gwMessages');if(!msgs)return;
+  var div=document.createElement('div');div.className='gw-msg gw-msg--'+(role==='user'?'user':'bot');
+  var av=role==='user'?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>':'<svg width="18" height="18" viewBox="0 0 40 40"><path d="M8 6 C8 18,32 22,32 34" fill="none" stroke="#34D6C6" stroke-width="2.6" stroke-linecap="round"/><path d="M32 6 C32 18,8 22,8 34" fill="none" stroke="#F0B429" stroke-width="2.6" stroke-linecap="round"/></svg>';
+  div.innerHTML='<div class="gw-msg-avatar">'+av+'</div><div class="gw-msg-bubble"><p>'+html+'</p></div>';
+  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;return div;
+}
+function gwShowTyping(){
+  var msgs=document.getElementById('gwMessages');if(!msgs)return null;
+  var div=document.createElement('div');div.className='gw-msg gw-msg--bot';
+  div.innerHTML='<div class="gw-msg-avatar"><svg width="18" height="18" viewBox="0 0 40 40"><path d="M8 6 C8 18,32 22,32 34" fill="none" stroke="#34D6C6" stroke-width="2.6" stroke-linecap="round"/><path d="M32 6 C32 18,8 22,8 34" fill="none" stroke="#F0B429" stroke-width="2.6" stroke-linecap="round"/></svg></div><div class="gw-msg-bubble"><div class="gw-typing-dots"><span></span><span></span><span></span></div></div>';
+  msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;return div;
+}
+function gwSend(text){
+  if(gwBusy||!text.trim())return;
+  var l=gwLang();gwBusy=true;
+  var inp=document.getElementById('gwInput'),btn=document.getElementById('gwSend'),chips=document.getElementById('gwChips');
+  if(inp)inp.value='';if(btn)btn.disabled=true;if(chips)chips.style.display='none';
+  gwAddMsg('user',gwEsc(text.trim()));gwHistory.push({role:'user',text:text.trim()});
+  var typing=gwShowTyping();
+  var ep=(typeof window!=='undefined'&&window.FH_ASSISTANT_ENDPOINT)||'';
+  if(!ep){
+    setTimeout(function(){if(typing)typing.remove();var m=l==='en'?'The assistant will be available once the backend is connected.':'El asistente estará disponible en cuanto se conecte el backend. Escribe a hola@4helixventures.com para soporte directo.';gwAddMsg('bot',gwEsc(m));gwHistory.push({role:'assistant',text:m});gwBusy=false;if(btn)btn.disabled=false;},900);return;
+  }
+  fetch(ep,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:l,messages:gwHistory,message:text.trim(),history:gwHistory.map(function(m){return{role:m.role,content:m.text};})})})
+  .then(function(r){if(!r.ok)throw new Error('bad');return r.json();})
+  .then(function(d){if(typing)typing.remove();var rep=d.reply||d.text||d.message||'';gwAddMsg('bot',gwEsc(rep));gwHistory.push({role:'assistant',text:rep});gwBusy=false;if(btn)btn.disabled=false;})
+  .catch(function(){if(typing)typing.remove();var m=l==='en'?'There was a problem. Try again.':'Ha habido un problema. Inténtalo de nuevo.';gwAddMsg('bot',gwEsc(m));gwBusy=false;if(btn)btn.disabled=false;});
+}
+function gwTranslate(){
+  var l=gwLang();
+  document.querySelectorAll('#gateway-chat [data-es]').forEach(function(el){var v=el.getAttribute('data-'+l)||el.getAttribute('data-es');if(v)el.textContent=v;});
+  var inp=document.getElementById('gwInput');if(inp){var ph=inp.getAttribute('data-ph-'+l)||inp.getAttribute('data-ph-es');if(ph)inp.placeholder=ph;}
+  document.querySelectorAll('#gwChips .gw-chip').forEach(function(c){var q=c.getAttribute('data-q-'+l)||c.getAttribute('data-q-es');if(q)c.textContent=q.length>38?q.substring(0,36)+'…':q;});
+}
+function gwInit(){
+  var inp=document.getElementById('gwInput'),btn=document.getElementById('gwSend'),chips=document.getElementById('gwChips');
+  if(!inp||!btn)return;
+  btn.addEventListener('click',function(){gwSend(inp.value);});
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();gwSend(inp.value);}});
+  inp.addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px';});
+  if(chips){chips.querySelectorAll('.gw-chip').forEach(function(chip){chip.addEventListener('click',function(){var l=gwLang();var q=chip.getAttribute('data-q-'+l)||chip.getAttribute('data-q-es')||chip.textContent;if(inp)inp.value=q;gwSend(q);});});}
+  document.addEventListener('langchange',gwTranslate);
+  gwTranslate();
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',gwInit);else gwInit();
+})();
+</script>
+
+
 <section class="o-hero"><div class="wrap reveal">
   <span class="eyebrow" data-es="Innovación abierta corporativa" data-en="Corporate open innovation">Innovación abierta corporativa</span>
   <h1 data-es="Una puerta directa a la <em>innovación abierta</em> de las grandes corporaciones" data-en="A direct door to the <em>open innovation</em> of the world’s top corporations">Una puerta directa a la <em>innovación abierta</em> de las grandes corporaciones</h1>

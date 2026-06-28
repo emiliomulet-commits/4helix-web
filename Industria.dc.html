@@ -14,6 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="4helix-favicon.svg">
 <script src="fh-config.js"></script>
 <script src="fh-assistant.js"></script>
+<script src="fh-chat.js"></script>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -82,7 +83,43 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  
+  <!-- CHAT INDUSTRIA -->
+  <section class="fh-chat-section" data-system-prompt="Eres el asistente de 4Helix Ventures especializado para empresas e industria (Helice Industria). Ayuda a directores de innovacion y empresas a entender como colaborar con tecnologia de frontera. Explica las tres vias de colaboracion: co-desarrollo, licencia e integracion (M&A/joint venture). Orienta sobre que sectores tienen mas retos activos, como acceder a tecnologia cientifica y que ventajas competitivas aporta.">
+    <div class="wrap">
+      <div class="fh-chat-header">
+        <div class="fh-chat-title-row">
+          <div class="fh-chat-logo-icon"><svg width="28" height="28" viewBox="0 0 40 40"><path d="M8 6 C8 18,32 22,32 34" fill="none" stroke="#34D6C6" stroke-width="2.6" stroke-linecap="round"/><path d="M32 6 C32 18,8 22,8 34" fill="none" stroke="#F0B429" stroke-width="2.6" stroke-linecap="round"/><path d="M8 6 C20 12,20 28,8 34" fill="none" stroke="#8E9BFF" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><path d="M32 6 C20 12,20 28,32 34" fill="none" stroke="#F47E6F" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><circle cx="20" cy="20" r="2.6" fill="#eef2f6"/></svg></div>
+          <div>
+            <h2 class="fh-chat-heading" data-es="Asistente — Para Empresas e Industria" data-en="Assistant — For Companies and Industry">Asistente — Para Empresas e Industria</h2>
+            <p class="fh-chat-sub" data-es="Descubre como tu empresa puede acceder a tecnologia de frontera y talento cientifico." data-en="Discover how your company can access frontier technology and scientific talent.">Descubre como tu empresa puede acceder a tecnologia de frontera.</p>
+          </div>
+          <div class="fh-chat-badge" data-es="IA ACTIVA" data-en="AI ACTIVE">IA ACTIVA</div>
+        </div>
+      </div>
+      <div class="fh-chat-box">
+        <div class="fh-chat-messages">
+          <div class="fh-msg bot" data-es="Hola. Soy tu asistente para empresas. Si tu empresa busca innovacion tecnologica de frontera, puedo orientarte sobre las tres vias de colaboracion con ciencia y como 4Helix facilita ese proceso." data-en="Hi! I am your assistant for companies. I can guide you on the three collaboration paths with science and how 4Helix facilitates that process.">Hola. Soy tu asistente para empresas. Puedo orientarte sobre como colaborar con ciencia de frontera y las tres vias: co-desarrollo, licencia e integracion.</div>
+        </div>
+        <div class="fh-chat-chips">
+          <button class="fh-chip" data-q-es="Cuales son las tres vias de colaboracion entre empresa y ciencia?" data-q-en="What are the three collaboration paths between company and science?">Vias de colaboracion</button>
+          <button class="fh-chip" data-q-es="Que ventajas competitivas aporta colaborar con ciencia universitaria?" data-q-en="What competitive advantages does collaboration with university science bring?">Ventaja competitiva</button>
+          <button class="fh-chip" data-q-es="Como funciona el co-desarrollo de tecnologia con una spin-off?" data-q-en="How does technology co-development with a spin-off work?">Co-desarrollo</button>
+          <button class="fh-chip" data-q-es="Es mejor licenciar la tecnologia o hacer una integracion?" data-q-en="Is it better to license the technology or do an integration?">Licencia vs integracion</button>
+          <button class="fh-chip" data-q-es="En que sectores hay mas retos de innovacion abierta ahora mismo?" data-q-en="In which sectors are there more open innovation challenges right now?">Sectores con mas retos</button>
+          <button class="fh-chip" data-q-es="Cuanto tiempo lleva normalmente una colaboracion empresa-ciencia?" data-q-en="How long does a company-science collaboration typically take?">Tiempos de colaboracion</button>
+        </div>
+        <div class="fh-chat-input-row">
+          <textarea class="fh-chat-input" rows="1" placeholder="Pregunta sobre colaboracion empresa-ciencia..."></textarea>
+          <button class="fh-chat-send" aria-label="Enviar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D1428" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        </div>
+        <p class="fh-chat-disclaimer" data-es="Informacion orientativa." data-en="Informational only.">Informacion orientativa.</p>
+      </div>
+    </div>
+  </section>
+  <!-- /CHAT INDUSTRIA -->
+
+<!-- HERO -->
   <header style="max-width:1180px; margin:0 auto; padding:clamp(40px,7vh,72px) clamp(24px,5vw,64px) clamp(8px,2vh,20px);">
     <div data-bg-clear style="display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:30px;">
       <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#5d748c; margin-right:6px;">{{ t.position }}</span>

@@ -75,14 +75,29 @@
   </nav>
 
   
-  <!-- CHAT CASOS -->
+  <!-- HERO -->
+  <header style="max-width:1180px; margin:0 auto; padding:clamp(44px,7vh,80px) clamp(24px,5vw,64px) clamp(20px,3vh,32px);">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.26em; text-transform:uppercase; color:#88b0ee; margin-bottom:20px;">{{ t.eyebrow }}</div>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.02em; line-height:1.05; font-size:clamp(30px,4.2vw,54px); margin:0; max-width:20ch; color:#eef2f6;">{{ t.title }}</h1>
+    <p style="font-size:clamp(16px,1.4vw,18px); line-height:1.62; color:#9aa0ac; max-width:54ch; margin:22px 0 0; font-weight:300;">{{ t.intro }}</p>
+    <div data-bg-clear style="display:flex; flex-wrap:wrap; gap:clamp(24px,4vw,46px); margin-top:30px;">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+        <div style="display:flex; align-items:baseline; gap:9px;">
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,3vw,38px); letter-spacing:-0.01em; color:#eef2f6;">{{ s.n }}</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#88b0ee;">{{ s.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </header>
+
+<!-- CHAT CASOS -->
   <section class="fh-chat-section" data-system-prompt="Eres el asistente de 4Helix Ventures especializado en casos de exito de spin-offs y empresas deep-tech europeas. Esta seccion recoge 100 casos de referencia: BioNTech (mRNA, Alemania), Climeworks (DAC, Suiza ETH), IQM (computacion cuantica, Finlandia), ICEYE (satelites SAR, Finlandia), Multiverse Computing (cuantica, Espana), Pasqal (atomos neutros, Francia), Synthesia (IA video, UK), Celonis (process mining, Alemania), Neustark (captura CO2, Suiza), Oxford Nanopore (secuenciacion ADN, UK). Puedes describir casos, explicar lecciones del recorrido laboratorio-mercado, comparar por sector o pais, y orientar sobre como se replica ese recorrido.">
     <div class="wrap">
       <div class="fh-chat-header">
         <div class="fh-chat-title-row">
           <div class="fh-chat-logo-icon"><svg width="28" height="28" viewBox="0 0 40 40"><path d="M8 6 C8 18,32 22,32 34" fill="none" stroke="#34D6C6" stroke-width="2.6" stroke-linecap="round"/><path d="M32 6 C32 18,8 22,8 34" fill="none" stroke="#F0B429" stroke-width="2.6" stroke-linecap="round"/><path d="M8 6 C20 12,20 28,8 34" fill="none" stroke="#8E9BFF" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><path d="M32 6 C20 12,20 28,32 34" fill="none" stroke="#F47E6F" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><circle cx="20" cy="20" r="2.6" fill="#eef2f6"/></svg></div>
           <div>
-            <h2 class="fh-chat-heading" data-es="Asistente — Casos de Exito Deep-tech" data-en="Assistant — Deep-tech Success Cases">Asistente — Casos de Exito Deep-tech</h2>
+            <h2 class="fh-chat-heading" data-es="Asistente — Referentes Ciencia al Mercado" data-en="Assistant — Science-to-Market References">Asistente — Casos de Exito Deep-tech</h2>
             <p class="fh-chat-sub" data-es="Explora 100 referentes europeos del laboratorio al mercado y extrae lecciones." data-en="Explore 100 European benchmarks from lab to market and extract lessons.">Explora 100 referentes europeos del laboratorio al mercado y extrae lecciones.</p>
           </div>
           <div class="fh-chat-badge" data-es="IA ACTIVA" data-en="AI ACTIVE">IA ACTIVA</div>
@@ -109,21 +124,6 @@
     </div>
   </section>
   <!-- /CHAT CASOS -->
-
-<!-- HERO -->
-  <header style="max-width:1180px; margin:0 auto; padding:clamp(44px,7vh,80px) clamp(24px,5vw,64px) clamp(20px,3vh,32px);">
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.26em; text-transform:uppercase; color:#88b0ee; margin-bottom:20px;">{{ t.eyebrow }}</div>
-    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.02em; line-height:1.05; font-size:clamp(30px,4.2vw,54px); margin:0; max-width:20ch; color:#eef2f6;">{{ t.title }}</h1>
-    <p style="font-size:clamp(16px,1.4vw,18px); line-height:1.62; color:#9aa0ac; max-width:54ch; margin:22px 0 0; font-weight:300;">{{ t.intro }}</p>
-    <div data-bg-clear style="display:flex; flex-wrap:wrap; gap:clamp(24px,4vw,46px); margin-top:30px;">
-      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
-        <div style="display:flex; align-items:baseline; gap:9px;">
-          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,3vw,38px); letter-spacing:-0.01em; color:#eef2f6;">{{ s.n }}</span>
-          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#88b0ee;">{{ s.label }}</span>
-        </div>
-      </sc-for>
-    </div>
-  </header>
 
   <!-- CONTROLS -->
   <section style="max-width:1180px; margin:0 auto; padding:clamp(16px,2vh,28px) clamp(24px,5vw,64px) 0;">

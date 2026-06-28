@@ -14,6 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="4helix-favicon.svg">
 <script src="fh-config.js"></script>
 <script src="fh-assistant.js"></script>
+<script src="fh-chat.js"></script>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -81,7 +82,43 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  
+  <!-- CHAT CAPITAL -->
+  <section class="fh-chat-section" data-system-prompt="Eres el asistente de 4Helix Ventures especializado en la Helice Capital. Esta seccion es para fondos de inversion y capital. Explica el embudo de de-risking (de 100 proyectos a 20 invertibles), el retorno esperado, como 4Helix gestiona el riesgo tecnico, y los instrumentos de financiacion europea (EIC Accelerator, EIC Pathfinder, InvestEU). Cuando se pregunte sobre fondos especificos, redirige a Actualidad o Topics.">
+    <div class="wrap">
+      <div class="fh-chat-header">
+        <div class="fh-chat-title-row">
+          <div class="fh-chat-logo-icon"><svg width="28" height="28" viewBox="0 0 40 40"><path d="M8 6 C8 18,32 22,32 34" fill="none" stroke="#34D6C6" stroke-width="2.6" stroke-linecap="round"/><path d="M32 6 C32 18,8 22,8 34" fill="none" stroke="#F0B429" stroke-width="2.6" stroke-linecap="round"/><path d="M8 6 C20 12,20 28,8 34" fill="none" stroke="#8E9BFF" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><path d="M32 6 C20 12,20 28,32 34" fill="none" stroke="#F47E6F" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><circle cx="20" cy="20" r="2.6" fill="#eef2f6"/></svg></div>
+          <div>
+            <h2 class="fh-chat-heading" data-es="Asistente — Capital e Inversion Deep-tech" data-en="Assistant — Deep-tech Capital and Investment">Asistente — Capital e Inversion Deep-tech</h2>
+            <p class="fh-chat-sub" data-es="Explora como 4Helix filtra y prepara deal flow cientifico de alta calidad." data-en="Explore how 4Helix filters and prepares high-quality scientific deal flow.">Explora como 4Helix filtra y prepara deal flow cientifico de alta calidad.</p>
+          </div>
+          <div class="fh-chat-badge" data-es="IA ACTIVA" data-en="AI ACTIVE">IA ACTIVA</div>
+        </div>
+      </div>
+      <div class="fh-chat-box">
+        <div class="fh-chat-messages">
+          <div class="fh-msg bot" data-es="Hola. Soy tu asistente para la helice Capital. Puedo explicarte como 4Helix reduce el riesgo tecnico para inversores, como funciona nuestro embudo de de-risking y que instrumentos de financiacion europea existen para deep-tech." data-en="Hi! I am your assistant for the Capital helix. I can explain how 4Helix reduces technical risk for investors, how our de-risking funnel works, and what European financing instruments exist for deep-tech.">Hola. Soy tu asistente para la helice Capital. Puedo explicarte como 4Helix reduce el riesgo tecnico para inversores, como funciona nuestro embudo de de-risking y que instrumentos de financiacion europea existen para deep-tech.</div>
+        </div>
+        <div class="fh-chat-chips">
+          <button class="fh-chip" data-q-es="Como funciona el embudo de de-risking de 4Helix?" data-q-en="How does 4Helix's de-risking funnel work?">Embudo de de-risking</button>
+          <button class="fh-chip" data-q-es="Que retorno esperar de una inversion en deep-tech con 4Helix?" data-q-en="What return to expect from a deep-tech investment with 4Helix?">Retorno esperado</button>
+          <button class="fh-chip" data-q-es="Como entra un fondo de inversion a trabajar con 4Helix?" data-q-en="How does an investment fund start working with 4Helix?">Como co-invertir</button>
+          <button class="fh-chip" data-q-es="En que TRL es optimo entrar como inversor?" data-q-en="At what TRL is it optimal to enter as an investor?">TRL optimo para entrar</button>
+          <button class="fh-chip" data-q-es="Que instrumentos europeos combinan subvencion e inversion?" data-q-en="What European instruments combine grant and equity?">Subvencion mas equity</button>
+          <button class="fh-chip" data-q-es="Que sectores deep-tech tienen mas potencial de retorno?" data-q-en="Which deep-tech sectors have the most return potential?">Sectores con potencial</button>
+        </div>
+        <div class="fh-chat-input-row">
+          <textarea class="fh-chat-input" rows="1" placeholder="Pregunta sobre inversion deep-tech..."></textarea>
+          <button class="fh-chat-send" aria-label="Enviar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D1428" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        </div>
+        <p class="fh-chat-disclaimer" data-es="Informacion orientativa. No constituye asesoramiento financiero." data-en="Informational only. Not financial advice.">Informacion orientativa. No constituye asesoramiento financiero.</p>
+      </div>
+    </div>
+  </section>
+  <!-- /CHAT CAPITAL -->
+
+<!-- HERO -->
   <header style="max-width:1180px; margin:0 auto; padding:clamp(40px,7vh,72px) clamp(24px,5vw,64px) clamp(8px,2vh,20px);">
     <div data-bg-clear style="display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:30px;">
       <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#5d748c; margin-right:6px;">{{ t.position }}</span>

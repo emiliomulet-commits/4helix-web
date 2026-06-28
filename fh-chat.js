@@ -7,7 +7,7 @@
 
 /* ── CSS ──────────────────────────────────────────────────── */
 const CSS = `
-.fh-chat-section{padding:calc(68px + 40px) 0 0;background:linear-gradient(180deg,rgba(8,13,28,1) 0%,rgba(13,20,40,1) 100%);position:relative;z-index:1}
+.fh-chat-section{padding:60px 0;background:linear-gradient(180deg,rgba(8,13,28,1) 0%,rgba(13,20,40,1) 100%);position:relative;z-index:1}
 .fh-chat-section .wrap{max-width:860px}
 .fh-chat-header{margin-bottom:20px}
 .fh-chat-title-row{display:flex;align-items:flex-start;gap:16px}

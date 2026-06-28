@@ -14,6 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="4helix-favicon.svg">
 <script src="fh-config.js"></script>
 <script src="fh-assistant.js"></script>
+<script src="fh-chat.js"></script>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -73,7 +74,43 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  
+  <!-- CHAT TOPICS -->
+  <section class="fh-chat-section" data-system-prompt="Eres el asistente de 4Helix Ventures especializado en topics y programas de financiacion de la Comision Europea. Esta es la seccion Topics 2026-2027. Conoces los programas: Horizon Europe (clusters: Salud CL1, Digital e IA CL4, Energia y Clima CL5, Alimentacion CL6), EIC (Accelerator, Transition, Pathfinder), Innovation Fund. Puedes orientar sobre que programa y cluster es mas adecuado segun el sector tecnologico del usuario, requisitos TRL, presupuestos orientativos y plazos de cierre 2026-2027.">
+    <div class="wrap">
+      <div class="fh-chat-header">
+        <div class="fh-chat-title-row">
+          <div class="fh-chat-logo-icon"><svg width="28" height="28" viewBox="0 0 40 40"><path d="M8 6 C8 18,32 22,32 34" fill="none" stroke="#34D6C6" stroke-width="2.6" stroke-linecap="round"/><path d="M32 6 C32 18,8 22,8 34" fill="none" stroke="#F0B429" stroke-width="2.6" stroke-linecap="round"/><path d="M8 6 C20 12,20 28,8 34" fill="none" stroke="#8E9BFF" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><path d="M32 6 C20 12,20 28,32 34" fill="none" stroke="#F47E6F" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><circle cx="20" cy="20" r="2.6" fill="#eef2f6"/></svg></div>
+          <div>
+            <h2 class="fh-chat-heading" data-es="Asistente — Topics Horizon Europe 2026-27" data-en="Assistant — Horizon Europe Topics 2026-27">Asistente — Topics Horizon Europe 2026-27</h2>
+            <p class="fh-chat-sub" data-es="Encuentra el topic europeo que mejor encaja con tu tecnologia y sector." data-en="Find the European topic that best fits your technology and sector.">Encuentra el topic europeo que mejor encaja con tu tecnologia y sector.</p>
+          </div>
+          <div class="fh-chat-badge" data-es="IA ACTIVA" data-en="AI ACTIVE">IA ACTIVA</div>
+        </div>
+      </div>
+      <div class="fh-chat-box">
+        <div class="fh-chat-messages">
+          <div class="fh-msg bot" data-es="Hola. Soy tu asistente de topics europeos. Cuéntame sobre tu tecnologia o sector y te ayudo a identificar que programa Horizon Europe, EIC o Innovation Fund puede financiarte en 2026-2027." data-en="Hi! I am your European topics assistant. Tell me about your technology or sector and I will help you identify which Horizon Europe, EIC or Innovation Fund programme can fund you in 2026-2027.">Hola. Cuéntame sobre tu tecnologia o sector y te ayudo a identificar que programa europeo puede financiarte en 2026-2027.</div>
+        </div>
+        <div class="fh-chat-chips">
+          <button class="fh-chip" data-q-es="Tengo una startup de IA, a que topic de Horizon aplico?" data-q-en="I have an AI startup, which Horizon topic do I apply to?">IA y tecnologia digital</button>
+          <button class="fh-chip" data-q-es="Que topics existen para energia renovable y clima en 2026?" data-q-en="What topics exist for renewable energy and climate in 2026?">Energia y clima</button>
+          <button class="fh-chip" data-q-es="Cual es el presupuesto tipico de un proyecto Horizon Europe?" data-q-en="What is the typical budget of a Horizon Europe project?">Presupuestos Horizon</button>
+          <button class="fh-chip" data-q-es="Que diferencia hay entre Horizon Europe y el EIC?" data-q-en="What is the difference between Horizon Europe and the EIC?">Horizon vs EIC</button>
+          <button class="fh-chip" data-q-es="Para biotech y salud, que cluster de Horizon es el adecuado?" data-q-en="For biotech and health, which Horizon cluster is appropriate?">Biotech y salud</button>
+          <button class="fh-chip" data-q-es="Cuales son los topics con cierre mas proximo en 2026?" data-q-en="Which topics have the nearest deadline in 2026?">Cierres proximos 2026</button>
+        </div>
+        <div class="fh-chat-input-row">
+          <textarea class="fh-chat-input" rows="1" placeholder="Pregunta sobre topics europeos..."></textarea>
+          <button class="fh-chat-send" aria-label="Enviar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D1428" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        </div>
+        <p class="fh-chat-disclaimer" data-es="Datos orientativos. Confirma siempre en el Portal oficial de la UE." data-en="Indicative data. Always confirm on the EU official Portal.">Datos orientativos. Confirma siempre en el Portal oficial de la UE.</p>
+      </div>
+    </div>
+  </section>
+  <!-- /CHAT TOPICS -->
+
+<!-- HERO -->
   <header style="max-width:1180px; margin:0 auto; padding:clamp(44px,7vh,80px) clamp(24px,5vw,64px) clamp(20px,3vh,32px);">
     <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px; flex-wrap:wrap;">
       <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.26em; text-transform:uppercase; color:#88b0ee;">{{ t.eyebrow }}</span>

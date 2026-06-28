@@ -14,6 +14,7 @@
 <link rel="icon" type="image/svg+xml" href="4helix-favicon.svg">
 <script src="fh-config.js"></script>
 <script src="fh-assistant.js"></script>
+<script src="fh-chat.js"></script>
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -73,7 +74,43 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  
+  <!-- CHAT CASOS -->
+  <section class="fh-chat-section" data-system-prompt="Eres el asistente de 4Helix Ventures especializado en casos de exito de spin-offs y empresas deep-tech europeas. Esta seccion recoge 100 casos de referencia: BioNTech (mRNA, Alemania), Climeworks (DAC, Suiza ETH), IQM (computacion cuantica, Finlandia), ICEYE (satelites SAR, Finlandia), Multiverse Computing (cuantica, Espana), Pasqal (atomos neutros, Francia), Synthesia (IA video, UK), Celonis (process mining, Alemania), Neustark (captura CO2, Suiza), Oxford Nanopore (secuenciacion ADN, UK). Puedes describir casos, explicar lecciones del recorrido laboratorio-mercado, comparar por sector o pais, y orientar sobre como se replica ese recorrido.">
+    <div class="wrap">
+      <div class="fh-chat-header">
+        <div class="fh-chat-title-row">
+          <div class="fh-chat-logo-icon"><svg width="28" height="28" viewBox="0 0 40 40"><path d="M8 6 C8 18,32 22,32 34" fill="none" stroke="#34D6C6" stroke-width="2.6" stroke-linecap="round"/><path d="M32 6 C32 18,8 22,8 34" fill="none" stroke="#F0B429" stroke-width="2.6" stroke-linecap="round"/><path d="M8 6 C20 12,20 28,8 34" fill="none" stroke="#8E9BFF" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><path d="M32 6 C20 12,20 28,32 34" fill="none" stroke="#F47E6F" stroke-width="2.6" stroke-linecap="round" opacity=".9"/><circle cx="20" cy="20" r="2.6" fill="#eef2f6"/></svg></div>
+          <div>
+            <h2 class="fh-chat-heading" data-es="Asistente — Casos de Exito Deep-tech" data-en="Assistant — Deep-tech Success Cases">Asistente — Casos de Exito Deep-tech</h2>
+            <p class="fh-chat-sub" data-es="Explora 100 referentes europeos del laboratorio al mercado y extrae lecciones." data-en="Explore 100 European benchmarks from lab to market and extract lessons.">Explora 100 referentes europeos del laboratorio al mercado y extrae lecciones.</p>
+          </div>
+          <div class="fh-chat-badge" data-es="IA ACTIVA" data-en="AI ACTIVE">IA ACTIVA</div>
+        </div>
+      </div>
+      <div class="fh-chat-box">
+        <div class="fh-chat-messages">
+          <div class="fh-msg bot" data-es="Hola. Soy tu asistente de casos de exito deep-tech europeos. Puedo contarte sobre spin-offs como BioNTech, Climeworks, IQM, Celonis o cualquier otro de los 100 casos. Preguntame por sector, pais o tecnologia." data-en="Hi! I am your European deep-tech success cases assistant. I can tell you about spin-offs like BioNTech, Climeworks, IQM, Celonis or any of the 100 cases. Ask me by sector, country or technology.">Hola. Puedo contarte sobre BioNTech, Climeworks, IQM, Celonis y otros 100 casos europeos. Preguntame por sector, pais o tecnologia.</div>
+        </div>
+        <div class="fh-chat-chips">
+          <button class="fh-chip" data-q-es="Cuales son los casos mas destacados en computacion cuantica?" data-q-en="What are the most notable cases in quantum computing?">Computacion cuantica</button>
+          <button class="fh-chip" data-q-es="Dame ejemplos de spin-offs de biotech que hayan escalado en Europa" data-q-en="Give me examples of biotech spin-offs that scaled in Europe">Biotech que escalaron</button>
+          <button class="fh-chip" data-q-es="Que lecciones dejaron las spin-offs del ETH Zurich?" data-q-en="What lessons did ETH Zurich spin-offs leave?">Lecciones ETH Zurich</button>
+          <button class="fh-chip" data-q-es="Hay casos de exito de startups deep-tech en Espana?" data-q-en="Are there deep-tech startup success cases in Spain?">Casos en Espana</button>
+          <button class="fh-chip" data-q-es="Cuanto tiempo tardan tipicamente las spin-offs en llegar al mercado?" data-q-en="How long do spin-offs typically take to reach the market?">Tiempo hasta el mercado</button>
+          <button class="fh-chip" data-q-es="Que sectores tienen mas casos de exito en deep-tech europeo?" data-q-en="Which sectors have the most success cases in European deep-tech?">Sectores con mas exitos</button>
+        </div>
+        <div class="fh-chat-input-row">
+          <textarea class="fh-chat-input" rows="1" placeholder="Pregunta sobre casos deep-tech europeos..."></textarea>
+          <button class="fh-chat-send" aria-label="Enviar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D1428" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        </div>
+        <p class="fh-chat-disclaimer" data-es="Casos ilustrativos del ecosistema europeo, no proyectos de 4Helix." data-en="Illustrative cases from the European ecosystem, not 4Helix projects.">Casos ilustrativos del ecosistema europeo, no proyectos de 4Helix.</p>
+      </div>
+    </div>
+  </section>
+  <!-- /CHAT CASOS -->
+
+<!-- HERO -->
   <header style="max-width:1180px; margin:0 auto; padding:clamp(44px,7vh,80px) clamp(24px,5vw,64px) clamp(20px,3vh,32px);">
     <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.26em; text-transform:uppercase; color:#88b0ee; margin-bottom:20px;">{{ t.eyebrow }}</div>
     <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.02em; line-height:1.05; font-size:clamp(30px,4.2vw,54px); margin:0; max-width:20ch; color:#eef2f6;">{{ t.title }}</h1>

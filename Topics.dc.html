@@ -75,7 +75,25 @@
   </nav>
 
   
-  <!-- CHAT TOPICS -->
+  <!-- HERO -->
+  <header style="max-width:1180px; margin:0 auto; padding:clamp(44px,7vh,80px) clamp(24px,5vw,64px) clamp(20px,3vh,32px);">
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px; flex-wrap:wrap;">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.26em; text-transform:uppercase; color:#88b0ee;">{{ t.eyebrow }}</span>
+      <span style="{{ liveStyle }}"><span style="{{ liveDotStyle }}"></span>{{ liveLabel }}</span>
+    </div>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.02em; line-height:1.05; font-size:clamp(30px,4.2vw,54px); margin:0; max-width:20ch; color:#eef2f6;">{{ t.title }}</h1>
+    <p style="font-size:clamp(16px,1.4vw,18px); line-height:1.62; color:#9aa0ac; max-width:56ch; margin:22px 0 0; font-weight:300;">{{ t.intro }}</p>
+    <div data-bg-clear style="display:flex; flex-wrap:wrap; gap:clamp(24px,4vw,46px); margin-top:30px;">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+        <div style="display:flex; align-items:baseline; gap:9px;">
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,3vw,38px); letter-spacing:-0.01em; color:#eef2f6;">{{ s.n }}</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#88b0ee;">{{ s.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </header>
+
+<!-- CHAT TOPICS -->
   <section class="fh-chat-section" data-system-prompt="Eres el asistente de 4Helix Ventures especializado en topics y programas de financiacion de la Comision Europea. Esta es la seccion Topics 2026-2027. Conoces los programas: Horizon Europe (clusters: Salud CL1, Digital e IA CL4, Energia y Clima CL5, Alimentacion CL6), EIC (Accelerator, Transition, Pathfinder), Innovation Fund. Puedes orientar sobre que programa y cluster es mas adecuado segun el sector tecnologico del usuario, requisitos TRL, presupuestos orientativos y plazos de cierre 2026-2027.">
     <div class="wrap">
       <div class="fh-chat-header">
@@ -109,24 +127,6 @@
     </div>
   </section>
   <!-- /CHAT TOPICS -->
-
-<!-- HERO -->
-  <header style="max-width:1180px; margin:0 auto; padding:clamp(44px,7vh,80px) clamp(24px,5vw,64px) clamp(20px,3vh,32px);">
-    <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px; flex-wrap:wrap;">
-      <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.26em; text-transform:uppercase; color:#88b0ee;">{{ t.eyebrow }}</span>
-      <span style="{{ liveStyle }}"><span style="{{ liveDotStyle }}"></span>{{ liveLabel }}</span>
-    </div>
-    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.02em; line-height:1.05; font-size:clamp(30px,4.2vw,54px); margin:0; max-width:20ch; color:#eef2f6;">{{ t.title }}</h1>
-    <p style="font-size:clamp(16px,1.4vw,18px); line-height:1.62; color:#9aa0ac; max-width:56ch; margin:22px 0 0; font-weight:300;">{{ t.intro }}</p>
-    <div data-bg-clear style="display:flex; flex-wrap:wrap; gap:clamp(24px,4vw,46px); margin-top:30px;">
-      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
-        <div style="display:flex; align-items:baseline; gap:9px;">
-          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,3vw,38px); letter-spacing:-0.01em; color:#eef2f6;">{{ s.n }}</span>
-          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#88b0ee;">{{ s.label }}</span>
-        </div>
-      </sc-for>
-    </div>
-  </header>
 
   <!-- CONTROLS -->
   <section style="max-width:1180px; margin:0 auto; padding:clamp(16px,2vh,28px) clamp(24px,5vw,64px) 0;">

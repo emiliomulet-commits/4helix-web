@@ -17,7 +17,7 @@ const CSS = `
 .fh-chat-badge{margin-left:auto;flex-shrink:0;background:rgba(52,214,198,.12);border:1px solid rgba(52,214,198,.3);color:var(--science);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px;white-space:nowrap;display:flex;align-items:center;gap:6px}
 .fh-chat-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--science);animation:fhChatPulse 1.8s ease-in-out infinite}
 @keyframes fhChatPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-.fh-chat-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;position:relative}
+.fh-chat-box{background:rgba(8,13,28,.95);border-radius:16px;overflow:hidden;position:relative;border:1px solid transparent;background-clip:padding-box;box-shadow:0 0 0 1px rgba(52,214,198,.3),0 0 0 1px rgba(240,180,41,.15),0 4px 32px rgba(52,214,198,.08),0 4px 32px rgba(240,180,41,.06)}
 .fh-chat-messages{min-height:160px;max-height:360px;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
 .fh-chat-messages::-webkit-scrollbar{display:none}.fh-chat-messages{-ms-overflow-style:none;scrollbar-width:none}
 .fh-sb-track{position:absolute;right:6px;top:12px;bottom:12px;width:6px;border-radius:3px;background:linear-gradient(to bottom,#34D6C6 0%,#a8d8a8 40%,#d4d888 70%,#F0B429 100%);opacity:.25;pointer-events:none;z-index:10}
@@ -36,11 +36,12 @@ const CSS = `
 .fh-chat-chips{padding:12px 24px 0;display:flex;flex-wrap:wrap;gap:8px}
 .fh-chip{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);color:var(--on-dark-mut);font-size:13px;padding:6px 13px;border-radius:999px;cursor:pointer;transition:background .18s,border-color .18s,color .18s;white-space:nowrap}
 .fh-chip:hover{background:rgba(52,214,198,.12);border-color:rgba(52,214,198,.4);color:var(--science)}
-.fh-chat-input-row{display:flex;align-items:flex-end;gap:10px;padding:14px 20px 14px;border-top:1px solid rgba(255,255,255,.07)}
-.fh-chat-input{flex:1;background:transparent;border:none;outline:none;color:var(--on-dark);font-family:var(--body);font-size:14px;line-height:1.55;resize:none;min-height:22px;max-height:120px;padding:0;overflow-y:auto}
-.fh-chat-input::placeholder{color:var(--on-dark-mut)}
-.fh-chat-send{width:36px;height:36px;border-radius:50%;background:var(--science);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .18s;padding:0}
-.fh-chat-send:hover{opacity:.85}.fh-chat-send:disabled{opacity:.4;cursor:default}
+.fh-chat-input-row{display:flex;align-items:flex-end;gap:10px;padding:10px 16px;margin:0 16px 14px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(52,214,198,.25);box-shadow:0 0 0 1px rgba(240,180,41,.1) inset,0 2px 16px rgba(52,214,198,.06);transition:border-color .25s,box-shadow .25s}
+.fh-chat-input-row:focus-within{border-color:rgba(52,214,198,.55);box-shadow:0 0 0 1px rgba(240,180,41,.15) inset,0 2px 20px rgba(52,214,198,.14),0 0 12px rgba(52,214,198,.08)}
+.fh-chat-input{flex:1;background:transparent;border:none;outline:none;color:var(--on-dark);font-family:var(--body);font-size:14px;line-height:1.55;resize:none;min-height:22px;max-height:120px;padding:4px 0;overflow-y:auto}
+.fh-chat-input::placeholder{color:rgba(255,255,255,.35);font-style:italic}
+.fh-chat-send{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#34D6C6 0%,#F0B429 100%);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .18s,transform .12s;padding:0}
+.fh-chat-send:hover{opacity:.9;transform:scale(1.07)}.fh-chat-send:disabled{opacity:.35;cursor:default;transform:none}
 .fh-chat-disclaimer{padding:8px 24px 14px;font-size:11px;color:var(--on-dark-mut);opacity:.6}
 .fh-chat-cross-link{margin-top:8px;padding:8px 12px;background:rgba(240,180,41,.08);border:1px solid rgba(240,180,41,.2);border-radius:8px;font-size:12px;color:rgba(240,180,41,.85)}
 .fh-chat-cross-link a{color:rgba(240,180,41,.9);text-decoration:underline}
